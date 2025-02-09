@@ -16,6 +16,8 @@ expo-env.d.ts
 *.p12
 *.key
 *.mobileprovision
+android
+ios
 
 # Metro
 .metro-health-check*
@@ -28,6 +30,7 @@ yarn-error.*
 # macOS
 .DS_Store
 *.pem
+.yarn
 
 # local env files
 .env*.local
