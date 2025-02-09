@@ -42,5 +42,6 @@ export const Input = styled(TextInput).attrs(({ theme, ...props }) => ({
     font-family: ${theme.font.weight.regular};
     font-size: ${theme.font.size.large}px;
     height: 100%;
+    color: ${theme.colors.default.black.main};
   `}
 `;

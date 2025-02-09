@@ -19,6 +19,7 @@ export type TextInputProps = {
   label: string;
   labelProps?: TextProps;
   variant?: 'default' | 'password';
+  onFocus?: () => void;
 } & TextInputRNProps;
 
 type GetInputStateParams = {
@@ -48,6 +49,7 @@ export const Input = forwardRef<TextInputRN, TextInputProps>(
       label,
       labelProps,
       variant = 'default',
+      onFocus,
       ...props
     },
     ref
@@ -60,6 +62,7 @@ export const Input = forwardRef<TextInputRN, TextInputProps>(
     );
 
     const handlePressContainer = () => {
+      onFocus?.();
       inputRef.current?.focus();
     };
 
@@ -81,9 +84,8 @@ export const Input = forwardRef<TextInputRN, TextInputProps>(
             {...props}
             ref={ref || inputRef}
             secureTextEntry={secureTextEntry}
-            onFocus={(e) => {
+            onFocus={() => {
               setHasFocus(true);
-              props.onFocus?.(e);
             }}
             onBlur={(e) => {
               setHasFocus(false);
