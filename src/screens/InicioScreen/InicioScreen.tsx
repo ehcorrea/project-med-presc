@@ -1,12 +1,13 @@
 import { View } from 'react-native';
 import { ImageBackground } from 'expo-image';
 
-import { Spancing } from '@/components';
+import { useLogin } from '@/hooks';
+import { ModalProfile, Spancing } from '@/components';
 
 import * as S from './InicioScreen.styles';
 
 export function InicioScreen() {
-  const handleEntrarComEmail = () => {};
+  const { login, openModal, handleCloseModal } = useLogin();
 
   return (
     <ImageBackground
@@ -27,12 +28,13 @@ export function InicioScreen() {
           </View>
           <View className="flex-1 items-center justify-center">
             <Spancing y={10} />
-            <S.ButtonLogin onPress={handleEntrarComEmail}>
+            <S.ButtonLogin onPress={login}>
               <S.TextLogin>Começar</S.TextLogin>
             </S.ButtonLogin>
           </View>
         </View>
       </S.BackgroundLinearGradient>
+      <ModalProfile open={openModal} handleCloseModal={handleCloseModal} />
     </ImageBackground>
   );
 }

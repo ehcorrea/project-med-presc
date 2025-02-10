@@ -28,6 +28,7 @@ export default function RootLayout() {
     <Provider>
       <Stack screenOptions={{ headerShown: false }}>
         <Stack.Screen name="index" />
+        <Stack.Screen name="criar-perfil" />
       </Stack>
     </Provider>
   );
