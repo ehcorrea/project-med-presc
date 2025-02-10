@@ -1896,6 +1896,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@hookform/resolvers@npm:^3.10.0":
+  version: 3.10.0
+  resolution: "@hookform/resolvers@npm:3.10.0"
+  peerDependencies:
+    react-hook-form: ^7.0.0
+  checksum: e062f10bebff696a669fe37388f64f6b7c322eb524e99008c0e157e7adf68d2cee4d86fce1a7304a80d7f6fdd6d92facc37320a539cb195235a31a680415760c
+  languageName: node
+  linkType: hard
+
 "@humanwhocodes/config-array@npm:^0.13.0":
   version: 0.13.0
   resolution: "@humanwhocodes/config-array@npm:0.13.0"
@@ -4265,7 +4274,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"base64-js@npm:^1.2.3, base64-js@npm:^1.3.1, base64-js@npm:^1.5.1":
+"base64-js@npm:^1.2.3, base64-js@npm:^1.3.0, base64-js@npm:^1.3.1, base64-js@npm:^1.5.1":
   version: 1.5.1
   resolution: "base64-js@npm:1.5.1"
   checksum: 669632eb3745404c2f822a18fc3a0122d2f9a7a13f7fb8b5823ee19d1d2ff9ee5b52c53367176ea4ad093c332fd5ab4bd0ebae5a8e27917a4105a4cfc86b1005
@@ -6565,6 +6574,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"expo-crypto@npm:~13.0.2":
+  version: 13.0.2
+  resolution: "expo-crypto@npm:13.0.2"
+  dependencies:
+    base64-js: ^1.3.0
+  peerDependencies:
+    expo: "*"
+  checksum: b6978dfc5d89abdbd3471c53ae31c8e4eace13870ff25f39288c4b615c030d587865d7043c7f8ad38b53ad713b3eef27523957abdabeec89cf151e3e23c92609
+  languageName: node
+  linkType: hard
+
 "expo-dev-client@npm:~4.0.23":
   version: 4.0.29
   resolution: "expo-dev-client@npm:4.0.29"
@@ -6750,6 +6770,15 @@ __metadata:
     react-native-reanimated:
       optional: true
   checksum: d2d5100e20392036471b147745bf5405c20529c9998a5b79eec60fb484992d642120aeabac8a7f173272cac4cb19fa5f41b06b17ccb57050f349217e865c87e2
+  languageName: node
+  linkType: hard
+
+"expo-secure-store@npm:~13.0.2":
+  version: 13.0.2
+  resolution: "expo-secure-store@npm:13.0.2"
+  peerDependencies:
+    expo: "*"
+  checksum: 89d90bc9bbd7042ba28f15764184b672b51f0ca5dfe63b4c3f799f5280d95b79d1c2db8582f356154bf62bbcdda4560a6cc0e540a23c2cea9edeee45e97a10b3
   languageName: node
   linkType: hard
 
@@ -11738,6 +11767,7 @@ __metadata:
     "@commitlint/config-conventional": ^19.2.2
     "@eslint/js": ^9.7.0
     "@expo/vector-icons": ^14.0.2
+    "@hookform/resolvers": ^3.10.0
     "@react-navigation/native": ^6.0.2
     "@tanstack/react-query": ^5.51.23
     "@testing-library/jest-native": ^5.4.3
@@ -11755,12 +11785,14 @@ __metadata:
     eslint-plugin-prettier: ^5.2.1
     expo: ~51.0.28
     expo-constants: ~16.0.2
+    expo-crypto: ~13.0.2
     expo-dev-client: ~4.0.23
     expo-font: ~12.0.9
     expo-image: ~1.12.13
     expo-linear-gradient: ^14.0.2
     expo-linking: ~6.3.1
     expo-router: ~3.5.23
+    expo-secure-store: ~13.0.2
     expo-splash-screen: ~0.27.5
     expo-status-bar: ~1.12.1
     expo-system-ui: ~3.0.7
@@ -11775,7 +11807,9 @@ __metadata:
     prettier: ^3.3.3
     react: 18.2.0
     react-dom: 18.2.0
+    react-hook-form: ^7.54.2
     react-native: 0.74.5
+    react-native-color-toolkit: ^1.3.1
     react-native-gesture-handler: ~2.16.1
     react-native-keyboard-controller: ^1.13.0
     react-native-reanimated: ~3.10.1
@@ -11784,9 +11818,11 @@ __metadata:
     react-native-svg: ^15.5.0
     react-native-web: ~0.19.10
     react-test-renderer: 18.2.0
+    reanimated-color-picker: ^3.0.6
     styled-components: 6.1.12
     tailwindcss: 3.3.2
     typescript: ~5.3.3
+    yup: ^1.6.1
     zustand: ^4.5.5
   languageName: unknown
   linkType: soft
@@ -11837,6 +11873,13 @@ __metadata:
     object-assign: ^4.1.1
     react-is: ^16.13.1
   checksum: c056d3f1c057cb7ff8344c645450e14f088a915d078dcda795041765047fa080d38e5d626560ccaac94a4e16e3aa15f3557c1a9a8d1174530955e992c675e459
+  languageName: node
+  linkType: hard
+
+"property-expr@npm:^2.0.5":
+  version: 2.0.6
+  resolution: "property-expr@npm:2.0.6"
+  checksum: 89977f4bb230736c1876f460dd7ca9328034502fd92e738deb40516d16564b850c0bbc4e052c3df88b5b8cd58e51c93b46a94bea049a3f23f4a022c038864cab
   languageName: node
   linkType: hard
 
@@ -11990,6 +12033,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react-hook-form@npm:^7.54.2":
+  version: 7.54.2
+  resolution: "react-hook-form@npm:7.54.2"
+  peerDependencies:
+    react: ^16.8.0 || ^17 || ^18 || ^19
+  checksum: 49a867ece9894dca82f6552e5eefd012b7db962c56a7543f9275ae0b6ec202d549973c3694e7f97436afc2396549cb8fc8777241dd660b71793547aa9c8e5686
+  languageName: node
+  linkType: hard
+
 "react-is@npm:^16.12.0 || ^17.0.0 || ^18.0.0, react-is@npm:^18.0.0, react-is@npm:^18.1.0, react-is@npm:^18.2.0":
   version: 18.3.1
   resolution: "react-is@npm:18.3.1"
@@ -12008,6 +12060,13 @@ __metadata:
   version: 17.0.2
   resolution: "react-is@npm:17.0.2"
   checksum: 9d6d111d8990dc98bc5402c1266a808b0459b5d54830bbea24c12d908b536df7883f268a7868cfaedde3dd9d4e0d574db456f84d2e6df9c4526f99bb4b5344d8
+  languageName: node
+  linkType: hard
+
+"react-native-color-toolkit@npm:^1.3.1":
+  version: 1.3.1
+  resolution: "react-native-color-toolkit@npm:1.3.1"
+  checksum: 2f554305de85d7abd3ae8bd82fe9cd10a9a5036a510449362f44149aad0bf7f470f41b7e577665d238f70b452a7660bbfdfdd40d068470e92505e646baaaac43
   languageName: node
   linkType: hard
 
@@ -12281,6 +12340,22 @@ __metadata:
   version: 1.3.0
   resolution: "readline@npm:1.3.0"
   checksum: dfaf8e6ac20408ea00d650e95f7bb47f77c4c62dd12ed7fb51731ee84532a2f3675fcdc4cab4923dc1eef227520a2e082a093215190907758bea9f585b19438e
+  languageName: node
+  linkType: hard
+
+"reanimated-color-picker@npm:^3.0.6":
+  version: 3.0.6
+  resolution: "reanimated-color-picker@npm:3.0.6"
+  peerDependencies:
+    expo: ">=44.0.0"
+    react: "*"
+    react-native: "*"
+    react-native-gesture-handler: ">=2.0.0"
+    react-native-reanimated: ^2.0.0 || ^3.0.0
+  peerDependenciesMeta:
+    expo:
+      optional: true
+  checksum: e7106c5e6c2d1f5b512b97323f9f79c86c317055629706bd9263e9c2044ee6e1cdee02250876111f5682643029f2173c34c948f9708ad44d7c2ddc8edfd83c1c
   languageName: node
   linkType: hard
 
@@ -13984,6 +14059,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"tiny-case@npm:^1.0.3":
+  version: 1.0.3
+  resolution: "tiny-case@npm:1.0.3"
+  checksum: 3f7a30c39d5b0e1bc097b0b271bec14eb5b836093db034f35a0de26c14422380b50dc12bfd37498cf35b192f5df06f28a710712c87ead68872a9e37ad6f6049d
+  languageName: node
+  linkType: hard
+
 "tinyexec@npm:^0.3.0":
   version: 0.3.2
   resolution: "tinyexec@npm:0.3.2"
@@ -14027,6 +14109,13 @@ __metadata:
   version: 1.0.1
   resolution: "toidentifier@npm:1.0.1"
   checksum: 952c29e2a85d7123239b5cfdd889a0dde47ab0497f0913d70588f19c53f7e0b5327c95f4651e413c74b785147f9637b17410ac8c846d5d4a20a5a33eb6dc3a45
+  languageName: node
+  linkType: hard
+
+"toposort@npm:^2.0.2":
+  version: 2.0.2
+  resolution: "toposort@npm:2.0.2"
+  checksum: d64c74b570391c9432873f48e231b439ee56bc49f7cb9780b505cfdf5cb832f808d0bae072515d93834dd6bceca5bb34448b5b4b408335e4d4716eaf68195dcb
   languageName: node
   linkType: hard
 
@@ -14173,6 +14262,13 @@ __metadata:
   version: 0.7.1
   resolution: "type-fest@npm:0.7.1"
   checksum: 5b1b113529d59949d97b76977d545989ddc11b81bb0c766b6d2ccc65473cb4b4a5c7d24f5be2c2bb2de302a5d7a13c1732ea1d34c8c59b7e0ec1f890cf7fc424
+  languageName: node
+  linkType: hard
+
+"type-fest@npm:^2.19.0":
+  version: 2.19.0
+  resolution: "type-fest@npm:2.19.0"
+  checksum: a4ef07ece297c9fba78fc1bd6d85dff4472fe043ede98bd4710d2615d15776902b595abf62bd78339ed6278f021235fb28a96361f8be86ed754f778973a0d278
   languageName: node
   linkType: hard
 
@@ -15114,6 +15210,18 @@ __metadata:
   version: 1.1.1
   resolution: "yocto-queue@npm:1.1.1"
   checksum: f2e05b767ed3141e6372a80af9caa4715d60969227f38b1a4370d60bffe153c9c5b33a862905609afc9b375ec57cd40999810d20e5e10229a204e8bde7ef255c
+  languageName: node
+  linkType: hard
+
+"yup@npm:^1.6.1":
+  version: 1.6.1
+  resolution: "yup@npm:1.6.1"
+  dependencies:
+    property-expr: ^2.0.5
+    tiny-case: ^1.0.3
+    toposort: ^2.0.2
+    type-fest: ^2.19.0
+  checksum: 4ef0b15eb01d89a4f15c78c112b588468d553420be6f2f519d0e58a270c96a5bbbf1bff7bc8909851ba8b3df5e1fdb8b34d4a3bd4e9269006c592b3e8580568f
   languageName: node
   linkType: hard
 
