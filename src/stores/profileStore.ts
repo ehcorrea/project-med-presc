@@ -2,7 +2,8 @@ import { createJSONStorage, persist } from 'zustand/middleware';
 import * as SecureStore from 'expo-secure-store';
 import { randomUUID } from 'expo-crypto';
 
-import { Profile, Profiles, ProfileType } from '@/types/profile';
+import { Profile, Profiles } from '@/types/profile';
+import { createProfile } from '@/factories';
 
 import { create } from './zustand';
 
@@ -17,22 +18,7 @@ type Actions = {
 };
 
 export const initialStateAuth: State = {
-  profiles: {
-    '01': {
-      dependents: [],
-      id: '01',
-      type: ProfileType.PERSONAL,
-      name: 'Emilio H. Corrêa',
-      color: 'red',
-    },
-    '02': {
-      dependents: [],
-      id: '02',
-      type: ProfileType.PERSONAL,
-      name: 'Zezo H. Corrêa',
-      color: 'green',
-    },
-  },
+  profiles: {},
   selected: null,
 };
 
@@ -42,7 +28,11 @@ export const profileStore = create(
       ...initialStateAuth,
       setProfile(profile) {
         const store = get();
-        const profiles = { ...store.profiles, [randomUUID()]: profile };
+        const id = randomUUID();
+        const profiles = {
+          ...store.profiles,
+          [id]: createProfile(profile, id),
+        };
         set({ ...store, profiles });
       },
       editProfile(id, profile) {},
