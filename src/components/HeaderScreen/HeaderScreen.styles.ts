@@ -1,10 +1,6 @@
 import styled, { css } from 'styled-components/native';
 
-type ContainerProps = {
-  top?: number;
-};
-
-export const Container = styled.View<ContainerProps>`
+export const Container = styled.View`
   ${({ theme }) => css`
     align-items: center;
     flex-direction: row;
