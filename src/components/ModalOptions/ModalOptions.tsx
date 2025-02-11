@@ -1,7 +1,7 @@
 import { FlatList } from 'react-native';
 
 import { Button } from '../Button/Button';
-import { Modal, ModalProps } from '../Modal/Modal';
+import { Modal } from '../Modal/Modal';
 import { Spancing } from '../Spacing/Spacing';
 import { Text } from '../Text/Text';
 
@@ -12,16 +12,23 @@ type ModalOptionsProps<T> = {
   }[];
   onSelect: (value: T) => void;
   title?: string;
-} & Omit<ModalProps, 'children'>;
+  onClose: () => void;
+  open: boolean;
+};
 
 export function ModalOptions<T>({
   values,
   onSelect,
+  onClose,
   title,
-  ...props
+  open,
 }: ModalOptionsProps<T>) {
   return (
-    <Modal className="min-h-[20%] max-h-[65%] p-[5%] px-[8%]" {...props}>
+    <Modal
+      onTouchBackground={onClose}
+      open={open}
+      className="min-h-[20%] max-h-[65%] p-[5%] px-[8%]"
+    >
       <Text weight="semi" size="large" className="self-center">
         {title}
       </Text>
@@ -36,6 +43,7 @@ export function ModalOptions<T>({
                 className="flex-row rounded-md"
                 onPress={() => {
                   onSelect(item.value);
+                  onClose();
                 }}
                 label={{ size: 'large' }}
               >
