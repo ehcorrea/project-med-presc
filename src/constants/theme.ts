@@ -25,6 +25,12 @@ const COLORS_NEUTRAL = {
     50: '#F38585',
     20: '#F3BEBE',
   },
+  bg: {
+    main: '#F9FBFF',
+    80: '#FAFCFF',
+    50: '#FCFDFF',
+    20: '#FEFEFF',
+  },
 };
 
 export const theme = {
