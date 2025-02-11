@@ -21,7 +21,8 @@
         "foregroundImage": "./src/assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.ehcorrea.projectmedpresc"
+      "package": "com.ehcorrea.projectmedpresc",
+      "googleServicesFile": "./google/google-services.json"
     },
     "web": {
       "bundler": "metro",
@@ -35,6 +36,15 @@
     ],
     "experiments": {
       "typedRoutes": true
-    }
+    },
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "00079e76-60bb-4916-8645-2f837f24e232"
+      }
+    },
+    "owner": "zctechs"
   }
 }

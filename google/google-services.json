@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1045774138928",
+    "project_id": "project-med-presc",
+    "storage_bucket": "project-med-presc.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1045774138928:android:826d6d803d5d97271977f5",
+        "android_client_info": {
+          "package_name": "com.ehcorrea.projectmedpresc"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD8WTWgqEfiHGizEZUcrcmhPgFF0Bg-RjQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
