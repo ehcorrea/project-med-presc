@@ -1,0 +1,276 @@
+import { ScrollView, View } from 'react-native';
+import { useState } from 'react';
+import { Controller, useForm } from 'react-hook-form';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { yupResolver } from '@hookform/resolvers/yup';
+
+import { MedicationMeasures, MedicationType } from '@/types/medication';
+import {
+  addMedicationValidators,
+  getValuesFromEnum,
+  splitTimer,
+  pluralize,
+  MedicationValidators,
+} from '@/utils';
+
+import {
+  Button,
+  HeaderScreen,
+  Input,
+  Layout,
+  ModalConfirm,
+  ModalOptions,
+  ModalTimer,
+  Spancing,
+  Text,
+} from '@/components';
+
+export function CadastrarRemedioPessoalScreen() {
+  const [modalTimer, setModalTimer] = useState(false);
+  const [modalType, setModalType] = useState(false);
+  const [modalMeasures, setModalMeasures] = useState(false);
+  const [modalConfirm, setModalConfirm] = useState(false);
+  const [formState, setFormState] = useState<MedicationValidators>();
+
+  const { control, setValue, handleSubmit, clearErrors, watch } = useForm({
+    resolver: yupResolver(addMedicationValidators),
+  });
+
+  const type = getValuesFromEnum(MedicationType, watch('type'));
+  const quantity = watch('quantity')?.padStart(2, '0');
+  const measure = pluralize(
+    quantity,
+    getValuesFromEnum(MedicationMeasures, watch('measure'))
+  );
+
+  const handleConfirmInterval = (hr: string, min: string) => {
+    setValue('interval', `${hr}:${min}`);
+    clearErrors('interval');
+  };
+
+  const handleSelectType = (type: string) => {
+    setValue('type', type);
+    clearErrors('type');
+  };
+
+  const handleMeasures = (measure: string) => {
+    setValue('measure', measure);
+    clearErrors('measure');
+  };
+
+  const handleAdd = (data: MedicationValidators) => {
+    setFormState(data);
+    setModalConfirm(true);
+  };
+
+  return (
+    <Layout>
+      <HeaderScreen />
+      <SafeAreaView className="flex-1">
+        <View className="px-[5%] pb-[5%] flex-1">
+          <ScrollView className="flex-1" showsVerticalScrollIndicator={false}>
+            <Text>
+              Informe detalhes sobre os medicamentos prescritos, como intervalo
+              de uso e instruções. Inclua pelo menos um medicamento.
+            </Text>
+            <Spancing y={10} />
+            <Controller
+              name="name"
+              control={control}
+              render={({
+                field: { onChange, ...props },
+                fieldState: { error },
+              }) => (
+                <Input
+                  accessibilityLabel="inserir nome do medicamento"
+                  error={error?.message}
+                  label="Medicamento"
+                  onChangeText={onChange}
+                  placeholder="Paracetamol, dipirona, etc..."
+                  size="small"
+                  {...props}
+                />
+              )}
+            />
+            <View className="flex-row">
+              <View className="flex-1">
+                <Controller
+                  name="type"
+                  control={control}
+                  render={({
+                    field: { onChange, value: _, ...props },
+                    fieldState: { error },
+                  }) => (
+                    <Input
+                      accessibilityLabel="inserir tipo do medicamento"
+                      editable={false}
+                      error={error?.message}
+                      label="Tipo"
+                      onChangeText={onChange}
+                      onFocus={() => setModalType(true)}
+                      placeholder="Comprimido, xarope, etc..."
+                      pointerEvents="none"
+                      size="small"
+                      value={type}
+                      {...props}
+                    />
+                  )}
+                />
+              </View>
+              <Spancing x={3} />
+              <View className="flex-1">
+                <Controller
+                  name="interval"
+                  control={control}
+                  render={({
+                    field: { onChange, value, ...props },
+                    fieldState: { error },
+                  }) => (
+                    <Input
+                      accessibilityLabel="inserir intervalo de uso"
+                      editable={false}
+                      error={error?.message}
+                      label="Intervalo"
+                      onChangeText={onChange}
+                      onFocus={() => setModalTimer(true)}
+                      placeholder="a cada xx:xx"
+                      pointerEvents="none"
+                      size="small"
+                      value={value ? `A cada ${value}` : undefined}
+                      {...props}
+                    />
+                  )}
+                />
+              </View>
+            </View>
+            <View className="flex-row">
+              <View className="flex-1">
+                <Controller
+                  name="quantity"
+                  control={control}
+                  render={({
+                    field: { onChange, ...props },
+                    fieldState: { error },
+                  }) => (
+                    <Input
+                      accessibilityLabel="inserir quantidade"
+                      error={error?.message}
+                      keyboardType="numeric"
+                      label="Quantidade"
+                      onChangeText={onChange}
+                      placeholder="1, 4, 6..."
+                      maxLength={4}
+                      size="small"
+                      {...props}
+                    />
+                  )}
+                />
+              </View>
+              <Spancing x={3} />
+              <View className="flex-1">
+                <Controller
+                  name="measure"
+                  control={control}
+                  render={({
+                    field: { onChange, value: _, ...props },
+                    fieldState: { error },
+                  }) => (
+                    <Input
+                      accessibilityLabel="inserir tipo de medida"
+                      editable={false}
+                      error={error?.message}
+                      label="Medida"
+                      onChangeText={onChange}
+                      onFocus={() => setModalMeasures(true)}
+                      placeholder="ml, mg..."
+                      pointerEvents="none"
+                      size="small"
+                      value={measure}
+                      {...props}
+                    />
+                  )}
+                />
+              </View>
+            </View>
+            <Controller
+              name="observation"
+              control={control}
+              render={({
+                field: { onChange, ...props },
+                fieldState: { error },
+              }) => (
+                <Input
+                  accessibilityLabel={`inserir seu nome`}
+                  containerProps={{ style: { height: 90 } }}
+                  error={error?.message}
+                  label="Observação"
+                  maxLength={128}
+                  multiline
+                  numberOfLines={4}
+                  onChangeText={onChange}
+                  placeholder="Evitar o uso com outros medicamentos..."
+                  size="small"
+                  textAlignVertical="top"
+                  {...props}
+                />
+              )}
+            />
+            <Button
+              className="w-[60%] self-center"
+              onPress={handleSubmit(handleAdd)}
+            >
+              ADICIONAR
+            </Button>
+          </ScrollView>
+        </View>
+      </SafeAreaView>
+      <ModalTimer
+        onClose={() => setModalTimer(false)}
+        onConfirm={handleConfirmInterval}
+        open={modalTimer}
+      />
+      <ModalOptions
+        onClose={() => setModalType(false)}
+        onSelect={handleSelectType}
+        open={modalType}
+        title="Selecione um tipo"
+        values={Object.entries(MedicationType).map(([value, title]) => ({
+          title,
+          value,
+        }))}
+      />
+      <ModalOptions
+        onClose={() => setModalMeasures(false)}
+        onSelect={handleMeasures}
+        open={modalMeasures}
+        title="Selecione a medida"
+        values={Object.entries(MedicationMeasures).map(([value, title]) => ({
+          title: `${quantity || ''} ${pluralize(quantity, title)}`,
+          value,
+        }))}
+      />
+      <ModalConfirm
+        onClose={() => setModalConfirm(false)}
+        onConfirm={() => {}}
+        open={!!modalConfirm}
+        title="Confirmar Medicamento"
+      >
+        <View className="px-[5%] pb-[3%]">
+          <Text size="large">
+            Usar a cada {splitTimer(formState?.interval)},{'\n'}
+            {formState?.quantity} {measure}({type}) de {formState?.name}.
+          </Text>
+
+          {formState?.observation && (
+            <View>
+              <Spancing y={2} />
+              <Text size="large" weight="semi">
+                Obs: {formState.observation}
+              </Text>
+            </View>
+          )}
+        </View>
+      </ModalConfirm>
+    </Layout>
+  );
+}
