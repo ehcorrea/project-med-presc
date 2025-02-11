@@ -2397,6 +2397,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@react-native-async-storage/async-storage@npm:1.23.1":
+  version: 1.23.1
+  resolution: "@react-native-async-storage/async-storage@npm:1.23.1"
+  dependencies:
+    merge-options: ^3.0.4
+  peerDependencies:
+    react-native: ^0.0.0-0 || >=0.60 <1.0
+  checksum: 7096546ed4a5faf1f6e0425e2e15713575f1a7493a04524da386ff35c3844b57b8fd20544fad4157b4a61e048b10235f2f06124f262da5b327edc74fbc31e02b
+  languageName: node
+  linkType: hard
+
 "@react-native-community/cli-clean@npm:13.6.9":
   version: 13.6.9
   resolution: "@react-native-community/cli-clean@npm:13.6.9"
@@ -2575,6 +2586,16 @@ __metadata:
   bin:
     rnc-cli: build/bin.js
   checksum: 5e997b50fd687b4f3fcdde6a1fd36317ffee5536649fb16e87f6e3bb1bd56a279daad57b7d904d0442425106f048a114e3987f9a0fc8dc3fadd0a784dcb83a40
+  languageName: node
+  linkType: hard
+
+"@react-native-picker/picker@npm:2.7.5":
+  version: 2.7.5
+  resolution: "@react-native-picker/picker@npm:2.7.5"
+  peerDependencies:
+    react: "*"
+    react-native: "*"
+  checksum: 7c968bc2886e63aa9ddfd9115c4f7f5523e6e19c21427a72dadc68eff09d33acd04c3b8b6332108b7e3e608a31c79a81a7a897ab44ee31ca22743f5bffc5908a
   languageName: node
   linkType: hard
 
@@ -3305,6 +3326,13 @@ __metadata:
   dependencies:
     undici-types: ~5.26.4
   checksum: 8f780a51a2dc1d597b104a2c33a2ab175fda492defbaab2cbb5fd098124d867ebed7cda0eaf80309bba25fbd4e41b4a04c91b7f14b50547b4377a39ccf749a7c
+  languageName: node
+  linkType: hard
+
+"@types/pluralize@npm:^0.0.33":
+  version: 0.0.33
+  resolution: "@types/pluralize@npm:0.0.33"
+  checksum: 282d42dc0187e5e0912f9f36ee0f5615bfd273a08d40afe5bf5881cb28daf1977abe10564543032aa0f42352ebba739ff3d86bf5562ac4691c6d1761fcc7cf39
   languageName: node
   linkType: hard
 
@@ -6681,14 +6709,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"expo-linear-gradient@npm:^14.0.2":
-  version: 14.0.2
-  resolution: "expo-linear-gradient@npm:14.0.2"
+"expo-linear-gradient@npm:~13.0.2":
+  version: 13.0.2
+  resolution: "expo-linear-gradient@npm:13.0.2"
   peerDependencies:
     expo: "*"
-    react: "*"
-    react-native: "*"
-  checksum: 3f318f50fae44b1f2f90becf421a1c7c0c2822e0a381031fa6d893899173b7ecc6f0c4eddde699e6825fd091d5576cf5960ba81046aeaf0300f44de1147bb543
+  checksum: 525e0ccdb75d1876d2d0faece669e952a0d5addb543f46705dd73b6d82a2f866847b752c12488acfc62c95877530d69e526eeab317afc0ce8f7042eadf01ccab
   languageName: node
   linkType: hard
 
@@ -8419,6 +8445,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"is-plain-obj@npm:^2.1.0":
+  version: 2.1.0
+  resolution: "is-plain-obj@npm:2.1.0"
+  checksum: cec9100678b0a9fe0248a81743041ed990c2d4c99f893d935545cfbc42876cbe86d207f3b895700c690ad2fa520e568c44afc1605044b535a7820c1d40e38daa
+  languageName: node
+  linkType: hard
+
 "is-plain-object@npm:^2.0.4":
   version: 2.0.4
   resolution: "is-plain-object@npm:2.0.4"
@@ -10105,6 +10138,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"merge-options@npm:^3.0.4":
+  version: 3.0.4
+  resolution: "merge-options@npm:3.0.4"
+  dependencies:
+    is-plain-obj: ^2.1.0
+  checksum: d86ddb3dd6e85d558dbf25dc944f3527b6bacb944db3fdda6e84a3f59c4e4b85231095f58b835758b9a57708342dee0f8de0dffa352974a48221487fe9f4584f
+  languageName: node
+  linkType: hard
+
 "merge-stream@npm:^2.0.0":
   version: 2.0.0
   resolution: "merge-stream@npm:2.0.0"
@@ -11499,6 +11541,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"pluralize@npm:^8.0.0":
+  version: 8.0.0
+  resolution: "pluralize@npm:8.0.0"
+  checksum: 08931d4a6a4a5561a7f94f67a31c17e6632cb21e459ab3ff4f6f629d9a822984cf8afef2311d2005fbea5d7ef26016ebb090db008e2d8bce39d0a9a9d218736e
+  languageName: node
+  linkType: hard
+
 "pngjs@npm:^3.3.0":
   version: 3.4.0
   resolution: "pngjs@npm:3.4.0"
@@ -11768,11 +11817,14 @@ __metadata:
     "@eslint/js": ^9.7.0
     "@expo/vector-icons": ^14.0.2
     "@hookform/resolvers": ^3.10.0
+    "@react-native-async-storage/async-storage": 1.23.1
+    "@react-native-picker/picker": 2.7.5
     "@react-navigation/native": ^6.0.2
     "@tanstack/react-query": ^5.51.23
     "@testing-library/jest-native": ^5.4.3
     "@testing-library/react-native": ^12.5.1
     "@types/jest": ^29.5.12
+    "@types/pluralize": ^0.0.33
     "@types/react": ~18.2.45
     "@types/react-test-renderer": ^18.0.7
     "@typescript-eslint/parser": ^7.16.1
@@ -11789,7 +11841,7 @@ __metadata:
     expo-dev-client: ~4.0.23
     expo-font: ~12.0.9
     expo-image: ~1.12.13
-    expo-linear-gradient: ^14.0.2
+    expo-linear-gradient: ~13.0.2
     expo-linking: ~6.3.1
     expo-router: ~3.5.23
     expo-secure-store: ~13.0.2
@@ -11804,12 +11856,14 @@ __metadata:
     jest-styled-components: ^7.2.0
     lint-staged: ^15.2.7
     nativewind: ^2.0.11
+    pluralize: ^8.0.0
     prettier: ^3.3.3
     react: 18.2.0
     react-dom: 18.2.0
     react-hook-form: ^7.54.2
     react-native: 0.74.5
     react-native-color-toolkit: ^1.3.1
+    react-native-date-picker: ^5.0.10
     react-native-gesture-handler: ~2.16.1
     react-native-keyboard-controller: ^1.13.0
     react-native-reanimated: ~3.10.1
@@ -12067,6 +12121,16 @@ __metadata:
   version: 1.3.1
   resolution: "react-native-color-toolkit@npm:1.3.1"
   checksum: 2f554305de85d7abd3ae8bd82fe9cd10a9a5036a510449362f44149aad0bf7f470f41b7e577665d238f70b452a7660bbfdfdd40d068470e92505e646baaaac43
+  languageName: node
+  linkType: hard
+
+"react-native-date-picker@npm:^5.0.10":
+  version: 5.0.10
+  resolution: "react-native-date-picker@npm:5.0.10"
+  peerDependencies:
+    react: ">= 17.0.1"
+    react-native: ">= 0.64.3"
+  checksum: 347266d8c13fb9c45b9b6300628dcf305baec64b9640f96a8678a9cb9cd62e186ccfb69b249c16599c6e601598b96c396c9074616101df3da7b6ef37296133ad
   languageName: node
   linkType: hard
 
