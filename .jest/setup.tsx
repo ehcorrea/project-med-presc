@@ -1,7 +1,12 @@
+export * from '@react-native-async-storage/async-storage/jest/async-storage-mock';
+
 import mockedSafeAreaContext from 'react-native-safe-area-context/jest/mock';
 import 'react-native-gesture-handler/jestSetup';
 import { mockedRouter, create as mockedCreate } from '../src/test/mocks';
 
+jest.mock('@react-native-async-storage/async-storage', () =>
+  require('@react-native-async-storage/async-storage/jest/async-storage-mock')
+);
 jest.useFakeTimers();
 require('react-native-reanimated').setUpTests();
 jest.mock('react-native/Libraries/EventEmitter/NativeEventEmitter');

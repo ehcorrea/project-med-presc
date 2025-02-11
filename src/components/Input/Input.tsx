@@ -19,6 +19,7 @@ export type TextInputProps = {
   label: string;
   labelProps?: TextProps;
   variant?: 'default' | 'password';
+  size?: S.ContainerProps['size'];
   onFocus?: () => void;
 } & TextInputRNProps;
 
@@ -30,7 +31,7 @@ type GetInputStateParams = {
 const getInputState = ({
   hasError,
   hasFocus,
-}: GetInputStateParams): S.InputState => {
+}: GetInputStateParams): S.ContainerProps['state'] => {
   if (hasError) {
     return 'error';
   }
@@ -49,6 +50,7 @@ export const Input = forwardRef<TextInputRN, TextInputProps>(
       label,
       labelProps,
       variant = 'default',
+      size = 'medium',
       onFocus,
       ...props
     },
@@ -77,12 +79,14 @@ export const Input = forwardRef<TextInputRN, TextInputProps>(
         </Text>
         <Spancing y={5} />
         <S.Container
+          size={size}
           state={getInputState({ hasError: !!error, hasFocus })}
           {...containerProps}
         >
           <S.Input
             {...props}
             ref={ref || inputRef}
+            size={size}
             secureTextEntry={secureTextEntry}
             onFocus={() => {
               setHasFocus(true);
