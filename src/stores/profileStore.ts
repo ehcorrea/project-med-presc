@@ -14,7 +14,7 @@ type State = {
 
 type Actions = {
   editProfile: (id: string, profile: Profile) => void;
-  setProfile: (profile: Profile) => void;
+  setProfile: (profile: Profile, select?: boolean) => void;
   setSelected: (id: string) => void;
 };
 
@@ -27,7 +27,7 @@ export const profileStore = create(
   persist<State & Actions>(
     (set, get) => ({
       ...initialStateAuth,
-      setProfile(profile) {
+      setProfile(profile, select) {
         const store = get();
         const id = randomUUID();
         const profiles = {
@@ -35,6 +35,9 @@ export const profileStore = create(
           [id]: createProfile(profile, id),
         };
         set({ ...store, profiles });
+        if (select) {
+          this.setSelected(id);
+        }
       },
       editProfile(id, profile) {},
       setSelected(id) {

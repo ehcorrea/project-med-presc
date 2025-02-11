@@ -1,7 +1,7 @@
+import { Controller, useFieldArray, useForm } from 'react-hook-form';
 import { ScrollView, TouchableOpacity, View } from 'react-native';
 import { useCallback, useRef, useState } from 'react';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { Controller, useFieldArray, useForm } from 'react-hook-form';
 
 import { Profile, ProfileType } from '@/types/profile';
 import {
@@ -16,6 +16,7 @@ import { validatorNewProfile } from '@/utils/form/';
 
 import * as S from './CriarPerfilScreen.styles';
 import { profileStore } from '@/stores';
+import { router } from 'expo-router';
 
 export function CriarPerfilScreen() {
   const [modalProfile, setModalProfile] = useState(false);
@@ -34,7 +35,6 @@ export function CriarPerfilScreen() {
 
   const handleSelectProfileType = (profile: ProfileType) => {
     setValue('type', profile.toString());
-    setModalProfile(false);
   };
 
   const handleAddDependent = useCallback(() => {
@@ -50,7 +50,8 @@ export function CriarPerfilScreen() {
   };
 
   const handleAddProfile = (data: Profile) => {
-    setProfile(data);
+    setProfile(data, true);
+    router.replace('/home');
   };
 
   return (
@@ -96,11 +97,11 @@ export function CriarPerfilScreen() {
             <Input
               accessibilityLabel="inserir tipo do perfil"
               editable={false}
+              onFocus={() => setModalProfile(true)}
+              pointerEvents="none"
               error={error?.message}
               label="Tipo de Perfil"
-              onFocus={() => setModalProfile(true)}
               placeholder="Pessoal ou Cuidador"
-              pointerEvents="none"
               {...props}
             />
           )}
@@ -172,6 +173,7 @@ export function CriarPerfilScreen() {
             { title: ProfileType.CAREGIVING, value: ProfileType.CAREGIVING },
           ]}
           open={modalProfile}
+          onClose={() => setModalProfile(false)}
           onSelect={handleSelectProfileType}
         />
       </ScrollView>
