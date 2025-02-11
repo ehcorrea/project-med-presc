@@ -1,5 +1,4 @@
 import { useCallback, useState } from 'react';
-import { router } from 'expo-router';
 
 import { profileStore } from '@/stores';
 
@@ -10,7 +9,7 @@ export function useLogin() {
   const login = useCallback(() => {
     if (selected) {
       // redirecionar para home
-      return router.replace('..');
+      // router("/home")
     }
 
     return setOpenModal(true);
