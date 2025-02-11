@@ -1,6 +1,6 @@
 import { createJSONStorage, persist } from 'zustand/middleware';
-import * as SecureStore from 'expo-secure-store';
 import { randomUUID } from 'expo-crypto';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import { Profile, Profiles } from '@/types/profile';
 import { createProfile } from '@/factories';
@@ -13,8 +13,9 @@ type State = {
 };
 
 type Actions = {
-  setProfile: (profile: Profile) => void;
   editProfile: (id: string, profile: Profile) => void;
+  setProfile: (profile: Profile) => void;
+  setSelected: (id: string) => void;
 };
 
 export const initialStateAuth: State = {
@@ -36,13 +37,15 @@ export const profileStore = create(
         set({ ...store, profiles });
       },
       editProfile(id, profile) {},
+      setSelected(id) {
+        const store = get();
+        const profile = store.profiles[id];
+        set({ ...store, selected: profile });
+      },
     }),
     {
       name: 'profile-storage',
-      storage: createJSONStorage(() => ({
-        ...SecureStore,
-        removeItem: SecureStore.deleteItemAsync,
-      })),
+      storage: createJSONStorage(() => AsyncStorage),
     }
   )
 );
