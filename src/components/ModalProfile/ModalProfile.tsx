@@ -13,11 +13,17 @@ import { Text } from '../Text/Text';
 export type ModalProfileProps = { handleCloseModal: () => void; open: boolean };
 
 export function ModalProfile({ open, handleCloseModal }: ModalProfileProps) {
-  const { profiles } = profileStore();
+  const { profiles, setSelected } = profileStore();
 
   const handleNewProfile = () => {
     handleCloseModal();
     router.push('/criar-perfil');
+  };
+
+  const handleSelectProfile = (id: string) => {
+    handleCloseModal();
+    setSelected(id);
+    router.push('/(tabs)/home');
   };
 
   return (
@@ -44,7 +50,10 @@ export function ModalProfile({ open, handleCloseModal }: ModalProfileProps) {
             <View key={id}>
               <Line />
               <Spancing y={8} />
-              <TouchableOpacity className="flex-row">
+              <TouchableOpacity
+                className="flex-row"
+                onPress={() => handleSelectProfile(id)}
+              >
                 <AvatarProfile name={name} color={color} />
                 <Spancing x={8} />
                 <View className="self-center">
