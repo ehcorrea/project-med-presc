@@ -5,6 +5,8 @@ const defaultValidations = {
   required: 'obrigatório',
 };
 
+export type NewProfileValidator = yup.InferType<typeof validatorNewProfile>;
+
 export const validatorNewProfile = yup.object().shape({
   name: yup
     .string()
