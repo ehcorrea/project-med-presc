@@ -1,20 +1,40 @@
-import { random } from 'react-native-color-toolkit';
 import { randomUUID } from 'expo-crypto';
+import { random } from 'react-native-color-toolkit';
 
-import { Profile, ProfileType } from '@/types/profile';
+import { Profiles, ProfileType } from '@/types/profile';
+import { NewProfileValidator } from '@/utils';
 
-export function createProfile(data: Profile, id: string): Profile {
-  const isCaregiving = data.type === ProfileType.CAREGIVING;
-  return {
-    ...data,
-    id,
+export type CreateProfile = { profiles: Profiles; selectedId: string };
+
+export function createProfile(data: NewProfileValidator): CreateProfile {
+  const { dependents, name, type } = data;
+  const profiles: Profiles = {};
+  const mainId = randomUUID();
+  const dependentsId: string[] = [];
+
+  dependents?.forEach(({ name }) => {
+    const dependentId = randomUUID();
+    dependentsId.push(dependentId);
+    profiles[dependentId] = {
+      caregivingId: mainId,
+      color: random(),
+      dependents: [],
+      id: dependentId,
+      isDependent: true,
+      name: name!,
+      type: ProfileType.DEPENDENT,
+    };
+  });
+
+  profiles[mainId] = {
+    caregivingId: undefined,
     color: random(),
-    dependents: isCaregiving
-      ? data.dependents.map((dependent) => ({
-          ...dependent,
-          color: random(),
-          id: randomUUID(),
-        }))
-      : [],
+    dependents: dependentsId,
+    id: mainId,
+    isDependent: false,
+    name,
+    type: type as ProfileType,
   };
+
+  return { profiles, selectedId: mainId };
 }

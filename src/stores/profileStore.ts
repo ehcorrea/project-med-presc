@@ -1,9 +1,7 @@
 import { createJSONStorage, persist } from 'zustand/middleware';
-import { randomUUID } from 'expo-crypto';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import { Profile, Profiles } from '@/types/profile';
-import { createProfile } from '@/factories';
 
 import { create } from './zustand';
 
@@ -14,8 +12,9 @@ type State = {
 
 type Actions = {
   editProfile: (id: string, profile: Profile) => void;
-  setProfile: (profile: Profile, select?: boolean) => void;
-  setSelected: (id: string) => void;
+  getProfile: (id: string) => Profile;
+  setProfile: (profiles: Profiles, select?: string) => void;
+  setSelected: (id?: string) => void;
 };
 
 export const initialStateAuth: State = {
@@ -27,24 +26,27 @@ export const profileStore = create(
   persist<State & Actions>(
     (set, get) => ({
       ...initialStateAuth,
-      setProfile(profile, select) {
+      setProfile(newProfiles, select) {
         const store = get();
-        const id = randomUUID();
         const profiles = {
           ...store.profiles,
-          [id]: createProfile(profile, id),
+          ...newProfiles,
         };
         set({ ...store, profiles });
-        if (select) {
-          this.setSelected(id);
-        }
+        get().setSelected(select);
       },
-      editProfile(id, profile) {},
       setSelected(id) {
+        if (!id) return null;
         const store = get();
         const profile = store.profiles[id];
         set({ ...store, selected: profile });
       },
+      getProfile(id) {
+        const store = get();
+        const profile = store.profiles[id];
+        return profile;
+      },
+      editProfile(id, profile) {},
     }),
     {
       name: 'profile-storage',

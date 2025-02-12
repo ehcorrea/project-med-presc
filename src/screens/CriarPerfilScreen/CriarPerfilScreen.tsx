@@ -3,7 +3,7 @@ import { ScrollView, TouchableOpacity, View } from 'react-native';
 import { useCallback, useRef, useState } from 'react';
 import { yupResolver } from '@hookform/resolvers/yup';
 
-import { Profile, ProfileType } from '@/types/profile';
+import { ProfileType } from '@/types/profile';
 import {
   Button,
   Input,
@@ -12,11 +12,12 @@ import {
   Spancing,
   Text,
 } from '@/components';
-import { validatorNewProfile } from '@/utils/form/';
+import { NewProfileValidator, validatorNewProfile } from '@/utils/form/';
 
 import * as S from './CriarPerfilScreen.styles';
 import { profileStore } from '@/stores';
 import { router } from 'expo-router';
+import { createProfile } from '@/factories';
 
 export function CriarPerfilScreen() {
   const [modalProfile, setModalProfile] = useState(false);
@@ -49,8 +50,9 @@ export function CriarPerfilScreen() {
     setFocus(field as never);
   };
 
-  const handleAddProfile = (data: Profile) => {
-    setProfile(data, true);
+  const handleAddProfile = (data: NewProfileValidator) => {
+    const { profiles, selectedId } = createProfile(data);
+    setProfile(profiles, selectedId);
     router.replace('/home');
   };
 
@@ -160,9 +162,7 @@ export function CriarPerfilScreen() {
         <Button
           elevation
           className="w-[60%] self-center"
-          onPress={handleSubmit((values) =>
-            handleAddProfile(values as Profile)
-          )}
+          onPress={handleSubmit(handleAddProfile)}
         >
           CRIAR
         </Button>
