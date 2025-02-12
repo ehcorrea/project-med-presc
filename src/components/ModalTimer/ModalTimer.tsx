@@ -11,7 +11,7 @@ export type ModalTimerProps = {
 
 export function ModalTimer({ onConfirm, ...props }: ModalTimerProps) {
   const [newData, setNewDate] = useState(
-    new Date(new Date().setHours(0, 10, 0, 0))
+    new Date(new Date().setHours(0, 30, 0, 0))
   );
 
   const handleConfirm = () => {
@@ -22,12 +22,13 @@ export function ModalTimer({ onConfirm, ...props }: ModalTimerProps) {
   return (
     <ModalConfirm onConfirm={handleConfirm} {...props}>
       <DatePicker
+        theme="light"
         cancelText="Cancelar"
         confirmText="Confirmar"
         date={newData}
         is24hourSource="locale"
         locale="pt-BR"
-        minuteInterval={10}
+        minuteInterval={30}
         mode="time"
         onDateChange={(value) => setNewDate(value)}
       />
