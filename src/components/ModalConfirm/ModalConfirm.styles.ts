@@ -10,12 +10,12 @@ export const ModalButon = styled(Button).attrs<ModalButonProps>(
     ...props,
     label: {
       palette: cancel ? 'black' : 'white',
-      size: 'small',
+      size: 'medium',
     },
   })
 )`
   ${({ theme }) => css`
     flex: 1;
-    height: ${theme.rfvalue(40)}px;
+    height: ${theme.rfvalue(50)}px;
   `}
 `;

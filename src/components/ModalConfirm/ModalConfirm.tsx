@@ -28,12 +28,12 @@ export function ModalConfirm({
 
   return (
     <Modal variant="floating" open={open} onTouchBackground={onClose}>
-      <View className="p-[5%] items-center">
-        <Text weight="bold" size="xlarge" className="self-center">
+      <View className="p-[5%] flex-1 items-center justify-between">
+        <Text weight="bold" size="xlarge" className="self-center ">
           {title}
         </Text>
         {children}
-        <View className="flex-row max-w-[50%] self-end">
+        <View className="flex-row max-w-[60%] self-end">
           <S.ModalButon palette="white" cancel onPress={onClose}>
             Cancelar
           </S.ModalButon>
