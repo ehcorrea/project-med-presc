@@ -2329,6 +2329,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@notifee/react-native@npm:^9.1.8":
+  version: 9.1.8
+  resolution: "@notifee/react-native@npm:9.1.8"
+  peerDependencies:
+    react-native: "*"
+  checksum: a144f7c5aa54a7e774c95b3a91341653865dfa4c8540b34ead3f281edd733830975c4f86bdfe422467d18ae97879b75be09ca25bb1818ba2ecfc56808cb570b1
+  languageName: node
+  linkType: hard
+
 "@npmcli/agent@npm:^3.0.0":
   version: 3.0.0
   resolution: "@npmcli/agent@npm:3.0.0"
@@ -6590,6 +6599,18 @@ __metadata:
   languageName: node
   linkType: hard
 
+"expo-build-properties@npm:~0.12.5":
+  version: 0.12.5
+  resolution: "expo-build-properties@npm:0.12.5"
+  dependencies:
+    ajv: ^8.11.0
+    semver: ^7.6.0
+  peerDependencies:
+    expo: "*"
+  checksum: 7426ca3ee44bd79f3d2f4a20d5c3f09e394d9d7f901c9fea70ba7bf633e63b5178707ce8d7551d50c94e7300555536375fcb0da08aa2ed63a4ddcd863a866324
+  languageName: node
+  linkType: hard
+
 "expo-constants@npm:~16.0.0, expo-constants@npm:~16.0.2":
   version: 16.0.2
   resolution: "expo-constants@npm:16.0.2"
@@ -6661,6 +6682,17 @@ __metadata:
   peerDependencies:
     expo: "*"
   checksum: 0f0c670bc10f88d92f0ab734e832c496802a04b6da8e65755395b8e4ae1d936fcc49ad24db6fd8c60e77ca73c8ca0c17a9c22489c402587d993d14194ff0c6ed
+  languageName: node
+  linkType: hard
+
+"expo-device@npm:~6.0.2":
+  version: 6.0.2
+  resolution: "expo-device@npm:6.0.2"
+  dependencies:
+    ua-parser-js: ^0.7.33
+  peerDependencies:
+    expo: "*"
+  checksum: f2399848c0f1b3139b2b8647154be0cea9bf984c6bfe98d308d9c8cf38541e9400ef785711efc779e6366b724c99240bb605f42d2411bfe1efcb9fd5da4cdbcd
   languageName: node
   linkType: hard
 
@@ -9977,6 +10009,26 @@ __metadata:
   languageName: node
   linkType: hard
 
+"lottie-react-native@npm:6.7.0":
+  version: 6.7.0
+  resolution: "lottie-react-native@npm:6.7.0"
+  peerDependencies:
+    "@dotlottie/react-player": ^1.6.1
+    "@lottiefiles/react-lottie-player": ^3.5.3
+    react: "*"
+    react-native: ">=0.46"
+    react-native-windows: ">=0.63.x"
+  peerDependenciesMeta:
+    "@dotlottie/react-player":
+      optional: true
+    "@lottiefiles/react-lottie-player":
+      optional: true
+    react-native-windows:
+      optional: true
+  checksum: d0d7159f7c2eb2635c219606c8e528ca002401020333e1c83682479cb5b4b7ea72f7a18d12be8ed96584fa40fcfe4c4d0483d064e261aa6fe616b2adcf2f0a96
+  languageName: node
+  linkType: hard
+
 "lru-cache@npm:^10.0.1, lru-cache@npm:^10.2.0":
   version: 10.4.3
   resolution: "lru-cache@npm:10.4.3"
@@ -11817,6 +11869,7 @@ __metadata:
     "@eslint/js": ^9.7.0
     "@expo/vector-icons": ^14.0.2
     "@hookform/resolvers": ^3.10.0
+    "@notifee/react-native": ^9.1.8
     "@react-native-async-storage/async-storage": 1.23.1
     "@react-native-picker/picker": 2.7.5
     "@react-navigation/native": ^6.0.2
@@ -11836,9 +11889,11 @@ __metadata:
     eslint-config-prettier: ^9.1.0
     eslint-plugin-prettier: ^5.2.1
     expo: ~51.0.28
+    expo-build-properties: ~0.12.5
     expo-constants: ~16.0.2
     expo-crypto: ~13.0.2
     expo-dev-client: ~4.0.23
+    expo-device: ~6.0.2
     expo-font: ~12.0.9
     expo-image: ~1.12.13
     expo-linear-gradient: ~13.0.2
@@ -11855,6 +11910,7 @@ __metadata:
     jest-expo: ~51.0.3
     jest-styled-components: ^7.2.0
     lint-staged: ^15.2.7
+    lottie-react-native: 6.7.0
     nativewind: ^2.0.11
     pluralize: ^8.0.0
     prettier: ^3.3.3
@@ -14422,6 +14478,15 @@ __metadata:
     tsc: bin/tsc
     tsserver: bin/tsserver
   checksum: f61375590b3162599f0f0d5b8737877ac0a7bc52761dbb585d67e7b8753a3a4c42d9a554c4cc929f591ffcf3a2b0602f65ae3ce74714fd5652623a816862b610
+  languageName: node
+  linkType: hard
+
+"ua-parser-js@npm:^0.7.33":
+  version: 0.7.40
+  resolution: "ua-parser-js@npm:0.7.40"
+  bin:
+    ua-parser-js: script/cli.js
+  checksum: c8f69573c336cbf0f4341e7fe93a8d7082acf39dba4e135b704f06ad240f585d4b38fb44fd3cad92c97a015128e9fe2e653b39c3b6c0919f8a8af3be02d79cc2
   languageName: node
   linkType: hard
 

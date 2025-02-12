@@ -32,7 +32,18 @@
     "plugins": [
       "expo-router",
       "expo-font",
-      "expo-secure-store"
+      "expo-secure-store",
+      [
+        "expo-build-properties",
+        {
+          "android": {
+            "extraMavenRepos": [
+              "../../node_modules/@notifee/react-native/android/libs"
+              ]
+          },
+          "ios": {  }
+        }
+      ],
     ],
     "experiments": {
       "typedRoutes": true
