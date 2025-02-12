@@ -2,6 +2,7 @@ import { ScrollView, View } from 'react-native';
 import { useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { router, useLocalSearchParams } from 'expo-router';
 import { yupResolver } from '@hookform/resolvers/yup';
 
 import { MedicationMeasures, MedicationType } from '@/types/medication';
@@ -11,6 +12,7 @@ import {
   splitTimer,
   pluralize,
   MedicationValidators,
+  onCreateTriggerNotification,
 } from '@/utils';
 
 import {
@@ -24,8 +26,13 @@ import {
   Spancing,
   Text,
 } from '@/components';
+import { medicationStore, profileStore } from '@/stores';
+import { createMedication } from '@/factories';
 
-export function CadastrarRemedioPessoalScreen() {
+export function CadastrarRemedioScreen() {
+  const { id } = useLocalSearchParams();
+  const saveMedication = medicationStore((state) => state.setMedicationData);
+  const getProfile = profileStore((state) => state.getProfile);
   const [modalTimer, setModalTimer] = useState(false);
   const [modalType, setModalType] = useState(false);
   const [modalMeasures, setModalMeasures] = useState(false);
@@ -61,6 +68,16 @@ export function CadastrarRemedioPessoalScreen() {
   const handleAdd = (data: MedicationValidators) => {
     setFormState(data);
     setModalConfirm(true);
+  };
+
+  const handleConfirm = async () => {
+    if (formState && id) {
+      const medication = createMedication(formState);
+      const profile = getProfile(id as string);
+      saveMedication(profile.id, medication);
+      await onCreateTriggerNotification(medication, profile);
+      router.replace('/home');
+    }
   };
 
   return (
@@ -251,24 +268,22 @@ export function CadastrarRemedioPessoalScreen() {
       />
       <ModalConfirm
         onClose={() => setModalConfirm(false)}
-        onConfirm={() => {}}
+        onConfirm={handleConfirm}
         open={!!modalConfirm}
         title="Confirmar Medicamento"
       >
-        <View className="px-[5%] pb-[3%]">
+        <View className="px-[5%] pb-[3%] h-[160px] justify-center">
           <Text size="large">
             Usar a cada {splitTimer(formState?.interval)},{'\n'}
-            {formState?.quantity} {measure}({type}) de {formState?.name}.
+            {quantity} {measure} de {formState?.name.trim()} em {type}.
+            {!!formState?.observation && `${'\n'}Obs: ${formState.observation}`}
           </Text>
-
-          {formState?.observation && (
-            <View>
-              <Spancing y={2} />
-              <Text size="large" weight="semi">
-                Obs: {formState.observation}
-              </Text>
-            </View>
-          )}
+          <Spancing y={2} />
+          <Text size="small" weight="semi">
+            Você receberá notificações de uso a cada{' '}
+            {splitTimer(formState?.interval)}.{'\n'}
+            Podendo desativá-las na página do rémedio.
+          </Text>
         </View>
       </ModalConfirm>
     </Layout>
