@@ -1,31 +1,37 @@
 import { createJSONStorage, persist } from 'zustand/middleware';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-import { MedicationData, Medication } from '@/types/medication';
+import { Medications, Medication } from '@/types/medication';
 
 import { create } from './zustand';
 
 type State = {
-  data: MedicationData;
+  medications: Medications;
 };
 
 type Actions = {
-  setMedicationData: (id: string, medication: Medication) => void;
+  setMedicationData: (profileId: string, medication: Medication) => void;
 };
 
 export const initialStateMedication: State = {
-  data: {},
+  medications: {},
 };
 
 export const medicationStore = create(
   persist<State & Actions>(
     (set, get) => ({
       ...initialStateMedication,
-      setMedicationData(id, medication) {
+      setMedicationData(profileId, medication) {
         const store = get();
-        const data = store.data;
-        const dataId = data[id];
-        set({ ...store, data: { ...data, [id]: [...dataId, medication] } });
+        const medications = store.medications;
+        const medicationsById = medications[profileId];
+        set({
+          ...store,
+          medications: {
+            ...medications,
+            [profileId]: { [medication.id]: medication, ...medicationsById },
+          },
+        });
       },
     }),
     {

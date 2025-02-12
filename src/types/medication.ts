@@ -1,13 +1,13 @@
-export type MedicationData = Record<string, Medication[]>;
+export type Medications = Record<string, Medication[]>;
 
 export type Medication = {
   id: string;
-  measure: MedicationMeasures;
+  measure: keyof typeof MedicationMeasures;
   name: string;
   observation?: string;
   quantity: number;
-  type: MedicationType;
-  interval: string;
+  type: keyof typeof MedicationType;
+  interval: { hr: number; min: number };
 };
 
 export enum MedicationType {
