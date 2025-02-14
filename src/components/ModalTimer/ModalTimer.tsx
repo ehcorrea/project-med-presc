@@ -11,7 +11,7 @@ export type ModalTimerProps = {
 
 export function ModalTimer({ onConfirm, ...props }: ModalTimerProps) {
   const [newData, setNewDate] = useState(
-    new Date(new Date().setHours(0, 30, 0, 0))
+    new Date(new Date().setHours(0, 15, 0, 0))
   );
 
   const handleConfirm = () => {
@@ -28,7 +28,7 @@ export function ModalTimer({ onConfirm, ...props }: ModalTimerProps) {
         date={newData}
         is24hourSource="locale"
         locale="pt-BR"
-        minuteInterval={30}
+        minuteInterval={15}
         mode="time"
         onDateChange={(value) => setNewDate(value)}
       />
