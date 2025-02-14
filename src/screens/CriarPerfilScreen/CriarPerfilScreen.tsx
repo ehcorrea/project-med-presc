@@ -46,7 +46,8 @@ export function CriarPerfilScreen() {
     }, 100);
   }, [append]);
 
-  const handleFocus = (field: string) => () => {
+  const handleFocus = (field: string, callback?: () => void) => () => {
+    callback?.();
     setFocus(field as never);
   };
 
@@ -82,9 +83,10 @@ export function CriarPerfilScreen() {
             <Input
               label="Nome"
               accessibilityLabel={`inserir seu nome`}
-              placeholder="Nome Completo"
+              placeholder="Nome Completo ou apelido"
               error={error?.message}
               onChangeText={onChange}
+              onFocus={handleFocus('name')}
               {...props}
             />
           )}
@@ -100,6 +102,7 @@ export function CriarPerfilScreen() {
               accessibilityLabel="inserir tipo do perfil"
               editable={false}
               onFocus={() => setModalProfile(true)}
+              forceHasFocus={modalProfile}
               pointerEvents="none"
               error={error?.message}
               label="Tipo de Perfil"
@@ -128,10 +131,10 @@ export function CriarPerfilScreen() {
                       <Input
                         label="Nome"
                         accessibilityLabel={`inserir nome do dependente ${index + 1}`}
-                        placeholder="Nome Completo"
+                        placeholder="Nome Completo ou apelido"
                         error={error?.message}
                         onChangeText={onChange}
-                        onFocus={handleFocus(`dependents.${index}.nome`)}
+                        onFocus={handleFocus(`dependents.${index}.name`)}
                         {...props}
                       />
                     )}

@@ -1,4 +1,4 @@
-import { forwardRef, useRef, useState } from 'react';
+import { forwardRef, useEffect, useRef, useState } from 'react';
 import { Ionicons } from '@expo/vector-icons/';
 import { useTheme } from 'styled-components/native';
 import {
@@ -21,6 +21,7 @@ export type TextInputProps = {
   variant?: 'default' | 'password';
   size?: S.ContainerProps['size'];
   onFocus?: () => void;
+  forceHasFocus?: boolean;
 } & TextInputRNProps;
 
 type GetInputStateParams = {
@@ -52,6 +53,7 @@ export const Input = forwardRef<TextInputRN, TextInputProps>(
       variant = 'default',
       size = 'medium',
       onFocus,
+      forceHasFocus = false,
       ...props
     },
     ref
@@ -72,9 +74,13 @@ export const Input = forwardRef<TextInputRN, TextInputProps>(
       setSecureTextEntry((prevState) => !prevState);
     };
 
+    useEffect(() => {
+      setHasFocus(forceHasFocus);
+    }, [forceHasFocus]);
+
     return (
       <TouchableOpacity onPress={handlePressContainer} className="w-full">
-        <Text palette="gray" {...labelProps}>
+        <Text palette={hasFocus ? 'primary' : 'gray'} {...labelProps}>
           {label}
         </Text>
         <Spancing y={5} />

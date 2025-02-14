@@ -39,9 +39,10 @@ export function CadastrarRemedioScreen() {
   const [modalConfirm, setModalConfirm] = useState(false);
   const [formState, setFormState] = useState<MedicationValidators>();
 
-  const { control, setValue, handleSubmit, clearErrors, watch } = useForm({
-    resolver: yupResolver(addMedicationValidators),
-  });
+  const { control, setValue, handleSubmit, clearErrors, watch, setFocus } =
+    useForm({
+      resolver: yupResolver(addMedicationValidators),
+    });
 
   const type = getValuesFromEnum(MedicationType, watch('type'));
   const quantity = watch('quantity')?.padStart(2, '0');
@@ -80,6 +81,11 @@ export function CadastrarRemedioScreen() {
     }
   };
 
+  const handleFocus = (field: string, callback?: () => void) => () => {
+    callback?.();
+    setFocus(field as never);
+  };
+
   return (
     <Layout>
       <HeaderScreen />
@@ -103,8 +109,8 @@ export function CadastrarRemedioScreen() {
                   error={error?.message}
                   label="Medicamento"
                   onChangeText={onChange}
+                  onFocus={handleFocus('name')}
                   placeholder="Paracetamol, dipirona, etc..."
-                  size="small"
                   {...props}
                 />
               )}
@@ -122,9 +128,10 @@ export function CadastrarRemedioScreen() {
                       accessibilityLabel="inserir tipo do medicamento"
                       editable={false}
                       error={error?.message}
+                      forceHasFocus={modalType}
                       label="Tipo"
                       onChangeText={onChange}
-                      onFocus={() => setModalType(true)}
+                      onFocus={handleFocus('type', () => setModalType(true))}
                       placeholder="Comprimido, xarope, etc..."
                       pointerEvents="none"
                       size="small"
@@ -147,9 +154,12 @@ export function CadastrarRemedioScreen() {
                       accessibilityLabel="inserir intervalo de uso"
                       editable={false}
                       error={error?.message}
+                      forceHasFocus={modalTimer}
                       label="Intervalo"
                       onChangeText={onChange}
-                      onFocus={() => setModalTimer(true)}
+                      onFocus={handleFocus('interval', () =>
+                        setModalTimer(true)
+                      )}
                       placeholder="a cada xx:xx"
                       pointerEvents="none"
                       size="small"
@@ -174,6 +184,7 @@ export function CadastrarRemedioScreen() {
                       error={error?.message}
                       keyboardType="numeric"
                       label="Quantidade"
+                      onFocus={handleFocus('quantity')}
                       onChangeText={onChange}
                       placeholder="1, 4, 6..."
                       maxLength={4}
@@ -196,9 +207,12 @@ export function CadastrarRemedioScreen() {
                       accessibilityLabel="inserir tipo de medida"
                       editable={false}
                       error={error?.message}
+                      forceHasFocus={modalMeasures}
                       label="Medida"
                       onChangeText={onChange}
-                      onFocus={() => setModalMeasures(true)}
+                      onFocus={handleFocus('measure', () =>
+                        setModalMeasures(true)
+                      )}
                       placeholder="ml, mg..."
                       pointerEvents="none"
                       size="small"
@@ -225,6 +239,7 @@ export function CadastrarRemedioScreen() {
                   multiline
                   numberOfLines={4}
                   onChangeText={onChange}
+                  onFocus={handleFocus('observation')}
                   placeholder="Evitar o uso com outros medicamentos..."
                   size="small"
                   textAlignVertical="top"

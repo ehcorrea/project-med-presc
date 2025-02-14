@@ -1,4 +1,4 @@
-import { TextInput } from 'react-native';
+import { Platform, TextInput } from 'react-native';
 import styled, { css, DefaultTheme } from 'styled-components/native';
 
 export type InputState = 'error' | 'focused' | 'default';
@@ -31,9 +31,11 @@ const containerModifiders = {
 const inputModifiders = {
   small: (theme: DefaultTheme) => css`
     font-size: ${theme.font.size.medium}px;
+    line-height: ${Platform.OS === 'ios' ? 20 : 21}px;
   `,
   medium: (theme: DefaultTheme) => css`
     font-size: ${theme.font.size.large}px;
+    line-height: ${Platform.OS === 'ios' ? 20 : 25}px;
   `,
 };
 
@@ -63,7 +65,7 @@ export const Input = styled(TextInput).attrs(({ theme, ...props }) => ({
     color: ${theme.colors.default.black.main};
     justify-content: center;
     align-items: center;
-    line-height: 20px;
-    ${inputModifiders[size](theme)}
+
+    ${inputModifiders[size](theme)};
   `}
 `;
