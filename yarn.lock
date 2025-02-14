@@ -11915,6 +11915,7 @@ __metadata:
     pluralize: ^8.0.0
     prettier: ^3.3.3
     react: 18.2.0
+    react-countdown: ^2.3.6
     react-dom: 18.2.0
     react-hook-form: ^7.54.2
     react-native: 0.74.5
@@ -12102,6 +12103,18 @@ __metadata:
   bin:
     rc: ./cli.js
   checksum: 2e26e052f8be2abd64e6d1dabfbd7be03f80ec18ccbc49562d31f617d0015fbdbcf0f9eed30346ea6ab789e0fdfe4337f033f8016efdbee0df5354751842080e
+  languageName: node
+  linkType: hard
+
+"react-countdown@npm:^2.3.6":
+  version: 2.3.6
+  resolution: "react-countdown@npm:2.3.6"
+  dependencies:
+    prop-types: ^15.7.2
+  peerDependencies:
+    react: ">= 15"
+    react-dom: ">= 15"
+  checksum: c322ce627a1ddf3aea62f58a06a204234e4eaab880a385d46f37bf2e226cf0c4595fb0f9c36311d39e6338785aa99e54d7ddb21c39e1652f7bf1fd715a9c6ee7
   languageName: node
   linkType: hard
 
