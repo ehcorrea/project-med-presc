@@ -1,5 +1,6 @@
 import notifee, {
   AndroidImportance,
+  EventDetail,
   IntervalTrigger,
   TimeUnit,
   TriggerType,
@@ -10,6 +11,7 @@ import {
   MedicationType,
 } from '@/types/medication';
 import { Profile } from '@/types/profile';
+import { medicationStore } from '@/stores';
 
 import { pluralize } from '../string/string';
 
@@ -23,12 +25,6 @@ export async function onCreateTriggerNotification(
     name: 'Medication Alerts',
     importance: AndroidImportance.HIGH,
   });
-
-  // const trigger: TimestampTrigger = {
-  //   type: TriggerType.TIMESTAMP,
-  //   timestamp: Date.now() + 3000, // fire in 3 hours
-  //   repeatFrequency: RepeatFrequency.WEEKLY,
-  // };
 
   const trigger: IntervalTrigger = {
     interval,
@@ -59,14 +55,31 @@ function createNotificationPopUp(medication: Medication, profile: Profile) {
     medication.quantity,
     MedicationMeasures[medication.measure]
   ).toLocaleLowerCase();
-
+  const interval = hr * 60 + min;
   const body = {
-    id,
+    id: id,
     title: profile.isDependent
       ? `Hora do medicamento de ${profile.name}`
       : 'Hora do seu medicamento',
-    body: `${String(quantity).padStart(2, '0')} ${measure} de ${name}(${MedicationType[type]})`,
+    body: `${String(quantity).padStart(2, '0')} ${measure} de ${name} em ${MedicationType[type]}`,
+    data: {
+      profileId: profile.id,
+      medicationId: medication.id,
+      interval,
+    },
   };
 
-  return { body, interval: hr * 60 + min };
+  return { body, interval };
+}
+
+export function updateNotification(detail: EventDetail) {
+  if (detail.notification?.data) {
+    const { updateNextNofication } = medicationStore.getState();
+    const { profileId, medicationId, interval } = detail.notification.data;
+    updateNextNofication(
+      String(profileId),
+      String(medicationId),
+      Number(interval)
+    );
+  }
 }
