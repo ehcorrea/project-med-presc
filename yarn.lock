@@ -6840,7 +6840,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"expo-splash-screen@npm:0.27.7, expo-splash-screen@npm:~0.27.5":
+"expo-splash-screen@npm:0.27.7, expo-splash-screen@npm:~0.27.7":
   version: 0.27.7
   resolution: "expo-splash-screen@npm:0.27.7"
   dependencies:
@@ -11900,7 +11900,7 @@ __metadata:
     expo-linking: ~6.3.1
     expo-router: ~3.5.23
     expo-secure-store: ~13.0.2
-    expo-splash-screen: ~0.27.5
+    expo-splash-screen: ~0.27.7
     expo-status-bar: ~1.12.1
     expo-system-ui: ~3.0.7
     expo-web-browser: ~13.0.3
