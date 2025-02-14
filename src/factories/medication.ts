@@ -29,6 +29,7 @@ export function createMedication(
     type: type as Medication['type'],
     dependentId: profile.isDependent ? profile.id : undefined,
     nextNotification,
+    alert: true,
   };
 }
 

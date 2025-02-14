@@ -1,6 +1,7 @@
 export type Medications = Record<string, Medication[]>;
 
 export type Medication = {
+  alert: boolean;
   dependentId?: string;
   id: string;
   interval: { hr: number; min: number };
