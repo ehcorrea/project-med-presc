@@ -1,21 +1,28 @@
 import { ScrollView, View } from 'react-native';
-import { FontAwesome6, MaterialIcons } from '@expo/vector-icons';
-
-import {
-  Spancing,
-  Layout,
-  Text,
-  CardSquare,
-  CardSimulation,
-  SearchBar,
-  AvatarProfile,
-  HeaderUser,
-} from '@/components';
-
-import * as S from './HomeScreen.styles';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { router } from 'expo-router';
 
+import {
+  CardMedicationPersonal,
+  CardSquare,
+  HeaderUser,
+  Layout,
+  SearchBar,
+  Spancing,
+  Text,
+} from '@/components';
+import { profileStore } from '@/stores';
+import { useNextAlerts } from '@/hooks';
+
+import * as S from './HomeScreen.styles';
+
 export function HomeScreen() {
+  const { selected } = profileStore();
+  const { alerts, total } = useNextAlerts({
+    profileId: selected!.id,
+    quantity: 4,
+  });
+
   return (
     <Layout>
       <HeaderUser />
@@ -24,14 +31,16 @@ export function HomeScreen() {
           <SearchBar
             button={
               <S.FilterButton
-                onPress={() => router.push('/remedios/cadastrar-pessoal')}
+                onPress={() =>
+                  router.push(`/remedios/cadastrar/${selected?.id}`)
+                }
               >
                 <S.FilterIcon name="sound-mix" />
               </S.FilterButton>
             }
           />
           <Spancing y={10} />
-
+          <Text>banner</Text>
           <Spancing y={10} />
           <Text weight="semi" size="xlarge">
             Informações
@@ -39,55 +48,53 @@ export function HomeScreen() {
           <Spancing y={8} />
           <View className="flex-row justify-between">
             <CardSquare
-              label="Simulações"
-              info="123"
-              icon={<FontAwesome6 name="chart-line" color="white" size={24} />}
-            />
-            <CardSquare
-              label="Vendas"
-              info="20"
+              label="Medicações"
+              info="05"
               icon={
-                <FontAwesome6 name="chart-simple" color="white" size={24} />
+                <MaterialCommunityIcons name="pill" size={24} color="white" />
               }
             />
             <CardSquare
-              label="Lucro"
-              info="R$ 9k"
-              icon={<FontAwesome6 name="sack-dollar" color="white" size={24} />}
+              label="Tomados"
+              info="20"
+              icon={
+                <MaterialCommunityIcons
+                  name="lotion-plus"
+                  size={24}
+                  color="white"
+                />
+              }
+            />
+            <CardSquare
+              label="Alertas"
+              info={String(total).padStart(2, '0')}
+              icon={
+                <MaterialCommunityIcons
+                  name="alert-circle"
+                  size={24}
+                  color="white"
+                />
+              }
             />
           </View>
           <Spancing y={10} />
           <View className="flex-row justify-between items-end">
             <Text weight="semi" size="xlarge">
-              Próximos remédios
+              Próximos alertas
             </Text>
             <Text palette="primary">ver mais</Text>
           </View>
-
           <Spancing y={8} />
-          <CardSimulation
-            title="Ana Paula Rogrigues"
-            content="Paracetamol as 16:55"
-            icon={<MaterialIcons name="emoji-people" size={30} color="white" />}
-          />
-          <Spancing y={5} />
-          <CardSimulation
-            title="Ana Paula Rogrigues"
-            content="Paracetamol as 16:55"
-            icon={<MaterialIcons name="emoji-people" size={30} color="white" />}
-          />
-          <Spancing y={5} />
-          <CardSimulation
-            title="Ana Paula Rogrigues"
-            content="Paracetamol as 16:55"
-            icon={<AvatarProfile name="Ana Paula Rogrigues" />}
-          />
-          <Spancing y={5} />
-          <CardSimulation
-            title="Ana Paula Rogrigues"
-            content="Paracetamol as 16:55"
-            icon={<MaterialIcons name="emoji-people" size={30} color="white" />}
-          />
+          {alerts.map((alert) => (
+            <View key={`${alert.id}.${alert.nextNotification}`}>
+              <CardMedicationPersonal
+                medication={alert}
+                key={`${alert.id}.${alert.nextNotification}`}
+                countdown
+              />
+              <Spancing y={5} />
+            </View>
+          ))}
         </View>
       </ScrollView>
     </Layout>
