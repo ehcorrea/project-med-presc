@@ -1,2 +1,2 @@
 export * from './useLogin/useLogin';
-export * from './useNextAlerts/useNextAlerts';
+export * from './useHomeScreen/useHomeScreen';

@@ -11,6 +11,7 @@ export type Medication = {
   observation?: string;
   quantity: number;
   type: keyof typeof MedicationType;
+  dependentName?: string;
 };
 
 export enum MedicationType {

@@ -1,4 +1,4 @@
-import { ScrollView, View } from 'react-native';
+import { FlatList, TouchableOpacity, View } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { router } from 'expo-router';
 
@@ -12,22 +12,23 @@ import {
   Text,
 } from '@/components';
 import { profileStore } from '@/stores';
-import { useNextAlerts } from '@/hooks';
+import { useHomeScreen } from '@/hooks';
+
+import { EmptyAlerts } from './components';
 
 import * as S from './HomeScreen.styles';
 
 export function HomeScreen() {
   const { selected } = profileStore();
-  const { alerts, total } = useNextAlerts({
-    profileId: selected!.id,
-    quantity: 4,
+  const { alerts, totalAlerts, totalMedication } = useHomeScreen({
+    alertsQuantity: 4,
   });
 
   return (
     <Layout>
       <HeaderUser />
-      <ScrollView className="flex-1">
-        <View className="p-[5%]">
+      <View className="p-[5%] flex-1 ">
+        <View>
           <SearchBar
             button={
               <S.FilterButton
@@ -39,9 +40,9 @@ export function HomeScreen() {
               </S.FilterButton>
             }
           />
-          <Spancing y={10} />
-          <Text>banner</Text>
-          <Spancing y={10} />
+        </View>
+        <Spancing y={20} />
+        <View>
           <Text weight="semi" size="xlarge">
             Informações
           </Text>
@@ -49,7 +50,7 @@ export function HomeScreen() {
           <View className="flex-row justify-between">
             <CardSquare
               label="Medicações"
-              info="05"
+              info={String(totalMedication).padStart(2, '0')}
               icon={
                 <MaterialCommunityIcons name="pill" size={24} color="white" />
               }
@@ -67,7 +68,7 @@ export function HomeScreen() {
             />
             <CardSquare
               label="Alertas"
-              info={String(total).padStart(2, '0')}
+              info={String(totalAlerts).padStart(2, '0')}
               icon={
                 <MaterialCommunityIcons
                   name="alert-circle"
@@ -77,26 +78,35 @@ export function HomeScreen() {
               }
             />
           </View>
-          <Spancing y={10} />
+        </View>
+        <Spancing y={20} />
+        <View className="flex-5">
           <View className="flex-row justify-between items-end">
             <Text weight="semi" size="xlarge">
               Próximos alertas
             </Text>
-            <Text palette="primary">ver mais</Text>
+            {!!totalAlerts && (
+              <TouchableOpacity>
+                <Text palette="primary">ver mais</Text>
+              </TouchableOpacity>
+            )}
           </View>
           <Spancing y={8} />
-          {alerts.map((alert) => (
-            <View key={`${alert.id}.${alert.nextNotification}`}>
-              <CardMedicationPersonal
-                medication={alert}
-                key={`${alert.id}.${alert.nextNotification}`}
-                countdown
-              />
-              <Spancing y={5} />
-            </View>
-          ))}
+          <FlatList
+            className="flex-1"
+            data={alerts}
+            showsVerticalScrollIndicator={false}
+            ListEmptyComponent={<EmptyAlerts />}
+            ItemSeparatorComponent={() => <Spancing y={2} />}
+            keyExtractor={({ id, nextNotification }) =>
+              `${id}.${nextNotification}`
+            }
+            renderItem={({ item: alert }) => (
+              <CardMedicationPersonal medication={alert} countdown />
+            )}
+          />
         </View>
-      </ScrollView>
+      </View>
     </Layout>
   );
 }
