@@ -72,10 +72,10 @@ export function CadastrarRemedioScreen() {
 
   const handleConfirm = async () => {
     if (formState && id) {
-      const medication = createMedication(formState);
       const profile = getProfile(id as string);
-      saveMedication(profile.id, medication);
+      const medication = createMedication(formState, profile);
       await onCreateTriggerNotification(medication, profile);
+      saveMedication(profile.id, medication);
       router.replace('/home');
     }
   };
