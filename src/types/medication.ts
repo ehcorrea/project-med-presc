@@ -1,13 +1,15 @@
 export type Medications = Record<string, Medication[]>;
 
 export type Medication = {
+  dependentId?: string;
   id: string;
+  interval: { hr: number; min: number };
   measure: keyof typeof MedicationMeasures;
   name: string;
+  nextNotification: Date;
   observation?: string;
   quantity: number;
   type: keyof typeof MedicationType;
-  interval: { hr: number; min: number };
 };
 
 export enum MedicationType {
