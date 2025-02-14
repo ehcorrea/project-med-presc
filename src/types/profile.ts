@@ -7,6 +7,7 @@ export type Profile = {
   name: string;
   color: string;
   isDependent: boolean;
+  isCaregiving: boolean;
   caregivingId?: string;
 };
 
