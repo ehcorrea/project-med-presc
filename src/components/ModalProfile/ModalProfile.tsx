@@ -3,6 +3,7 @@ import { MaterialIcons } from '@expo/vector-icons';
 import { router } from 'expo-router';
 
 import { profileStore } from '@/stores';
+import { ProfileType } from '@/types/profile';
 
 import { AvatarProfile } from '../AvatarProfile/AvatarProfile';
 import { Line } from '../Line/Line';
@@ -46,26 +47,28 @@ export function ModalProfile({ open, handleCloseModal }: ModalProfileProps) {
         </View>
         <Spancing y={10} />
         <ScrollView showsVerticalScrollIndicator={false}>
-          {Object.values(profiles).map(({ name, id, color, type }) => (
-            <View key={id}>
-              <Line />
-              <Spancing y={8} />
-              <TouchableOpacity
-                className="flex-row"
-                onPress={() => handleSelectProfile(id)}
-              >
-                <AvatarProfile name={name} color={color} />
-                <Spancing x={8} />
-                <View className="self-center">
-                  <Text size="large">{name}</Text>
-                  <Text palette="primary">{type}</Text>
-                </View>
-              </TouchableOpacity>
-              <Spancing y={8} />
-            </View>
-          ))}
+          {Object.values(profiles).map(({ name, id, color, type }) => {
+            if (type === ProfileType.DEPENDENT) return null;
+            return (
+              <View key={id}>
+                <Line />
+                <Spancing y={8} />
+                <TouchableOpacity
+                  className="flex-row"
+                  onPress={() => handleSelectProfile(id)}
+                >
+                  <AvatarProfile name={name} color={color} />
+                  <Spancing x={8} />
+                  <View className="self-center">
+                    <Text size="large">{name}</Text>
+                    <Text palette="primary">{type}</Text>
+                  </View>
+                </TouchableOpacity>
+                <Spancing y={8} />
+              </View>
+            );
+          })}
         </ScrollView>
-
         <Line />
         <Spancing y={8} />
         <TouchableOpacity
