@@ -2,6 +2,7 @@ import { Controller, useFieldArray, useForm } from 'react-hook-form';
 import { ScrollView, TouchableOpacity, View } from 'react-native';
 import { useCallback, useRef, useState } from 'react';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { router } from 'expo-router';
 
 import { ProfileType } from '@/types/profile';
 import {
@@ -13,11 +14,10 @@ import {
   Text,
 } from '@/components';
 import { NewProfileValidator, validatorNewProfile } from '@/utils/form/';
+import { profileStore } from '@/stores';
+import { createProfile } from '@/factories';
 
 import * as S from './CriarPerfilScreen.styles';
-import { profileStore } from '@/stores';
-import { router } from 'expo-router';
-import { createProfile } from '@/factories';
 
 export function CriarPerfilScreen() {
   const [modalProfile, setModalProfile] = useState(false);
