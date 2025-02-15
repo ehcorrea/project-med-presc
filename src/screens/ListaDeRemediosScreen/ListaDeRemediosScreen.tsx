@@ -11,22 +11,22 @@ export function ListaDeRemediosScreen() {
   return (
     <Layout>
       <View className="p-[5%] flex-1 ">
-        <View>
-          <SearchBar button={<View />} />
-          <Spancing y={10} />
-          <Text weight="semi" size="large">
-            Em progesso
-          </Text>
-          <Spancing y={8} />
-          <FlatList
-            data={getMedicationByProfileId(selected!.id)}
-            contentContainerStyle={{ padding: '2%' }}
-            ItemSeparatorComponent={() => <Spancing y={8} />}
-            renderItem={({ item }) => (
-              <CardMedicationDetailed medication={item} />
-            )}
-          />
-        </View>
+        <SearchBar button={<View />} />
+        <Spancing y={10} />
+        <Text weight="semi" size="large">
+          Em progesso
+        </Text>
+        <Spancing y={8} />
+        <FlatList
+          className="flex-1"
+          showsVerticalScrollIndicator={false}
+          data={getMedicationByProfileId(selected!.id)}
+          contentContainerStyle={{ padding: '2%' }}
+          ItemSeparatorComponent={() => <Spancing y={4} />}
+          renderItem={({ item }) => (
+            <CardMedicationDetailed medication={item} />
+          )}
+        />
       </View>
     </Layout>
   );

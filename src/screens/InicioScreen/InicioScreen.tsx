@@ -13,7 +13,7 @@ export function InicioScreen() {
     <ImageBackground
       className="flex-1"
       contentFit="cover"
-      source={require('@/assets/images/background_inicio.png')}
+      source={require('@/assets/images/background-inicio.png')}
     >
       <S.BackgroundLinearGradient>
         <View className="flex-1">
