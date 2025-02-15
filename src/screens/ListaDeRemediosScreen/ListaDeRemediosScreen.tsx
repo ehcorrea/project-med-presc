@@ -1,6 +1,9 @@
+import { useState } from 'react';
+import { router } from 'expo-router';
 import { FlatList, View } from 'react-native';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 
-import { Layout, SearchBar, Spancing, Text } from '@/components';
+import { Layout, SearchBar, Spancing, Text, FloatButton } from '@/components';
 import { medicationStore, profileStore } from '@/stores';
 
 import {
@@ -8,7 +11,6 @@ import {
   PopoverOptions,
   PressOptionsArgs,
 } from './components';
-import { useState } from 'react';
 
 export function ListaDeRemediosScreen() {
   const [options, setOptions] = useState<PressOptionsArgs | null>(null);
@@ -39,6 +41,14 @@ export function ListaDeRemediosScreen() {
         />
       </View>
       <PopoverOptions onClose={() => setOptions(null)} {...options} />
+      <FloatButton
+        firstButton={{
+          icon: <MaterialCommunityIcons size={25} color="white" name="pill" />,
+          onPress: () => {
+            router.push(`/remedios/cadastrar/${selected?.id}`);
+          },
+        }}
+      />
     </Layout>
   );
 }

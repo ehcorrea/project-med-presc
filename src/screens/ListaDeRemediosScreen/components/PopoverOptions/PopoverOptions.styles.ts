@@ -11,6 +11,6 @@ export const ButtonAlert = styled(TouchableOpacity)`
   ${({ theme }) => css`
     background-color: ${theme.colors.default.error[50]};
     border-radius: ${theme.rfvalue(10)}px;
-    padding: ${theme.rfvalue(15)}px;
+    padding: ${theme.rfvalue(10)}px;
   `}
 `;
