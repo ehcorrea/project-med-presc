@@ -3,11 +3,18 @@ import { FlatList, View } from 'react-native';
 import { Layout, SearchBar, Spancing, Text } from '@/components';
 import { medicationStore, profileStore } from '@/stores';
 
-import { CardMedicationDetailed } from './components';
+import {
+  CardMedicationDetailed,
+  PopoverOptions,
+  PressOptionsArgs,
+} from './components';
+import { useState } from 'react';
 
 export function ListaDeRemediosScreen() {
+  const [options, setOptions] = useState<PressOptionsArgs | null>(null);
   const { selected } = profileStore();
   const { getMedicationByProfileId } = medicationStore();
+
   return (
     <Layout>
       <View className="p-[5%] flex-1 ">
@@ -24,10 +31,14 @@ export function ListaDeRemediosScreen() {
           contentContainerStyle={{ padding: '2%' }}
           ItemSeparatorComponent={() => <Spancing y={4} />}
           renderItem={({ item }) => (
-            <CardMedicationDetailed medication={item} />
+            <CardMedicationDetailed
+              medication={item}
+              onPressOptions={setOptions}
+            />
           )}
         />
       </View>
+      <PopoverOptions onClose={() => setOptions(null)} {...options} />
     </Layout>
   );
 }

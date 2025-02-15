@@ -11,18 +11,35 @@ import { Line, Spancing, Text } from '@/components';
 import { pluralize } from '@/utils';
 
 import * as S from './CardMedicationDetailed.styles';
+import React, { useRef } from 'react';
+
+export type PressOptionsArgs = {
+  medication: Medication;
+  buttonRef: React.RefObject<TouchableOpacity>;
+};
 
 type CardMedicationDetailedProps = {
   medication: Medication;
+  onPressOptions: (args: PressOptionsArgs) => void;
 };
 
 export function CardMedicationDetailed({
   medication,
+  onPressOptions,
 }: CardMedicationDetailedProps) {
+  const optionsRef = useRef<TouchableOpacity>(null);
+
+  const handlePressOptions = () => {
+    if (optionsRef.current) {
+      onPressOptions({ medication, buttonRef: optionsRef });
+    }
+  };
+
   const measure = pluralize(
     medication.quantity,
     MedicationMeasures[medication.measure]
   ).toLocaleLowerCase();
+
   return (
     <TouchableOpacity>
       <S.Shadow>
@@ -33,7 +50,7 @@ export function CardMedicationDetailed({
               <Spancing x={4} />
               <Text palette="white">{MedicationType[medication.type]}</Text>
             </View>
-            <TouchableOpacity>
+            <TouchableOpacity ref={optionsRef} onPress={handlePressOptions}>
               <S.IconOptions />
             </TouchableOpacity>
           </S.Header>
