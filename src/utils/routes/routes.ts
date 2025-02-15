@@ -5,16 +5,12 @@ export const tabBarRoutes: TabBarRoutes = {
     title: 'Home',
     icon: 'home',
   },
-  simulacoes: {
-    title: 'Simulações',
-    icon: 'hands-helping',
+  remedios: {
+    title: 'Remédios',
+    icon: 'pills',
   },
-  dashboard: {
-    title: 'Dashboard',
-    icon: 'chart-pie',
-  },
-  perfil: {
-    title: 'Perfil',
-    icon: 'id-card-alt',
+  configuracoes: {
+    title: 'Configs',
+    icon: 'cogs',
   },
 };
