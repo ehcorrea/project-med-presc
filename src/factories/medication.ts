@@ -30,6 +30,7 @@ export function createMedication(
     dependentId: profile.isDependent ? profile.id : undefined,
     nextNotification,
     alert: true,
+    created: new Date(),
   };
 }
 
