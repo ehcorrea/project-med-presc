@@ -5,7 +5,6 @@ import { router } from 'expo-router';
 import {
   CardMedicationPersonal,
   CardSquare,
-  HeaderUser,
   Layout,
   SearchBar,
   Spancing,
@@ -26,7 +25,6 @@ export function HomeScreen() {
 
   return (
     <Layout>
-      <HeaderUser />
       <View className="p-[5%] flex-1 ">
         <View>
           <SearchBar
