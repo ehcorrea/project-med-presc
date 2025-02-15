@@ -3,6 +3,7 @@ export * from './Button/Button';
 export * from './CardMedication/CardMedication';
 export * from './CardMedicationPersonal/CardMedicationPersonal';
 export * from './CardSquare/CardSquare';
+export * from './FloatButton/FloatButton';
 export * from './HeaderScreen/HeaderScreen';
 export * from './HeaderUser/HeaderUser';
 export * from './Input/Input';
