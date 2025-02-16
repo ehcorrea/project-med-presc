@@ -7,7 +7,6 @@ export type Medication = {
   interval: { hr: number; min: number };
   measure: keyof typeof MedicationMeasures;
   name: string;
-  nextNotification: Date;
   observation?: string;
   quantity: number;
   type: keyof typeof MedicationType;
@@ -16,7 +15,6 @@ export type Medication = {
 };
 
 export enum MedicationType {
-  AEROSOL = 'Aerosol',
   CAPSULE = 'Cápsula',
   CREAM = 'Creme',
   ENEMA = 'Enema',
@@ -34,7 +32,6 @@ export enum MedicationType {
 }
 
 export enum MedicationColor {
-  AEROSOL = '#1E90FF',
   CAPSULE = '#FF4500',
   CREAM = '#FF6347',
   ENEMA = '#228B22',
@@ -52,7 +49,6 @@ export enum MedicationColor {
 }
 
 export const medicationIcons = {
-  AEROSOL: 'spray',
   CAPSULE: 'pill',
   CREAM: 'lotion',
   ENEMA: 'water',

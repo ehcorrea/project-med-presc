@@ -1,6 +1,7 @@
 import notifee, {
   AndroidImportance,
   EventDetail,
+  EventType,
   IntervalTrigger,
   TimeUnit,
   TriggerType,
@@ -11,7 +12,6 @@ import {
   MedicationType,
 } from '@/types/medication';
 import { Profile } from '@/types/profile';
-import { medicationStore } from '@/stores';
 
 import { pluralize } from '../string/string';
 
@@ -72,14 +72,9 @@ function createNotificationPopUp(medication: Medication, profile: Profile) {
   return { body, interval };
 }
 
-export function updateNotification(detail: EventDetail) {
-  if (detail.notification?.data) {
-    const { updateNextNofication } = medicationStore.getState();
-    const { profileId, medicationId, interval } = detail.notification.data;
-    updateNextNofication(
-      String(profileId),
-      String(medicationId),
-      Number(interval)
-    );
-  }
-}
+type MapNotificationArgs = {
+  type: EventType;
+  detail: EventDetail;
+};
+
+export async function mapNotification({ type, detail }: MapNotificationArgs) {}

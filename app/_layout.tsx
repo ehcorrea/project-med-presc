@@ -1,10 +1,8 @@
 import { useEffect } from 'react';
-import notifee, { EventType } from '@notifee/react-native';
 import { SplashScreen, Stack } from 'expo-router';
 import { useFonts } from 'expo-font';
 
 import { Provider } from '@/components';
-import { updateNotification } from '@/utils';
 
 export default function RootLayout() {
   const [loaded, error] = useFonts({
@@ -14,21 +12,6 @@ export default function RootLayout() {
     'SofiaPro-SemiBold': require('@/assets/fonts/SofiaPro-SemiBold.ttf'),
     'SofiaPro-Bold': require('@/assets/fonts/SofiaPro-Bold.ttf'),
   });
-
-  useEffect(() => {
-    return notifee.onForegroundEvent(({ type, detail }) => {
-      switch (type) {
-        case EventType.DELIVERED:
-          return updateNotification(detail);
-        case EventType.DISMISSED:
-          console.log('User dismissed notification', detail.notification);
-          break;
-        case EventType.PRESS:
-          console.log('User pressed notification', detail.notification);
-          break;
-      }
-    });
-  }, []);
 
   useEffect(() => {
     if (loaded || error) {
