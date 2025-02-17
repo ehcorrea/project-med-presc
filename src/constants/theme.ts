@@ -31,6 +31,12 @@ const COLORS_NEUTRAL = {
     50: '#FCFDFF',
     20: '#FEFEFF',
   },
+  transparent: {
+    main: 'transparent',
+    80: 'transparent',
+    50: 'transparent',
+    20: 'transparent',
+  },
 };
 
 export const theme = {

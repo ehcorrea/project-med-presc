@@ -34,7 +34,7 @@ export function ModalConfirm({
         </Text>
         {children}
         <View className="flex-row max-w-[60%] self-end">
-          <S.ModalButon palette="white" cancel onPress={onClose}>
+          <S.ModalButon palette="transparent" cancel onPress={onClose}>
             Cancelar
           </S.ModalButon>
           <Spancing x={5} />
