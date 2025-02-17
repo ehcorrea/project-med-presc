@@ -1,5 +1,7 @@
 import { TouchableOpacity, View } from 'react-native';
+import { useRef } from 'react';
 
+import { pluralize } from '@/utils';
 import {
   Medication,
   MedicationColor,
@@ -7,31 +9,36 @@ import {
   MedicationMeasures,
   MedicationType,
 } from '@/types/medication';
-import { Line, Spancing, Text } from '@/components';
-import { pluralize } from '@/utils';
+import {
+  Line,
+  PopoverMedicationsOptionsProps,
+  Spancing,
+  Text,
+} from '@/components';
 
 import * as S from './CardMedicationDetailed.styles';
-import React, { useRef } from 'react';
 
-export type PressOptionsArgs = {
-  medication: Medication;
-  buttonRef: React.RefObject<TouchableOpacity>;
-};
+export type CardMedicationOnPressOptions = Pick<
+  PopoverMedicationsOptionsProps,
+  'medication' | 'from'
+>;
 
 type CardMedicationDetailedProps = {
   medication: Medication;
-  onPressOptions: (args: PressOptionsArgs) => void;
+  onPressOptions: (args: CardMedicationOnPressOptions) => void;
+  onPress: () => void;
 };
 
 export function CardMedicationDetailed({
   medication,
   onPressOptions,
+  onPress,
 }: CardMedicationDetailedProps) {
   const optionsRef = useRef<TouchableOpacity>(null);
 
   const handlePressOptions = () => {
     if (optionsRef.current) {
-      onPressOptions({ medication, buttonRef: optionsRef });
+      onPressOptions({ medication, from: optionsRef });
     }
   };
 
@@ -41,7 +48,7 @@ export function CardMedicationDetailed({
   ).toLocaleLowerCase();
 
   return (
-    <TouchableOpacity className="p-1">
+    <TouchableOpacity className="p-1" onPress={onPress}>
       <S.Shadow>
         <S.Container>
           <S.Header backgroundColor={MedicationColor[medication.type]}>
@@ -50,7 +57,11 @@ export function CardMedicationDetailed({
               <Spancing x={4} />
               <Text palette="white">{MedicationType[medication.type]}</Text>
             </View>
-            <TouchableOpacity ref={optionsRef} onPress={handlePressOptions}>
+            <TouchableOpacity
+              ref={optionsRef}
+              onPress={handlePressOptions}
+              hitSlop={20}
+            >
               <S.IconOptions />
             </TouchableOpacity>
           </S.Header>
