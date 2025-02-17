@@ -14,6 +14,8 @@ export type Medication = {
   created: Date;
 };
 
+export type MedicationWithAlert = { nextAlert: Date } & Medication;
+
 export enum MedicationType {
   CAPSULE = 'Cápsula',
   CREAM = 'Creme',

@@ -20,7 +20,7 @@ import * as S from './HomeScreen.styles';
 export function HomeScreen() {
   const { selected } = profileStore();
   const { alerts, totalAlerts, totalMedication } = useHomeScreen({
-    alertsQuantity: 4,
+    alertsQuantity: 20,
   });
 
   return (
@@ -81,7 +81,7 @@ export function HomeScreen() {
         <View className="flex-5">
           <View className="flex-row justify-between items-end">
             <Text weight="semi" size="xlarge">
-              Próximos alertas
+              últimos alertas configurados
             </Text>
             {!!totalAlerts && (
               <TouchableOpacity>
@@ -96,9 +96,7 @@ export function HomeScreen() {
             showsVerticalScrollIndicator={false}
             ListEmptyComponent={<EmptyAlerts />}
             ItemSeparatorComponent={() => <Spancing y={2} />}
-            keyExtractor={({ id, nextNotification }) =>
-              `${id}.${nextNotification}`
-            }
+            keyExtractor={({ id }) => id}
             renderItem={({ item: alert }) => (
               <CardMedicationPersonal medication={alert} countdown />
             )}

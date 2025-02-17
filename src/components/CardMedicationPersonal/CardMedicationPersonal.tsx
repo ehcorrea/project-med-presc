@@ -1,16 +1,16 @@
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import Countdown from 'react-countdown';
 import {
-  Medication,
   MedicationMeasures,
   MedicationType,
+  MedicationWithAlert,
 } from '@/types/medication';
 import { pluralize } from '@/utils';
 
 import { CardMedication } from '../CardMedication/CardMedication';
 
 export type CardMedicationPersonalProps = {
-  medication: Medication;
+  medication: MedicationWithAlert;
   countdown?: boolean;
 };
 
@@ -45,8 +45,7 @@ export function CardMedicationPersonal({
 
   return (
     <Countdown
-      key={String(medication.nextNotification)}
-      date={new Date(medication.nextNotification)}
+      date={medication.nextAlert}
       autoStart={countdown}
       renderer={({ hours, minutes, seconds }) => (
         <CardMedication

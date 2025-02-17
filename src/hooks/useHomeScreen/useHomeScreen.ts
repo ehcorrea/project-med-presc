@@ -1,11 +1,16 @@
 import { useEffect, useState } from 'react';
 
-import { Medication, Medications } from '@/types/medication';
+import {
+  Medication,
+  Medications,
+  MedicationWithAlert,
+} from '@/types/medication';
 import { medicationStore, profileStore } from '@/stores';
 import { Profile } from '@/types/profile';
+import { getNextAlert } from '@/utils';
 
 type UseHomeScreen = {
-  alerts: Medication[];
+  alerts: MedicationWithAlert[];
   totalAlerts: number;
   totalMedication: number;
 };
@@ -23,7 +28,7 @@ export function useHomeScreen({
     totalMedication: 0,
   });
   const { selected } = profileStore();
-  const { medications } = medicationStore();
+  const { getMedicationByProfileId } = medicationStore();
 
   useEffect(() => {
     const getAlerts = () => {
@@ -35,26 +40,32 @@ export function useHomeScreen({
                 medications,
                 alertsQuantity
               )
-            : getPersonalAlerts(selected.id, medications, alertsQuantity)
+            : getPersonalAlerts(
+                getMedicationByProfileId(selected.id),
+                alertsQuantity
+              )
         );
       }
     };
     getAlerts();
-  }, [medications, selected, alertsQuantity]);
+  }, [selected, alertsQuantity, getMedicationByProfileId]);
 
   return home;
 }
 
 const getPersonalAlerts = (
-  profileId: string,
-  medications: Medications,
+  medications: Medication[],
   quantity: number
 ): UseHomeScreen => {
-  const profileMedications = medications[profileId] || [];
-  const totalMedication = profileMedications.sort(
-    ({ nextNotification: a }, { nextNotification: b }) =>
-      new Date(a).getTime() - new Date(b).getTime()
-  );
+  const totalMedication = medications
+    .map((medication) => ({
+      ...medication,
+      nextAlert: getNextAlert(medication.created, medication.interval),
+    }))
+    .sort(
+      ({ nextAlert: a }, { nextAlert: b }) =>
+        new Date(a).getTime() - new Date(b).getTime()
+    );
   const alerts = totalMedication.filter(({ alert }) => !!alert);
   return {
     alerts: alerts.slice(0, quantity),
