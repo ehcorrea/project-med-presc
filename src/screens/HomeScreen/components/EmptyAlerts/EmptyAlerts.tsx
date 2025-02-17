@@ -11,8 +11,8 @@ export function EmptyAlerts() {
         className="h-[200px] w-[200px]"
         source={require('@/assets/images/notification.svg')}
       />
-      <Text size="large">
-        Parece que você ainda não{`\n`}possui alertas configurados...
+      <Text size="large" className="text-center">
+        Parece que você ainda {`\n`}não possui alertas...
       </Text>
     </View>
   );
