@@ -5,13 +5,22 @@ import { Button } from '../Button/Button';
 
 import * as S from './HeaderScreen.styles';
 
-export function HeaderScreen() {
+export type HeaderScreenProps = {
+  title?: string;
+  rightButton?: React.ReactElement;
+};
+
+export function HeaderScreen({
+  title = 'Adicionar Medicamentos',
+  rightButton,
+}: HeaderScreenProps) {
   return (
     <S.Container>
       <Button.Back />
       <View className="flex-1 absolute items-center right-0 left-0">
-        <Text size="large">Adicionar Medicamentos</Text>
+        <Text size="large">{title}</Text>
       </View>
+      {rightButton}
     </S.Container>
   );
 }
