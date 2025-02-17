@@ -33,3 +33,17 @@ Button.Back = () => {
     </S.ButtonIcon>
   );
 };
+
+export type ButtonOptions = {
+  onPress?: () => void;
+  children?: React.ReactElement;
+};
+
+Button.Options = ({ onPress, children }: ButtonOptions) => {
+  return (
+    <S.ButtonIcon elevation palette="white" onPress={onPress} activeOpacity={0}>
+      {children}
+      <MaterialIcons name="keyboard-control" size={28} color="black" />
+    </S.ButtonIcon>
+  );
+};
