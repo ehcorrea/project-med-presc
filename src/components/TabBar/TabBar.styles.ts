@@ -9,17 +9,18 @@ export const Container = styled.View<ContainerProps>`
     align-items: center;
     align-self: center;
     background-color: ${theme.colors.default.white.main};
-    bottom: ${theme.rhvalue(24)}px;
     elevation: 3;
     flex-direction: row;
-    height: ${theme.rhvalue(70 + (bottom ? 5 : 0))}px;
+    top: 0;
+    bottom: 0;
     justify-content: space-around;
     padding: ${theme.rhvalue(20)}px;
     shadow-color: ${theme.colors.default.black.main};
     shadow-offset: 0px 1px;
     shadow-opacity: 0.2;
     shadow-radius: 3px;
-    width: 95%;
-    border-radius: ${theme.rhvalue(24)}px;
+    width: 100%;
+    border-top-left-radius: ${theme.rhvalue(24)}px;
+    border-top-right-radius: ${theme.rhvalue(24)}px;
   `}
 `;

@@ -3,11 +3,12 @@ import { router } from 'expo-router';
 import { FlatList, View } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
-import { Layout, SearchBar, Spancing, Text, FloatButton } from '@/components';
+import { Layout, SearchBar, Spancing, FloatButton, Text } from '@/components';
 import { medicationStore, profileStore } from '@/stores';
 
 import {
   CardMedicationDetailed,
+  EmptyList,
   PopoverOptions,
   PressOptionsArgs,
 } from './components';
@@ -19,19 +20,18 @@ export function ListaDeRemediosScreen() {
 
   return (
     <Layout>
-      <View className="p-[5%] flex-1 ">
+      <View className="px-[5%] flex-1 ">
         <SearchBar button={<View />} />
-        <Spancing y={10} />
-        <Text weight="semi" size="large">
-          Em progesso
+        <Spancing y={20} />
+        <Text weight="semi" size="xlarge">
+          Remédios cadastrados
         </Text>
         <Spancing y={8} />
         <FlatList
-          className="flex-1"
-          showsVerticalScrollIndicator={false}
+          ListEmptyComponent={<EmptyList />}
+          showsHorizontalScrollIndicator={false}
           data={getMedicationByProfileId(selected!.id)}
-          contentContainerStyle={{ padding: '2%' }}
-          ItemSeparatorComponent={() => <Spancing y={4} />}
+          ItemSeparatorComponent={() => <Spancing y={8} />}
           renderItem={({ item }) => (
             <CardMedicationDetailed
               medication={item}

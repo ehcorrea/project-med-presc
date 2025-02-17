@@ -25,7 +25,7 @@ export function HomeScreen() {
 
   return (
     <Layout>
-      <View className="p-[5%] flex-1 ">
+      <View className="px-[5%] flex-1 ">
         <View>
           <SearchBar
             button={
@@ -81,7 +81,7 @@ export function HomeScreen() {
         <View className="flex-5">
           <View className="flex-row justify-between items-end">
             <Text weight="semi" size="xlarge">
-              últimos alertas configurados
+              Próximos alertas
             </Text>
             {!!totalAlerts && (
               <TouchableOpacity>
@@ -95,6 +95,7 @@ export function HomeScreen() {
             data={alerts}
             showsVerticalScrollIndicator={false}
             ListEmptyComponent={<EmptyAlerts />}
+            contentContainerStyle={{ paddingBottom: 5 }}
             ItemSeparatorComponent={() => <Spancing y={2} />}
             keyExtractor={({ id }) => id}
             renderItem={({ item: alert }) => (

@@ -1,10 +1,6 @@
 import { Shadow as ShadowRN } from 'react-native-shadow-2';
 import styled, { css } from 'styled-components/native';
-import {
-  FontAwesome5,
-  Ionicons,
-  MaterialCommunityIcons,
-} from '@expo/vector-icons';
+import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 
 export const Shadow = styled(ShadowRN).attrs({
   corners: { topEnd: false, topStart: false },
@@ -14,9 +10,8 @@ export const Shadow = styled(ShadowRN).attrs({
   stretch: true,
 })`
   ${({ theme }) => css`
-    border-top-left-radius: ${theme.rfvalue(35)}px;
-    border-top-right-radius: ${theme.rfvalue(35)}px;
     flex: 1;
+    border-radius: ${theme.rfvalue(10)}px;
   `}
 `;
 
@@ -67,21 +62,16 @@ export const Body = styled.View`
   ${({ theme }) => css`
     flex-direction: row;
     padding: ${theme.rfvalue(16)}px;
-    align-items: center;
   `}
 `;
 
-export const IconDot = styled(FontAwesome5).attrs<IconProps>(
-  ({ color, theme }) => ({
+export const IconDot = styled(Ionicons).attrs<IconProps>(
+  ({ color, theme, ...props }) => ({
     color,
-    name: 'dot-circle',
     size: theme.rfvalue(24),
+    ...props,
   })
-)`
-  ${({ theme }) => css`
-    margin-top: ${theme.rfvalue(2)}px;
-  `}
-`;
+)``;
 
 export const Footer = styled.View`
   ${({ theme }) => css`

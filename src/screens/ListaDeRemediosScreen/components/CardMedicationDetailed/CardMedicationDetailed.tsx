@@ -41,7 +41,7 @@ export function CardMedicationDetailed({
   ).toLocaleLowerCase();
 
   return (
-    <TouchableOpacity>
+    <TouchableOpacity className="p-1">
       <S.Shadow>
         <S.Container>
           <S.Header backgroundColor={MedicationColor[medication.type]}>
@@ -55,9 +55,16 @@ export function CardMedicationDetailed({
             </TouchableOpacity>
           </S.Header>
           <S.Body>
-            <S.IconDot color={MedicationColor[medication.type]} />
+            <S.IconDot
+              color={MedicationColor[medication.type]}
+              name={
+                medication.alert
+                  ? 'notifications-circle-outline'
+                  : 'notifications-off-circle-outline'
+              }
+            />
             <Spancing x={6} />
-            <Text size="large" className="flex-1">
+            <Text size="large" className="flex-1" numberOfLines={1}>
               {String(medication.quantity).padStart(2, '0')} {measure} de{' '}
               {medication.name}.
             </Text>
@@ -77,7 +84,12 @@ export function CardMedicationDetailed({
               </Text>
             </View>
             {!!medication.observation && (
-              <Text weight="light" color={20}>
+              <Text
+                weight="light"
+                color={20}
+                className="px-[5px]"
+                adjustsFontSizeToFit
+              >
                 Possui observação
               </Text>
             )}
