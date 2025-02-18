@@ -14,6 +14,7 @@ export * from './ModalConfirm/ModalConfirm';
 export * from './ModalOptions/ModalOptions';
 export * from './ModalProfile/ModalProfile';
 export * from './ModalTimer/ModalTimer';
+export * from './PopoverMedicationsOptions/PopoverMedicationsOptions';
 export * from './Provider/Provider';
 export * from './SearchBar/SearchBar';
 export * from './Spacing/Spacing';

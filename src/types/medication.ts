@@ -31,6 +31,7 @@ export enum MedicationType {
   SUPPOSITORY = 'Supositório',
   SYRUP = 'Xarope',
   TABLET = 'Comprimido',
+  EYE_DROPS = 'Colírio',
 }
 
 export enum MedicationColor {
@@ -48,6 +49,7 @@ export enum MedicationColor {
   SUPPOSITORY = '#8A2BE2',
   SYRUP = '#FF1493',
   TABLET = '#20B2AA',
+  EYE_DROPS = '#A1D8F1',
 }
 
 export const medicationIcons = {
@@ -65,6 +67,7 @@ export const medicationIcons = {
   SUPPOSITORY: 'pill',
   SYRUP: 'bottle-tonic',
   TABLET: 'pill',
+  EYE_DROPS: 'eyedropper',
 };
 
 export enum MedicationMeasures {
