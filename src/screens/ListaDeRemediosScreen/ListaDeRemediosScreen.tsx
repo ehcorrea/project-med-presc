@@ -3,18 +3,26 @@ import { router } from 'expo-router';
 import { FlatList, View } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
-import { Layout, SearchBar, Spancing, FloatButton, Text } from '@/components';
 import { medicationStore, profileStore } from '@/stores';
+import {
+  Layout,
+  SearchBar,
+  Spancing,
+  FloatButton,
+  Text,
+  PopoverMedicationsOptions,
+} from '@/components';
 
 import {
   CardMedicationDetailed,
+  CardMedicationOnPressOptions,
   EmptyList,
-  PopoverOptions,
-  PressOptionsArgs,
 } from './components';
 
 export function ListaDeRemediosScreen() {
-  const [options, setOptions] = useState<PressOptionsArgs | null>(null);
+  const [options, setOptions] = useState<CardMedicationOnPressOptions | null>(
+    null
+  );
   const { selected } = profileStore();
   const { getMedicationByProfileId } = medicationStore();
 
@@ -29,18 +37,25 @@ export function ListaDeRemediosScreen() {
         <Spancing y={8} />
         <FlatList
           ListEmptyComponent={<EmptyList />}
-          showsHorizontalScrollIndicator={false}
+          showsVerticalScrollIndicator={false}
           data={getMedicationByProfileId(selected!.id)}
           ItemSeparatorComponent={() => <Spancing y={8} />}
           renderItem={({ item }) => (
             <CardMedicationDetailed
+              onPress={() =>
+                router.push(`/remedios/detalhes/${selected?.id}/${item.id}`)
+              }
               medication={item}
               onPressOptions={setOptions}
             />
           )}
         />
       </View>
-      <PopoverOptions onClose={() => setOptions(null)} {...options} />
+      <PopoverMedicationsOptions
+        onClose={() => setOptions(null)}
+        isVisible={!!options}
+        {...options}
+      />
       <FloatButton
         firstButton={{
           icon: <MaterialCommunityIcons size={25} color="white" name="pill" />,

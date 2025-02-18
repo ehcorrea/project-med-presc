@@ -1,6 +1,6 @@
 import { Stack } from 'expo-router';
-
 import { View } from 'react-native';
+
 import { theme } from '@/constants';
 
 export default function TabLayout() {
@@ -8,6 +8,7 @@ export default function TabLayout() {
     <View style={{ flex: 1, backgroundColor: theme.colors.default.bg.main }}>
       <Stack screenOptions={{ headerShown: false }}>
         <Stack.Screen name="cadastrar/[id]" />
+        <Stack.Screen name="detalhes/[profileId]/[id]" />
       </Stack>
     </View>
   );
