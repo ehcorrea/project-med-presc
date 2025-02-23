@@ -1,7 +1,9 @@
 import { PublicPopoverProps } from 'react-native-popover-view/dist/Popover';
 import { View } from 'react-native';
 import Popover, { PopoverPlacement } from 'react-native-popover-view';
+import { router } from 'expo-router';
 
+import { profileStore } from '@/stores';
 import { Medication } from '@/types/medication';
 
 import { Line } from '../Line/Line';
@@ -20,6 +22,17 @@ export function PopoverMedicationsOptions({
   onClose,
   ...props
 }: PopoverMedicationsOptionsProps) {
+  const selected = profileStore((state) => state.selected!);
+
+  const handleEditMedication = () => {
+    if (medication) {
+      router.push({
+        pathname: `/remedios/cadastrar/[profileId]`,
+        params: { medicationId: medication.id, profileId: selected.id },
+      });
+      onClose?.();
+    }
+  };
   return (
     <Popover
       {...props}
@@ -28,7 +41,7 @@ export function PopoverMedicationsOptions({
       backgroundStyle={{ opacity: 1, backgroundColor: 'transparent' }}
       popoverStyle={{ elevation: 5, borderRadius: 10 }}
     >
-      <S.Button>
+      <S.Button onPress={handleEditMedication}>
         <Text>Editar</Text>
       </S.Button>
       <Line />

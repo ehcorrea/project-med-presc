@@ -25,7 +25,10 @@ export const medicationStore = create(
       setMedicationData(profileId, medication) {
         const store = get();
         const medications = store.medications;
-        const medicationsById = medications[profileId] || [];
+        const medicationsById = (medications[profileId] || []).filter(
+          ({ id }) => id !== medication.id
+        );
+
         set({
           ...store,
           medications: {

@@ -30,8 +30,12 @@ import { medicationStore, profileStore } from '@/stores';
 import { createMedication } from '@/factories';
 
 export function CadastrarRemedioScreen() {
-  const { id } = useLocalSearchParams();
-  const saveMedication = medicationStore((state) => state.setMedicationData);
+  const { profileId, medicationId } = useLocalSearchParams<{
+    profileId: string;
+    medicationId?: string;
+  }>();
+  const { setMedicationData: saveMedication, getMedicationByProfileId } =
+    medicationStore();
   const getProfile = profileStore((state) => state.getProfile);
   const [modalTimer, setModalTimer] = useState(false);
   const [modalType, setModalType] = useState(false);
@@ -39,9 +43,21 @@ export function CadastrarRemedioScreen() {
   const [modalConfirm, setModalConfirm] = useState(false);
   const [formState, setFormState] = useState<MedicationValidators>();
 
+  const medication = getMedicationByProfileId(profileId).find(
+    ({ id }) => medicationId === id
+  );
+
   const { control, setValue, handleSubmit, clearErrors, watch, setFocus } =
     useForm({
       resolver: yupResolver(addMedicationValidators),
+      defaultValues: medication && {
+        name: medication.name,
+        measure: medication.measure,
+        observation: medication.observation,
+        quantity: String(medication.quantity),
+        type: medication.type,
+        interval: `${medication.interval.hr}:${medication.interval.min}`,
+      },
     });
 
   const type = getValuesFromEnum(MedicationType, watch('type'));
@@ -72,12 +88,12 @@ export function CadastrarRemedioScreen() {
   };
 
   const handleConfirm = async () => {
-    if (formState && id) {
-      const profile = getProfile(id as string);
-      const medication = createMedication(formState, profile);
+    if (formState) {
+      const profile = getProfile(profileId);
+      const medication = createMedication(formState, profile, medicationId);
       await onCreateTriggerNotification(medication, profile);
-      saveMedication(profile.id, medication);
-      router.replace('/home');
+      saveMedication(profileId, medication);
+      router.back();
     }
   };
 
@@ -88,13 +104,13 @@ export function CadastrarRemedioScreen() {
 
   return (
     <Layout>
-      <HeaderScreen />
+      <HeaderScreen title={medication && 'Editar Medicamento'} />
       <SafeAreaView className="flex-1">
         <View className="px-[5%] pb-[5%] flex-1">
           <ScrollView className="flex-1" showsVerticalScrollIndicator={false}>
             <Text>
-              Informe detalhes sobre os medicamentos prescritos, como intervalo
-              de uso e instruções. Inclua pelo menos um medicamento.
+              {medication ? 'Edite' : 'Informe'} detalhes sobre os medicamentos
+              prescritos, como intervalo de uso e instruções.
             </Text>
             <Spancing y={10} />
             <Controller
@@ -247,11 +263,12 @@ export function CadastrarRemedioScreen() {
                 />
               )}
             />
+
             <Button
               className="w-[60%] self-center"
               onPress={handleSubmit(handleAdd)}
             >
-              ADICIONAR
+              SALVAR
             </Button>
           </ScrollView>
         </View>
@@ -260,6 +277,7 @@ export function CadastrarRemedioScreen() {
         onClose={() => setModalTimer(false)}
         onConfirm={handleConfirmInterval}
         open={modalTimer}
+        defaultValue={medication?.interval}
       />
       <ModalOptions
         onClose={() => setModalType(false)}

@@ -6,14 +6,15 @@ import { Profile } from '@/types/profile';
 
 export function createMedication(
   medicationData: MedicationValidators,
-  profile: Profile
+  profile: Profile,
+  medicationId?: string
 ): Medication {
   const { measure, quantity, name, type, observation, interval } =
     medicationData;
   const [hr, min] = interval.split(':').map((timer) => Number(timer));
 
   return {
-    id: randomUUID(),
+    id: medicationId || randomUUID(),
     interval: { hr, min },
     measure: measure as Medication['measure'],
     name: name.trim(),

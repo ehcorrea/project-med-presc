@@ -7,11 +7,18 @@ import { ModalConfirm, ModalConfirmProps } from '../ModalConfirm/ModalConfirm';
 
 export type ModalTimerProps = {
   onConfirm: (hr: string, min: string) => void;
+  defaultValue?: { hr: number; min: number };
 } & Omit<ModalConfirmProps, 'onConfirm' | 'children'>;
 
-export function ModalTimer({ onConfirm, ...props }: ModalTimerProps) {
+export function ModalTimer({
+  onConfirm,
+  defaultValue,
+  ...props
+}: ModalTimerProps) {
   const [newData, setNewDate] = useState(
-    new Date(new Date().setHours(0, 15, 0, 0))
+    new Date(
+      new Date().setHours(defaultValue?.hr || 0, defaultValue?.min || 15, 0, 0)
+    )
   );
 
   const handleConfirm = () => {

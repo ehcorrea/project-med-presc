@@ -11,7 +11,7 @@ export type HeaderScreenProps = {
 };
 
 export function HeaderScreen({
-  title = 'Adicionar Medicamentos',
+  title = 'Adicionar Medicamento',
   rightButton,
 }: HeaderScreenProps) {
   return (
