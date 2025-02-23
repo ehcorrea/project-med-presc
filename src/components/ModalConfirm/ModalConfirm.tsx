@@ -1,25 +1,27 @@
 import { View } from 'react-native';
 
 import { Modal } from '../Modal/Modal';
-import { Text } from '../Text/Text';
 import { Spancing } from '../Spacing/Spacing';
+import { Text } from '../Text/Text';
 
 import * as S from './ModalConfirm.styles';
 
 export type ModalConfirmProps = {
-  title?: string;
-  onConfirm: () => void;
-  onClose: () => void;
-  open: boolean;
+  alert?: boolean;
   children: React.ReactElement;
+  onClose: () => void;
+  onConfirm: () => void;
+  open: boolean;
+  title?: string;
 };
 
 export function ModalConfirm({
-  title = 'Selecione o intervalo',
+  alert,
+  children,
   onClose,
   onConfirm,
-  children,
   open,
+  title = 'Selecione o intervalo',
 }: ModalConfirmProps) {
   const handleConfirmar = () => {
     onClose();
@@ -38,7 +40,9 @@ export function ModalConfirm({
             Cancelar
           </S.ModalButon>
           <Spancing x={5} />
-          <S.ModalButon onPress={handleConfirmar}>Confirmar</S.ModalButon>
+          <S.ModalButon onPress={handleConfirmar} alert={alert}>
+            Confirmar
+          </S.ModalButon>
         </View>
       </View>
     </Modal>
