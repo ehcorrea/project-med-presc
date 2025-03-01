@@ -17,13 +17,14 @@ import { pluralize } from '../string/string';
 
 export async function onCreateTriggerNotification(
   medication: Medication,
-  profile: Profile
+  profile: Profile,
+  silence = false
 ) {
   const { body, interval } = createNotificationPopUp(medication, profile);
   const channelId = await notifee.createChannel({
     id: 'med-presc-medication',
     name: 'Medication Alerts',
-    importance: AndroidImportance.HIGH,
+    importance: silence ? AndroidImportance.NONE : AndroidImportance.HIGH,
   });
 
   const trigger: IntervalTrigger = {

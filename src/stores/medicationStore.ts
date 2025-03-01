@@ -3,17 +3,20 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import notifee from '@notifee/react-native';
 
 import { Medications, Medication } from '@/types/medication';
+import { onCreateTriggerNotification } from '@/utils';
 
 import { create } from './zustand';
+import { profileStore } from './profileStore';
 
 type State = {
   medications: Medications;
 };
 
 type Actions = {
-  setMedicationData: (profileId: string, medication: Medication) => void;
-  getMedicationByProfileId: (profileId?: string) => Medication[];
+  changeAlert: (profileId: string, medicationId: string) => void;
   deleteMedication: (profileId: string, medicationId: string) => void;
+  getMedicationByProfileId: (profileId?: string) => Medication[];
+  setMedicationData: (profileId: string, medication: Medication) => void;
 };
 
 export const initialStateMedication: State = {
@@ -51,6 +54,35 @@ export const medicationStore = create(
           ({ id }) => id !== medicationId
         );
         notifee.cancelTriggerNotification(medicationId);
+        set({
+          ...store,
+          medications: {
+            ...medications,
+            [profileId]: medicationsById,
+          },
+        });
+      },
+      async changeAlert(profileId, medicationId) {
+        const { getProfile } = profileStore.getState();
+        const store = get();
+        const medications = store.medications;
+        const medicationsById = medications[profileId] || [];
+        const medicationIndex = medicationsById.findIndex(
+          ({ id }) => id === medicationId
+        );
+        const medicationItem = medicationsById[medicationIndex];
+        const newAlert = !medicationItem.alert;
+        await onCreateTriggerNotification(
+          medicationItem,
+          getProfile(profileId),
+          newAlert
+        );
+
+        medicationsById[medicationIndex] = {
+          ...medicationItem,
+          alert: !medicationItem.alert,
+        };
+
         set({
           ...store,
           medications: {
