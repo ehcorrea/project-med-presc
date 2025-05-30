@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { Share } from 'react-native';
 import { ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native';
 import { useLocalSearchParams } from 'expo-router';
@@ -27,6 +27,7 @@ import * as S from './DetalhesDoRemedioScreen.styles';
 
 export function DetalhesDoRemedioScreen() {
   const [showOptions, setShowOptions] = useState(false);
+  const [countdownDate, setCountdownDate] = useState<Date>();
   const optionsRef = useRef<TouchableOpacity>(null);
   const { profileId, id } = useLocalSearchParams<{
     profileId: string;
@@ -41,13 +42,21 @@ export function DetalhesDoRemedioScreen() {
     medication.quantity,
     MedicationMeasures[medication.measure]
   ).toLocaleLowerCase();
-  const nextInterval = getNextAlert(medication.created, medication.interval);
   const instructions = `${String(medication.quantity).padStart(2, '0')} ${measure} de ${medication.name} em ${MedicationType[medication.type].toLocaleLowerCase()} a cada ${splitTimer(`${medication.interval.hr}:${medication.interval.min}`)}.`;
   const shareText = async () => {
     await Share.share({
-      message: `Olá, preciso usar ${instructions} O próximo será ${nextInterval.toLocaleString()}.`,
+      message: `Olá, preciso usar ${instructions} O próximo será ${countdownDate?.toLocaleString()}.`,
     });
   };
+
+  const handleNextCountdownDate = useCallback(() => {
+    const nextInterval = getNextAlert(medication.created, medication.interval);
+    setCountdownDate(nextInterval);
+  }, [medication]);
+
+  useEffect(() => {
+    handleNextCountdownDate();
+  }, [handleNextCountdownDate]);
 
   return (
     <Layout>
@@ -113,7 +122,9 @@ export function DetalhesDoRemedioScreen() {
           <Spancing y={3} />
           <View className="flex-row items-center">
             <Countdown
-              date={nextInterval}
+              date={countdownDate}
+              key={countdownDate?.toDateString()}
+              onComplete={() => handleNextCountdownDate()}
               autoStart
               renderer={({ hours, minutes, seconds }) => (
                 <Text palette="error" size="large">

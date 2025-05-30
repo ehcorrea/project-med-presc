@@ -25,11 +25,16 @@ export function PopoverMedicationsOptions({
   ...props
 }: PopoverMedicationsOptionsProps) {
   const [modalRemove, setModalRemove] = useState(false);
+  const [modalAlert, setModalAlert] = useState(false);
   const selected = profileStore((state) => state.selected!);
-  const deleteMedication = medicationStore((state) => state.deleteMedication!);
+  const { deleteMedication, changeAlert } = medicationStore();
 
   const handleModalRemove = () => {
     setModalRemove((prevState) => !prevState);
+  };
+
+  const handleModalAlert = () => {
+    setModalAlert((prevState) => !prevState);
   };
 
   const handleEditMedication = () => {
@@ -49,6 +54,13 @@ export function PopoverMedicationsOptions({
     onClose?.();
   };
 
+  const handleAlertMedication = () => {
+    if (medication) {
+      changeAlert(selected.id, medication.id);
+    }
+    onClose?.();
+  };
+
   return (
     <>
       <Popover
@@ -57,14 +69,14 @@ export function PopoverMedicationsOptions({
         onRequestClose={onClose}
         backgroundStyle={{ opacity: 1, backgroundColor: 'transparent' }}
         popoverStyle={{ elevation: 5, borderRadius: 10 }}
-        isVisible={props.isVisible && !modalRemove}
+        isVisible={props.isVisible && !modalRemove && !modalAlert}
       >
         <S.Button onPress={handleEditMedication}>
           <Text>Editar</Text>
         </S.Button>
         <Line />
-        <S.Button>
-          <Text>Modificar Alerta</Text>
+        <S.Button onPress={handleModalAlert}>
+          <Text>{medication?.alert ? 'Silenciar' : 'Reativar'} Alerta</Text>
         </S.Button>
         <Line />
         <Spancing y={2} />
@@ -86,6 +98,18 @@ export function PopoverMedicationsOptions({
         <Text className="my-[10%] text-center">
           Esta ação não poderá ser desfeita e também {'\n'}removerá as
           notificações associadas.
+        </Text>
+      </ModalConfirm>
+      <ModalConfirm
+        title={`${medication?.alert ? 'Silenciar' : 'Reativar'} ${medication?.name}`}
+        open={modalAlert}
+        onClose={handleModalAlert}
+        onConfirm={handleAlertMedication}
+        alert={medication?.alert}
+      >
+        <Text className="my-[10%] text-center">
+          Você poderá {medication?.alert ? 'reativar' : 'silenciar'} o alerta
+          novamente quando quiser.
         </Text>
       </ModalConfirm>
     </>

@@ -15,10 +15,10 @@ export const splitTimer = (timer?: string) => {
     return '';
   }
   const [hr, min] = timer.split(':');
-  if (hr === '00') {
+  if (hr.padStart(2, '0') === '00') {
     return `${min} minutos`;
   }
-  if (min === '00') {
+  if (min.padStart(2, '0') === '00') {
     return `${hr} ${pluralize(hr, 'hora')}`;
   }
   return `${hr} ${pluralize(hr, 'hora')} e ${min} minutos`;
