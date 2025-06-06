@@ -34,9 +34,9 @@
           "android": {
             "extraMavenRepos": [
               "../../node_modules/@notifee/react-native/android/libs"
-              ]
+            ]
           },
-          "ios": {  }
+          "ios": {}
         }
       ],
       [
@@ -46,7 +46,8 @@
           "image": "./src/assets/images/splash-icon.png",
           "imageWidth": 200
         }
-      ]
+      ],
+      "expo-web-browser"
     ],
     "experiments": {
       "typedRoutes": true
