@@ -1,7 +1,7 @@
-import { ThemeProvider } from 'styled-components/native';
+import { ThemeProvider } from '@emotion/react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
-import { theme } from '@/constants';
+import { THEME } from '@/constants';
 
 type ProviderProps = {
   children: React.ReactElement;
@@ -13,7 +13,7 @@ const queryClient = new QueryClient();
 export function Provider({ children, customQueryClient }: ProviderProps) {
   return (
     <QueryClientProvider client={customQueryClient || queryClient}>
-      <ThemeProvider theme={theme}>{children}</ThemeProvider>
+      <ThemeProvider theme={THEME}>{children}</ThemeProvider>
     </QueryClientProvider>
   );
 }

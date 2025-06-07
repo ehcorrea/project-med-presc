@@ -1,7 +1,6 @@
-import { theme } from '@/constants';
+import { THEME } from '@/constants';
 
-export type Palette = keyof typeof theme.colors.default;
-export type Color = keyof typeof theme.colors.default.primary;
-export type FontSize = keyof typeof theme.font.size;
-export type FontWeight = keyof typeof theme.font.weight;
-export type SizeButton = keyof typeof theme.size.button;
+export type Palette = keyof typeof THEME.colors;
+export type Color = keyof typeof THEME.colors.primary;
+export type FontSize = keyof typeof THEME.fonts.size;
+export type FontWeight = keyof typeof THEME.fonts.weight;
