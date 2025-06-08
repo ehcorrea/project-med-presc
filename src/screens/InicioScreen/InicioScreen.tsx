@@ -1,8 +1,9 @@
 import { View } from 'react-native';
 import { ImageBackground } from 'expo-image';
+import { LinearGradient } from 'expo-linear-gradient';
 
 import { useLogin } from '@/hooks';
-import { ModalProfile, Spancing } from '@/components';
+import { AvatarProfile, ModalProfile, Text } from '@/components';
 
 import * as S from './InicioScreen.styles';
 
@@ -15,25 +16,50 @@ export function InicioScreen() {
       contentFit="cover"
       source={require('@/assets/images/background-inicio.png')}
     >
-      <S.BackgroundLinearGradient>
+      <LinearGradient
+        className="flex-1 p-[5%] "
+        colors={['#191B2F', '#494D6330', '#494D6370']}
+      >
         <View className="flex-1">
           <View className="flex-2 mt-[20%]">
-            <S.Title palette="gray" size={300}>
+            <Text.Title
+              adjustsFontSizeToFit
+              color={50}
+              customSize={90}
+              numberOfLines={1}
+              palette="gray"
+            >
               Bem-vindo ao
-            </S.Title>
-            <S.Title palette="primary" size={50}>
+            </Text.Title>
+            <Text.Title
+              adjustsFontSizeToFit
+              color={50}
+              customSize={50}
+              numberOfLines={1}
+              palette="primary"
+            >
               Med Presc
-            </S.Title>
-            <S.Subtitle>Seu parceiro em cuidados diários.</S.Subtitle>
+            </Text.Title>
+            <Text
+              className="text-[#cdd8f8] mt-[15x]"
+              palette="primary"
+              size="xlarge"
+            >
+              Seu parceiro em cuidados diários.
+            </Text>
           </View>
           <View className="flex-1 items-center justify-center">
-            <Spancing y={10} />
+            <AvatarProfile />
+          </View>
+          <View className="flex-1 items-center justify-center">
             <S.ButtonLogin onPress={login}>
-              <S.TextLogin>Começar</S.TextLogin>
+              <Text size="large" className="text-white mt-1" weight="semibold">
+                Começar
+              </Text>
             </S.ButtonLogin>
           </View>
         </View>
-      </S.BackgroundLinearGradient>
+      </LinearGradient>
       <ModalProfile open={openModal} handleCloseModal={handleCloseModal} />
     </ImageBackground>
   );
