@@ -1,12 +1,11 @@
 import { Tabs } from 'expo-router';
-import { StyleSheet, View } from 'react-native';
+import { View } from 'react-native';
 
 import { HeaderUser, TabBar } from '@/components';
-import { theme } from '@/constants';
 
 export default function TabLayout() {
   return (
-    <View style={styles.view}>
+    <View className="flex-1 bg-background-main">
       <HeaderUser />
       <Tabs
         screenOptions={{ headerShown: false }}
@@ -18,10 +17,3 @@ export default function TabLayout() {
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  view: {
-    flex: 1,
-    backgroundColor: theme.colors.default.bg.main,
-  },
-});
