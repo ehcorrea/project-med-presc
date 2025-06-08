@@ -4,6 +4,7 @@ export * from './CardMedication/CardMedication';
 export * from './CardMedicationPersonal/CardMedicationPersonal';
 export * from './CardSquare/CardSquare';
 export * from './FloatButton/FloatButton';
+export * from './HeaderPublic/HeaderPublic';
 export * from './HeaderScreen/HeaderScreen';
 export * from './HeaderUser/HeaderUser';
 export * from './Input/Input';
