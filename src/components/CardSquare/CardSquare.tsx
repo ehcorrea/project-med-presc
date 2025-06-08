@@ -12,10 +12,16 @@ export function CardSquare({ label, icon, info }: CardSquareProps) {
   return (
     <S.Container>
       {icon}
-      <Text weight="semi" palette="white" size="large">
+      <Text className="mt-1" palette="white" size="large" adjustsFontSizeToFit>
         {info}
       </Text>
-      <Text weight="semi" palette="white" size="small">
+      <Text
+        weight="semibold"
+        palette="white"
+        size="medium"
+        adjustsFontSizeToFit
+        numberOfLines={1}
+      >
         {label}
       </Text>
     </S.Container>
