@@ -25,7 +25,7 @@ export function AvatarProfile({
       {icon ? (
         icon
       ) : (
-        <Text palette="white" size="huge" height={43} weight="bold">
+        <Text palette="white" size="huge" weight="bold" className="mt-0.5">
           {avatar}
         </Text>
       )}
