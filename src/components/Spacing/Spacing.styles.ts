@@ -6,7 +6,7 @@ export type ContainerProps = {
 };
 
 export const Container = styled.View<ContainerProps>`
-  ${({ x = '5', y = '5' }) => css`
+  ${({ x = '0', y = '0' }) => css`
     margin-horizontal: ${x}px;
     margin-vertical: ${y}px;
   `}
