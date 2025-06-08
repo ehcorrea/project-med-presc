@@ -86,7 +86,7 @@ export const THEME = {
       large: rfvalue(20),
       xlarge: rfvalue(30),
       huge: rfvalue(50),
-      xhuge: rfvalue(60),
+      xhuge: rfvalue(55),
     },
   },
   size: {
