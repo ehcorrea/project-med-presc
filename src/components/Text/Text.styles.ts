@@ -27,7 +27,7 @@ export const Text = styled.Text<TextProps>`
 
     ${height &&
     css`
-      height: ${theme.rfvalue(height)}px;
+      line-height: ${theme.rfvalue(height)}px;
     `}
 
     ${customSize &&
