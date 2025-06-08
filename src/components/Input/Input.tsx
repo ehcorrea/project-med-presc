@@ -1,7 +1,8 @@
 import { forwardRef, useEffect, useRef, useState } from 'react';
 import { Ionicons } from '@expo/vector-icons/';
-import { useTheme } from 'styled-components/native';
+import { useTheme } from '@emotion/react';
 import {
+  Pressable,
   TextInput as TextInputRN,
   TextInputProps as TextInputRNProps,
   TouchableOpacity,
@@ -16,12 +17,12 @@ import * as S from './Input.styles';
 export type TextInputProps = {
   containerProps?: ViewProps;
   error?: string;
+  forceHasFocus?: boolean;
   label: string;
   labelProps?: TextProps;
-  variant?: 'default' | 'password';
-  size?: S.ContainerProps['size'];
   onFocus?: () => void;
-  forceHasFocus?: boolean;
+  size?: S.ContainerProps['size'];
+  variant?: 'default' | 'password';
 } & TextInputRNProps;
 
 type GetInputStateParams = {
@@ -79,11 +80,15 @@ export const Input = forwardRef<TextInputRN, TextInputProps>(
     }, [forceHasFocus]);
 
     return (
-      <TouchableOpacity onPress={handlePressContainer} className="w-full">
-        <Text palette={hasFocus ? 'primary' : 'gray'} {...labelProps}>
+      <Pressable onPress={handlePressContainer} className="w-full">
+        <Text
+          size="large"
+          palette={hasFocus ? 'primary' : 'gray'}
+          {...labelProps}
+        >
           {label}
         </Text>
-        <Spancing y={5} />
+        <Spancing y="2" />
         <S.Container
           size={size}
           state={getInputState({ hasError: !!error, hasFocus })}
@@ -91,6 +96,7 @@ export const Input = forwardRef<TextInputRN, TextInputProps>(
         >
           <S.Input
             {...props}
+            textAlignVertical="center"
             ref={ref || inputRef}
             size={size}
             secureTextEntry={secureTextEntry}
@@ -110,17 +116,16 @@ export const Input = forwardRef<TextInputRN, TextInputProps>(
               }
             >
               <Ionicons
-                color={theme.colors.default.gray[50]}
+                color={theme.colors.gray[50]}
                 name={secureTextEntry ? 'eye-off' : 'eye'}
-                size={theme.rfvalue(25)}
+                size={Number(theme.rfvalue(25))}
               />
             </TouchableOpacity>
           )}
         </S.Container>
-        <Spancing y={1} />
+        <Spancing y="2" />
         <Text palette="error">{error}</Text>
-        <Spancing y={2} />
-      </TouchableOpacity>
+      </Pressable>
     );
   }
 );
