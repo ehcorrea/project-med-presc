@@ -1,8 +1,8 @@
 import Animated from 'react-native-reanimated';
-import styled, { css } from 'styled-components/native';
+import styled, { css } from '@emotion/native';
 
 export type ModalProps = {
-  variant?: 'footer' | 'floating';
+  variant: 'footer' | 'floating';
 };
 
 const modalModifiers = {
@@ -20,20 +20,9 @@ const modalModifiers = {
   `,
 };
 
-export const Backdrop = styled(Animated.View)`
-  align-items: center;
-  background-color: #00000080;
-  bottom: 0;
-  justify-content: center;
-  left: 0;
-  position: absolute;
-  right: 0;
-  top: 0;
-`;
-
-export const Modal = styled(Animated.View)<ModalProps>`
-  ${({ theme, variant = 'footer' }) => css`
-    background-color: ${theme.colors.default.white.main};
+export const Container = styled(Animated.View)<ModalProps>`
+  ${({ theme, variant }) => css`
+    background-color: ${theme.colors.white.main};
     position: absolute;
     z-index: 1;
 
