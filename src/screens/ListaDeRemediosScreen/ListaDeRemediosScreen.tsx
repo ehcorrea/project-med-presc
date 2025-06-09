@@ -25,31 +25,42 @@ export function ListaDeRemediosScreen() {
   );
   const { selected } = profileStore();
   const { getMedicationByProfileId } = medicationStore();
+  const medications = getMedicationByProfileId(selected?.id);
+
+  const onPressAddMedication = () =>
+    router.push(`/remedios/cadastrar/${selected?.id}`);
 
   return (
     <Layout>
       <View className="px-[5%] flex-1 ">
-        <SearchBar button={<View />} />
-        <Spancing y={20} />
-        <Text weight="semi" size="xlarge">
-          Remédios cadastrados
-        </Text>
-        <Spancing y={8} />
-        <FlatList
-          ListEmptyComponent={<EmptyList />}
-          showsVerticalScrollIndicator={false}
-          data={getMedicationByProfileId(selected!.id)}
-          ItemSeparatorComponent={() => <Spancing y={8} />}
-          renderItem={({ item }) => (
-            <CardMedicationDetailed
-              onPress={() =>
-                router.push(`/remedios/detalhes/${selected?.id}/${item.id}`)
-              }
-              medication={item}
-              onPressOptions={setOptions}
+        <SearchBar />
+        {medications.length ? (
+          <>
+            <Text weight="semibold" size="xlarge">
+              Remédios cadastrados
+            </Text>
+            <Spancing y="8" />
+            <FlatList
+              ListEmptyComponent={<EmptyList />}
+              showsVerticalScrollIndicator={false}
+              data={getMedicationByProfileId(selected!.id)}
+              ItemSeparatorComponent={() => <Spancing y="8" />}
+              renderItem={({ item }) => (
+                <CardMedicationDetailed
+                  onPress={() =>
+                    router.push(`/remedios/detalhes/${selected?.id}/${item.id}`)
+                  }
+                  medication={item}
+                  onPressOptions={setOptions}
+                />
+              )}
             />
-          )}
-        />
+          </>
+        ) : (
+          <View className="flex-1 items-center justify-center">
+            <EmptyList />
+          </View>
+        )}
       </View>
       <PopoverMedicationsOptions
         onClose={() => setOptions(null)}
@@ -59,9 +70,7 @@ export function ListaDeRemediosScreen() {
       <FloatButton
         firstButton={{
           icon: <MaterialCommunityIcons size={25} color="white" name="pill" />,
-          onPress: () => {
-            router.push(`/remedios/cadastrar/${selected?.id}`);
-          },
+          onPress: onPressAddMedication,
         }}
       />
     </Layout>
