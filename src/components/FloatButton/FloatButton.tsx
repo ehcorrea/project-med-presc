@@ -1,5 +1,7 @@
-import { useRef } from 'react';
+import { useState } from 'react';
 import { PressableProps, TouchableOpacity } from 'react-native';
+import { useTheme } from '@emotion/react';
+import { Entypo } from '@expo/vector-icons';
 import Animated, {
   Easing,
   interpolate,
@@ -15,17 +17,18 @@ import * as S from './FloatButton.styles';
 type FloatButtonProps = {
   firstButton: { icon: React.ReactElement; onPress: () => void };
   mainButtonProps?: (open: boolean) => PressableProps;
-  position?: [number, number | undefined];
+  position?: [string, string | undefined];
   secondButton?: { icon: React.ReactElement; onPress: () => void };
 };
 
 export function FloatButton({
   firstButton,
   secondButton,
-  position: [x, y] = [10, undefined],
+  position: [x, y] = ['10', '10'],
   mainButtonProps,
 }: FloatButtonProps) {
-  const open = useRef(false);
+  const [isOpen, setIsOpen] = useState(false);
+  const theme = useTheme();
   const firstBtn = useSharedValue(0);
   const secondBtn = useSharedValue(0);
   const mainButton = useSharedValue(1);
@@ -52,7 +55,7 @@ export function FloatButton({
   const mainButtonAnimated = useAnimatedStyle(() => {
     return {
       transform: [
-        { rotateZ: `${interpolate(mainButton.value, [0, 1], [90, 0])} deg` },
+        { rotate: `${interpolate(mainButton.value, [0, 1], [90, 0])}deg` },
       ],
       opacity: mainButton.value,
     };
@@ -61,13 +64,16 @@ export function FloatButton({
   const secondaryButtonAnimated = useAnimatedStyle(() => {
     return {
       transform: [
-        { rotateZ: `${interpolate(mainButton.value, [0, 1], [0, -90])} deg` },
+        { rotate: `${interpolate(mainButton.value, [0, 1], [0, -90])}deg` },
       ],
     };
   }, []);
 
   const handleOpen = () => {
-    if (open.current) {
+    const newOpenState = !isOpen;
+    setIsOpen(newOpenState);
+
+    if (isOpen) {
       mainButton.value = withTiming(1, { duration: 400 });
       firstBtn.value = withDelay(
         400,
@@ -88,43 +94,42 @@ export function FloatButton({
       firstBtn.value = withSpring(-55, { damping: 10 });
       secondBtn.value = withDelay(200, withSpring(-80, { damping: 10 }));
     }
-    open.current = !open.current;
+  };
+
+  const handleButtonPress = (buttonAction: () => void) => {
+    if (isOpen) {
+      buttonAction();
+      handleOpen();
+    }
   };
 
   return (
     <S.Container x={x} y={y}>
       <S.Button
-        {...mainButtonProps?.(open.current)}
+        {...mainButtonProps?.(isOpen)}
         onPress={handleOpen}
-        accessibilityState={{ expanded: open.current }}
+        accessibilityState={{ expanded: isOpen }}
       >
-        <Animated.View style={mainButtonAnimated} testID="view-main-icon">
-          <S.MainIcon name="plus" />
+        <Animated.View style={mainButtonAnimated}>
+          <Entypo name="plus" size={40} color={theme.colors.white.main} />
         </Animated.View>
-        <Animated.View
-          className="absolute"
-          style={secondaryButtonAnimated}
-          testID="view-secondary-icon"
-        >
-          <S.MainIcon name="minus" />
+        <Animated.View className="absolute" style={secondaryButtonAnimated}>
+          <Entypo name="minus" size={40} color={theme.colors.white.main} />
         </Animated.View>
       </S.Button>
+
       {firstButton && (
-        <S.ActionContainer
-          style={firstButtonAnimated}
-          testID="view-first-button"
-        >
+        <S.ActionContainer style={firstButtonAnimated}>
           <TouchableOpacity
-            accessibilityRole="button"
-            onPress={() => {
-              handleOpen();
-              firstButton.onPress();
-            }}
+            className="h-full w-full items-center justify-center"
+            onPress={() => handleButtonPress(firstButton.onPress)}
+            disabled={!isOpen}
           >
             {firstButton.icon}
           </TouchableOpacity>
         </S.ActionContainer>
       )}
+
       {secondButton && (
         <S.ActionContainer
           style={secondButtonAnimated}
@@ -132,10 +137,8 @@ export function FloatButton({
         >
           <TouchableOpacity
             accessibilityRole="button"
-            onPress={() => {
-              handleOpen();
-              secondButton.onPress();
-            }}
+            onPress={() => handleButtonPress(secondButton.onPress)}
+            disabled={!isOpen}
           >
             {secondButton.icon}
           </TouchableOpacity>
