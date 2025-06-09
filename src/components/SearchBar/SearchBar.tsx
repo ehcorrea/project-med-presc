@@ -23,7 +23,7 @@ export function SearchBar({ button }: SearchBarProps) {
     <View className="flex-row w-full items-center justify-between">
       <TouchableOpacity
         onPress={handleFocus}
-        className="bg-primary-20/30 rounded-2xl flex-row h-12 px-2.5 w-[80%] items-center"
+        className="bg-primary-20/30 rounded-2xl flex-row h-12 px-2.5 flex-1 items-center"
       >
         <AntDesign
           name="search1"
@@ -37,7 +37,7 @@ export function SearchBar({ button }: SearchBarProps) {
           placeholderTextColor={theme.colors.gray[50]}
         />
       </TouchableOpacity>
-      <View className="w-[15%] items-end">{button}</View>
+      {button && <View className="w-[15%] items-end">{button}</View>}
     </View>
   );
 }
