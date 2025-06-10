@@ -16,7 +16,7 @@ import * as S from './FloatButton.styles';
 
 type FloatButtonProps = {
   firstButton: { icon: React.ReactElement; onPress: () => void };
-  mainButtonProps?: (open: boolean) => PressableProps;
+  mainButtonProps?: (open: boolean) => PressableProps | void;
   position?: [string, string | undefined];
   secondButton?: { icon: React.ReactElement; onPress: () => void };
 };

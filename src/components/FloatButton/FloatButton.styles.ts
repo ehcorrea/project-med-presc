@@ -11,7 +11,7 @@ export const Container = styled.View<ContainerProps>`
     bottom: ${y}px;
     position: absolute;
     right: ${x}px;
-    z-index: 9999;
+    z-index: 999;
   `}
 `;
 
@@ -24,7 +24,7 @@ export const ActionContainer = styled(Animated.View)`
     justify-content: center;
     position: absolute;
     width: 40px;
-    z-index: 9999;
+    z-index: -1;
   `}
 `;
 
