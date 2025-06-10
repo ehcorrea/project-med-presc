@@ -6,8 +6,8 @@ export const Input = styled(TextInput)`
     align-items: center;
     flex: 1;
     font-family: ${theme.fonts.weight.regular};
-    font-size: ${theme.fonts.size.large};
+    font-size: ${theme.fonts.size.large}px;
     height: 100%;
-    line-height: ${theme.fonts.height.large};
+    line-height: ${theme.fonts.height.large}px;
   `}
 `;
