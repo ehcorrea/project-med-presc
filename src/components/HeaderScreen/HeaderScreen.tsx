@@ -1,26 +1,54 @@
-import { View } from 'react-native';
+import { Pressable, View } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { useTheme } from '@emotion/react';
 
+import { Spancing } from '../Spacing/Spacing';
 import { Text } from '../Text/Text';
-import { Button } from '../Button/Button';
-
-import * as S from './HeaderScreen.styles';
 
 export type HeaderScreenProps = {
-  title?: string;
-  rightButton?: React.ReactElement;
+  rightArtifact?: React.ReactElement;
+  subtitle?: string;
+  title: string;
 };
 
 export function HeaderScreen({
-  title = 'Adicionar Medicamento',
-  rightButton,
+  title,
+  subtitle,
+  rightArtifact,
 }: HeaderScreenProps) {
+  const theme = useTheme();
+  const insets = useSafeAreaInsets();
   return (
-    <S.Container>
-      <Button.Back />
-      <View className="flex-1 absolute items-center right-0 left-0">
-        <Text size="large">{title}</Text>
+    <View
+      className="items-center m-[5%]  justify-between"
+      style={{ marginTop: insets.top }}
+    >
+      <View className="flex-row justify-between items-center w-full">
+        <View className="flex-1">
+          <Pressable>
+            <Ionicons
+              name="arrow-back"
+              size={Number(theme.rfvalue(30))}
+              color="#222"
+            />
+          </Pressable>
+        </View>
+        <View className="flex-1 h-10">
+          <View className="absolute  right-0">{rightArtifact}</View>
+        </View>
       </View>
-      {rightButton}
-    </S.Container>
+      <Spancing y="5" />
+      <View>
+        <Text palette="black" size="huge" weight="semibold">
+          {title}
+        </Text>
+        {subtitle && (
+          <Text palette="black" color={50} weight="regular" size="large">
+            {subtitle}
+          </Text>
+        )}
+      </View>
+    </View>
   );
 }
