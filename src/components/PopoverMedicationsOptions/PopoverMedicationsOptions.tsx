@@ -79,10 +79,10 @@ export function PopoverMedicationsOptions({
           <Text>{medication?.alert ? 'Silenciar' : 'Reativar'} Alerta</Text>
         </S.Button>
         <Line />
-        <Spancing y={2} />
+        <Spancing y="2" />
         <View className="p-[10px]">
           <S.ButtonAlert onPress={handleModalRemove}>
-            <Text className="self-center" palette="white" weight="semi">
+            <Text className="self-center" palette="white" weight="semibold">
               Remover
             </Text>
           </S.ButtonAlert>
