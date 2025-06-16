@@ -15,14 +15,19 @@ export function CardMedication({ icon, title, content }: CardMedicationProps) {
   return (
     <S.Container>
       <S.ContainerIcon>{icon}</S.ContainerIcon>
-      <Spancing x={10} />
+      <Spancing x="10" />
       <View className="flex-1">
-        <Text weight="semi" size="medium" numberOfLines={1}>
+        <Text weight="semibold" size="medium" numberOfLines={1}>
           {title}
         </Text>
-        <S.TextContent palette="gray" color={50} numberOfLines={1}>
+        <Text
+          className="w-full pr-[5px]"
+          palette="gray"
+          color={50}
+          numberOfLines={1}
+        >
           {content}
-        </S.TextContent>
+        </Text>
       </View>
     </S.Container>
   );
