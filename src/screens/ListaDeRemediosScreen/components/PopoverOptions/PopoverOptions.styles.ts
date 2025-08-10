@@ -1,4 +1,4 @@
-import styled, { css } from 'styled-components/native';
+import styled, { css } from '@emotion/native';
 import { TouchableOpacity } from 'react-native';
 
 export const Button = styled(TouchableOpacity)`
@@ -9,7 +9,7 @@ export const Button = styled(TouchableOpacity)`
 
 export const ButtonAlert = styled(TouchableOpacity)`
   ${({ theme }) => css`
-    background-color: ${theme.colors.default.error[50]};
+    background-color: ${theme.colors.error[50]};
     border-radius: ${theme.rfvalue(10)}px;
     padding: ${theme.rfvalue(10)}px;
   `}
