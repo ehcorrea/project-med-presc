@@ -1,4 +1,4 @@
-import { TextInput } from 'react-native';
+import { Platform, TextInput } from 'react-native';
 import styled, { css, Theme } from '@emotion/native';
 
 export type InputState = 'error' | 'focused' | 'default';
@@ -19,10 +19,10 @@ const containerModifiders = {
     border-color: ${theme.colors.gray.main};
   `,
   medium: () => css`
-    height: 50px;
+    min-height: 50px;
   `,
   large: () => css`
-    height: 60px;
+    min-height: 60px;
   `,
 };
 
@@ -32,6 +32,12 @@ const inputModifiders = {
   `,
   large: (theme: Theme) => css`
     font-size: ${theme.fonts.size.xlarge}px;
+  `,
+};
+
+const systemModifiers = {
+  ios: () => css`
+    padding-top: 1%;
   `,
 };
 
@@ -57,7 +63,9 @@ export const Input = styled(TextInput)<Pick<ContainerProps, 'size'>>`
     flex: 1;
     font-family: ${theme.fonts.weight.regular};
     font-size: ${theme.fonts.size.large}px;
-
     ${inputModifiders[size](theme)};
+    ${Platform.select({
+      ios: systemModifiers.ios(),
+    })}
   `}
 `;

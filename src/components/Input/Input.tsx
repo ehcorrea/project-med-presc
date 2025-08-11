@@ -97,6 +97,7 @@ export const Input = forwardRef<TextInputRN, TextInputProps>(
           <S.Input
             {...props}
             textAlignVertical="center"
+            placeholderTextColor={theme.colors.gray[80]}
             ref={ref || inputRef}
             size={size}
             secureTextEntry={secureTextEntry}
