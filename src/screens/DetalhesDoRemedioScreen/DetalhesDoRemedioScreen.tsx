@@ -31,7 +31,7 @@ import {
   Text,
 } from '@/components';
 
-import { DisplayInput } from './components';
+import { DisplayInfo } from './components';
 import * as S from './DetalhesDoRemedioScreen.styles';
 
 export function DetalhesDoRemedioScreen() {
@@ -71,10 +71,9 @@ export function DetalhesDoRemedioScreen() {
   return (
     <Layout>
       <ImageBackground
-        className="flex-1"
         contentFit="contain"
         contentPosition="top"
-        source={require('@/assets/images/details.svg')}
+        source={require('@/assets/images/elipses.svg')}
       >
         <PopoverMedicationsOptions
           from={optionsRef}
@@ -83,24 +82,20 @@ export function DetalhesDoRemedioScreen() {
           onClose={() => setShowOptions(false)}
         />
         <HeaderScreen
-          title=""
           rightArtifact={
-            <View>
-              <Button.Options onPress={() => setShowOptions(true)}>
-                <TouchableOpacity
-                  disabled
-                  ref={optionsRef}
-                  style={styles.placeholder}
-                />
-              </Button.Options>
-            </View>
+            <Button.Options onPress={() => setShowOptions(true)}>
+              <TouchableOpacity
+                disabled
+                ref={optionsRef}
+                style={styles.placeholder}
+              />
+            </Button.Options>
           }
         />
         <View className="self-center items-center">
           <S.Shadow
-            distance={15}
-            offset={[1, 2]}
-            startColor={MedicationColor[medication.type]}
+            distance={6}
+            startColor={MedicationColor[medication.type] + '33'}
           >
             <Popover
               backgroundStyle={{ backgroundColor: 'transparent' }}
@@ -143,6 +138,7 @@ export function DetalhesDoRemedioScreen() {
               </View>
             </S.AvatarContainer>
           </S.Shadow>
+          <Spancing y="8" />
           <Text size="xlarge" weight="semibold">
             {medication.name}
           </Text>
@@ -150,7 +146,7 @@ export function DetalhesDoRemedioScreen() {
           <Text size="large" palette="gray" weight="light">
             {MedicationType[medication.type]}
           </Text>
-          <Spancing y="3" />
+          <Spancing y="5" />
           <View className="flex-row items-center">
             <Countdown
               date={countdownDate}
@@ -159,34 +155,53 @@ export function DetalhesDoRemedioScreen() {
               autoStart
               renderer={({ hours, minutes, seconds }) => (
                 <Text palette="error" size="large">
-                  Em {hours}h {minutes}m {seconds}s
+                  em {hours}h {minutes}m {seconds}s
                 </Text>
               )}
             />
           </View>
         </View>
         <ScrollView className="px-[5%]">
-          <DisplayInput
-            label="Instrução"
-            value={`${String(medication.quantity).padStart(2, '0')} ${measure} de ${medication.name} em ${MedicationType[medication.type].toLocaleLowerCase()} a cada ${splitTimer(`${medication.interval.hr}:${medication.interval.min}`)}.`}
-          />
-          <DisplayInput
-            label="Observação"
-            value={medication.observation}
-            placeholder="Sem observações."
-          />
+          <Text size="xlarge">Instrução</Text>
+          <Spancing y="4" />
+          <DisplayInfo>
+            <Text size="large" palette="black">
+              Utilizar {String(medication.quantity).padStart(2, '0')} {measure}{' '}
+              de {medication.name} em{' '}
+              {MedicationType[medication.type].toLocaleLowerCase()} a cada{' '}
+              {splitTimer(
+                `${medication.interval.hr}:${medication.interval.min}`
+              )}
+              .
+            </Text>
+          </DisplayInfo>
+          <Spancing y="10" />
+          <Text size="xlarge">Observações</Text>
+          <Spancing y="4" />
+          <DisplayInfo>
+            {!medication.observation && (
+              <Text size="large" palette="gray" color={50}>
+                Sem observações
+              </Text>
+            )}
+            {medication.observation && (
+              <Text size="large" palette="black">
+                {medication.observation}
+              </Text>
+            )}
+          </DisplayInfo>
         </ScrollView>
-        <S.Footer>
-          <Button
-            palette="secondary"
-            color={80}
-            label={{ size: 'large' }}
-            onPress={shareText}
-          >
-            Compartilhar
-          </Button>
-        </S.Footer>
       </ImageBackground>
+      <S.Footer>
+        <Button
+          palette="secondary"
+          color={80}
+          label={{ size: 'large' }}
+          onPress={shareText}
+        >
+          Compartilhar
+        </Button>
+      </S.Footer>
     </Layout>
   );
 }
