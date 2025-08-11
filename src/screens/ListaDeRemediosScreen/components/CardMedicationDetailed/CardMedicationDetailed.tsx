@@ -15,6 +15,8 @@ import {
   Spancing,
   Text,
 } from '@/components';
+import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
+import { useTheme } from '@emotion/react';
 
 import * as S from './CardMedicationDetailed.styles';
 
@@ -35,7 +37,7 @@ export function CardMedicationDetailed({
   onPress,
 }: CardMedicationDetailedProps) {
   const optionsRef = useRef<TouchableOpacity>(null);
-
+  const { colors } = useTheme();
   const handlePressOptions = () => {
     if (optionsRef.current) {
       onPressOptions({ medication, from: optionsRef });
@@ -49,12 +51,22 @@ export function CardMedicationDetailed({
 
   return (
     <TouchableOpacity className="p-1" onPress={onPress}>
-      <S.Shadow>
+      <S.Shadow
+        corners={{ topEnd: false, topStart: false }}
+        distance={3}
+        sides={{ top: false }}
+        startColor="#00000010"
+        stretch={true}
+      >
         <S.Container>
           <S.Header backgroundColor={MedicationColor[medication.type]}>
             <View className="flex-row items-center">
-              <S.IconType name={medicationIcons[medication.type]} />
-              <Spancing x={4} />
+              <MaterialCommunityIcons
+                name={medicationIcons[medication.type] as 'symbol'}
+                size={20}
+                color={colors.white.main}
+              />
+              <Spancing x="4" />
               <Text palette="white">{MedicationType[medication.type]}</Text>
             </View>
             <TouchableOpacity
@@ -62,11 +74,16 @@ export function CardMedicationDetailed({
               onPress={handlePressOptions}
               hitSlop={20}
             >
-              <S.IconOptions />
+              <MaterialCommunityIcons
+                color={colors.white.main}
+                name="dots-horizontal"
+                size={30}
+              />
             </TouchableOpacity>
           </S.Header>
           <S.Body>
-            <S.IconDot
+            <Ionicons
+              size={24}
               color={MedicationColor[medication.type]}
               name={
                 medication.alert
@@ -74,21 +91,26 @@ export function CardMedicationDetailed({
                   : 'notifications-off-circle-outline'
               }
             />
-            <Spancing x={6} />
-            <Text size="large" className="flex-1" numberOfLines={1}>
+            <Spancing x="6" />
+            <Text size="large" className="flex-1 mt-1" numberOfLines={1}>
               {String(medication.quantity).padStart(2, '0')} {measure} de{' '}
               {medication.name}.
             </Text>
           </S.Body>
           <View className="flex-row">
-            <Spancing x={8} />
+            <Spancing x="8" />
             <Line />
-            <Spancing x={8} />
+            <Spancing x="8" />
           </View>
           <S.Footer>
             <View className="flex-row items-center">
-              <S.IconTimer />
-              <Spancing x={3} />
+              <Ionicons
+                className="mt-[3px]"
+                color={colors.error[80]}
+                name="time-outline"
+                size={14}
+              />
+              <Spancing x="3" />
               <Text weight="light" palette="error" color={80}>
                 {String(medication.interval.hr).padStart(2, '0')}h{' '}
                 {String(medication.interval.min).padStart(2, '0')}m
@@ -97,14 +119,15 @@ export function CardMedicationDetailed({
             {!!medication.observation && (
               <Text
                 weight="light"
-                color={20}
+                color={80}
                 className="px-[5px]"
                 adjustsFontSizeToFit
+                palette="secondary"
               >
                 Possui observação
               </Text>
             )}
-            <Text weight="light" color={20}>
+            <Text weight="light" color={80}>
               {new Date(medication.created).toLocaleDateString()}
             </Text>
           </S.Footer>

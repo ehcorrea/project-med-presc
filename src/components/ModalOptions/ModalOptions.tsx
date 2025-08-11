@@ -29,10 +29,10 @@ export function ModalOptions<T>({
       open={open}
       className="min-h-[20%] max-h-[65%] p-[5%] px-[8%]"
     >
-      <Text weight="semi" size="large" className="self-center">
+      <Text weight="semibold" size="large" className="self-center">
         {title}
       </Text>
-      <Spancing y={10} />
+      <Spancing y="10" />
       <FlatList
         showsVerticalScrollIndicator={false}
         data={values}
@@ -49,7 +49,7 @@ export function ModalOptions<T>({
               >
                 {item.title}
               </Button>
-              <Spancing y={6} />
+              <Spancing y="6" />
             </>
           );
         }}

@@ -1,13 +1,13 @@
-import styled, { css } from 'styled-components/native';
+import styled, { css } from '@emotion/native';
 
-type ContainerProps = {
-  x: number;
-  y: number;
+export type ContainerProps = {
+  x?: string;
+  y?: string;
 };
 
 export const Container = styled.View<ContainerProps>`
-  ${({ theme, x, y }) => css`
-    margin-horizontal: ${theme.rwvalue(x)}px;
-    margin-vertical: ${theme.rhvalue(y)}px;
+  ${({ x = '0', y = '0' }) => css`
+    margin-horizontal: ${x}px;
+    margin-vertical: ${y}px;
   `}
 `;

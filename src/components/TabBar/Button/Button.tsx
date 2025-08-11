@@ -1,5 +1,7 @@
 import { useEffect } from 'react';
 import { Pressable, PressableProps } from 'react-native';
+import { useTheme } from '@emotion/react';
+import { FontAwesome5 } from '@expo/vector-icons';
 import Animated, {
   interpolate,
   useAnimatedStyle,
@@ -9,15 +11,17 @@ import Animated, {
 
 import { tabBarRoutes } from '@/utils';
 
-import * as S from './Button.styles';
+import { Spancing } from '../../Spacing/Spacing';
+import { Text } from '../../Text/Text';
 
 type ButtonProps = {
   name: string;
-} & PressableProps &
-  S.TitleProps;
+  isFocused: boolean;
+} & PressableProps;
 
-export function Button({ isFocused, name, onPress }: ButtonProps) {
+export function Button({ isFocused = false, name, onPress }: ButtonProps) {
   const scale = useSharedValue(0);
+  const theme = useTheme();
   const { title, icon } = tabBarRoutes[name];
 
   useEffect(() => {
@@ -42,15 +46,19 @@ export function Button({ isFocused, name, onPress }: ButtonProps) {
 
   return (
     <Pressable onPress={onPress} className="items-center">
-      <Animated.View style={viewStyle} testID="view-icon">
-        <S.Icon
-          name={icon as never}
+      <Animated.View style={viewStyle}>
+        <FontAwesome5
+          name={icon}
           isFocused={isFocused}
-          accessibilityLabel="icon"
+          size={Number(theme.fonts.size.xlarge)}
+          color={isFocused ? theme.colors.primary.main : theme.colors.gray[50]}
         />
       </Animated.View>
-      <Animated.View style={textStyle} testID="view-text">
-        <S.Title isFocused={isFocused}>{title}</S.Title>
+      <Spancing y="2" />
+      <Animated.View style={textStyle}>
+        <Text weight="semibold" palette="gray" color={50}>
+          {title}
+        </Text>
       </Animated.View>
     </Pressable>
   );

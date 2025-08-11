@@ -1,7 +1,15 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { Share } from 'react-native';
-import { ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native';
+import {
+  ScrollView,
+  StyleSheet,
+  TouchableOpacity,
+  View,
+  Share,
+} from 'react-native';
+import { ImageBackground } from 'expo-image';
+import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { useLocalSearchParams } from 'expo-router';
+import { useTheme } from '@emotion/react';
 import Countdown from 'react-countdown';
 import Popover from 'react-native-popover-view';
 
@@ -23,11 +31,13 @@ import {
   Text,
 } from '@/components';
 
+import { DisplayInfo } from './components';
 import * as S from './DetalhesDoRemedioScreen.styles';
 
 export function DetalhesDoRemedioScreen() {
   const [showOptions, setShowOptions] = useState(false);
   const [countdownDate, setCountdownDate] = useState<Date>();
+  const { colors } = useTheme();
   const optionsRef = useRef<TouchableOpacity>(null);
   const { profileId, id } = useLocalSearchParams<{
     profileId: string;
@@ -60,7 +70,11 @@ export function DetalhesDoRemedioScreen() {
 
   return (
     <Layout>
-      <S.Background>
+      <ImageBackground
+        contentFit="contain"
+        contentPosition="top"
+        source={require('@/assets/images/elipses.svg')}
+      >
         <PopoverMedicationsOptions
           from={optionsRef}
           isVisible={showOptions}
@@ -68,21 +82,21 @@ export function DetalhesDoRemedioScreen() {
           onClose={() => setShowOptions(false)}
         />
         <HeaderScreen
-          title=""
-          rightButton={
-            <View>
-              <Button.Options onPress={() => setShowOptions(true)}>
-                <TouchableOpacity
-                  disabled
-                  ref={optionsRef}
-                  style={styles.placeholder}
-                />
-              </Button.Options>
-            </View>
+          rightArtifact={
+            <Button.Options onPress={() => setShowOptions(true)}>
+              <TouchableOpacity
+                disabled
+                ref={optionsRef}
+                style={styles.placeholder}
+              />
+            </Button.Options>
           }
         />
         <View className="self-center items-center">
-          <S.Shadow startColor={MedicationColor[medication.type]}>
+          <S.Shadow
+            distance={6}
+            startColor={MedicationColor[medication.type] + '33'}
+          >
             <Popover
               backgroundStyle={{ backgroundColor: 'transparent' }}
               popoverStyle={{
@@ -95,31 +109,44 @@ export function DetalhesDoRemedioScreen() {
                 <S.NotificationButton
                   backgroundColor={MedicationColor[medication.type]}
                 >
-                  <S.NotificationIcon alert={medication.alert} />
+                  <Ionicons
+                    color={colors.white.main}
+                    size={20}
+                    name={
+                      medication.alert
+                        ? 'notifications-sharp'
+                        : 'notifications-off-sharp'
+                    }
+                  />
                 </S.NotificationButton>
               }
             >
               <Text>
                 Alerta{' '}
-                <Text weight="semi">
+                <Text weight="semibold">
                   {medication.alert ? 'ligado' : 'desligado'}
                 </Text>
               </Text>
             </Popover>
             <S.AvatarContainer color={MedicationColor[medication.type]}>
               <View>
-                <S.IconMedication name={medicationIcons[medication.type]} />
+                <MaterialCommunityIcons
+                  size={75}
+                  color={colors.white.main}
+                  name={medicationIcons[medication.type] as 'symbol'}
+                />
               </View>
             </S.AvatarContainer>
           </S.Shadow>
-          <Text size="xlarge" weight="semi">
+          <Spancing y="8" />
+          <Text size="xlarge" weight="semibold">
             {medication.name}
           </Text>
-          <Spancing y={2} />
+          <Spancing y="2" />
           <Text size="large" palette="gray" weight="light">
             {MedicationType[medication.type]}
           </Text>
-          <Spancing y={3} />
+          <Spancing y="5" />
           <View className="flex-row items-center">
             <Countdown
               date={countdownDate}
@@ -128,36 +155,53 @@ export function DetalhesDoRemedioScreen() {
               autoStart
               renderer={({ hours, minutes, seconds }) => (
                 <Text palette="error" size="large">
-                  Em {hours}h {minutes}m {seconds}s
+                  em {hours}h {minutes}m {seconds}s
                 </Text>
               )}
             />
           </View>
         </View>
         <ScrollView className="px-[5%]">
-          <S.DisplayInput
-            label="Instrução"
-            value={`${String(medication.quantity).padStart(2, '0')} ${measure} de ${medication.name} em ${MedicationType[medication.type].toLocaleLowerCase()} a cada ${splitTimer(`${medication.interval.hr}:${medication.interval.min}`)}.`}
-          />
-
-          <S.DisplayInput
-            label="Observação"
-            value={medication.observation}
-            placeholder="Sem observações."
-          />
+          <Text size="xlarge">Instrução</Text>
+          <Spancing y="4" />
+          <DisplayInfo>
+            <Text size="large" palette="black">
+              Utilizar {String(medication.quantity).padStart(2, '0')} {measure}{' '}
+              de {medication.name} em{' '}
+              {MedicationType[medication.type].toLocaleLowerCase()} a cada{' '}
+              {splitTimer(
+                `${medication.interval.hr}:${medication.interval.min}`
+              )}
+              .
+            </Text>
+          </DisplayInfo>
+          <Spancing y="10" />
+          <Text size="xlarge">Observações</Text>
+          <Spancing y="4" />
+          <DisplayInfo>
+            {!medication.observation && (
+              <Text size="large" palette="gray" color={50}>
+                Sem observações
+              </Text>
+            )}
+            {medication.observation && (
+              <Text size="large" palette="black">
+                {medication.observation}
+              </Text>
+            )}
+          </DisplayInfo>
         </ScrollView>
-        <S.Footer>
-          <Button
-            palette="secondary"
-            color={80}
-            size="large"
-            label={{ size: 'large' }}
-            onPress={shareText}
-          >
-            Compartilhar
-          </Button>
-        </S.Footer>
-      </S.Background>
+      </ImageBackground>
+      <S.Footer>
+        <Button
+          palette="secondary"
+          color={80}
+          label={{ size: 'large' }}
+          onPress={shareText}
+        >
+          Compartilhar
+        </Button>
+      </S.Footer>
     </Layout>
   );
 }

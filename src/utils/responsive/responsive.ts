@@ -7,9 +7,11 @@ const bases = {
 
 const { width, height } = Dimensions.get('window');
 
-const rwvalue = (size: number) => Math.floor((width / bases.width) * size);
-const rhvalue = (size: number) => Math.floor((height / bases.height) * size);
+const rwvalue = (size: number) =>
+  Math.floor((width / bases.width) * size).toString();
+const rhvalue = (size: number) =>
+  Math.floor((height / bases.height) * size).toString();
 const rfvalue = (size: number, upscale = 0.5) =>
-  size + (rwvalue(size) - size) * upscale;
+  (size + (Number(rwvalue(size)) - size) * upscale).toString();
 
 export { rwvalue, rhvalue, rfvalue };

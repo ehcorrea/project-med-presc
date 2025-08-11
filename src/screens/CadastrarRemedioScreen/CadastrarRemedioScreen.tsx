@@ -50,13 +50,17 @@ export function CadastrarRemedioScreen() {
   const { control, setValue, handleSubmit, clearErrors, watch, setFocus } =
     useForm({
       resolver: yupResolver(addMedicationValidators),
-      defaultValues: medication && {
-        name: medication.name,
-        measure: medication.measure,
-        observation: medication.observation,
-        quantity: String(medication.quantity),
-        type: medication.type,
-        interval: `${medication.interval.hr}:${medication.interval.min}`,
+      defaultValues: {
+        type: 'TABLET',
+        measure: 'MG',
+        ...(medication && {
+          name: medication.name,
+          measure: medication.measure,
+          observation: medication.observation,
+          quantity: String(medication.quantity),
+          type: medication.type,
+          interval: `${medication.interval.hr}:${medication.interval.min}`,
+        }),
       },
     });
 
@@ -104,7 +108,9 @@ export function CadastrarRemedioScreen() {
 
   return (
     <Layout>
-      <HeaderScreen title={medication && 'Editar Medicamento'} />
+      <HeaderScreen
+        title={medication ? 'Editar Medicamento' : 'Cadastrar Medicamento'}
+      />
       <SafeAreaView className="flex-1">
         <View className="px-[5%] pb-[5%] flex-1">
           <ScrollView className="flex-1" showsVerticalScrollIndicator={false}>
@@ -112,26 +118,31 @@ export function CadastrarRemedioScreen() {
               {medication ? 'Edite' : 'Informe'} detalhes sobre os medicamentos
               prescritos, como intervalo de uso e instruções.
             </Text>
-            <Spancing y={10} />
-            <Controller
-              name="name"
-              control={control}
-              render={({
-                field: { onChange, ...props },
-                fieldState: { error },
-              }) => (
-                <Input
-                  accessibilityLabel="inserir nome do medicamento"
-                  error={error?.message}
-                  label="Medicamento"
-                  onChangeText={onChange}
-                  onFocus={handleFocus('name')}
-                  placeholder="Paracetamol, dipirona, etc..."
-                  {...props}
-                />
-              )}
-            />
+            <Spancing y="8" />
+            <Text size="xlarge">Medicamento</Text>
+            <Spancing y="4" />
             <View className="flex-row">
+              <View className="flex-1">
+                <Controller
+                  name="name"
+                  control={control}
+                  render={({
+                    field: { onChange, ...props },
+                    fieldState: { error },
+                  }) => (
+                    <Input
+                      accessibilityLabel="inserir nome do medicamento"
+                      error={error?.message}
+                      label="Nome"
+                      onChangeText={onChange}
+                      onFocus={handleFocus('name')}
+                      placeholder="Ex: Paracetamol"
+                      {...props}
+                    />
+                  )}
+                />
+              </View>
+              <Spancing x="3" />
               <View className="flex-1">
                 <Controller
                   name="type"
@@ -148,44 +159,38 @@ export function CadastrarRemedioScreen() {
                       label="Tipo"
                       onChangeText={onChange}
                       onFocus={handleFocus('type', () => setModalType(true))}
-                      placeholder="Comprimido, xarope, etc..."
                       pointerEvents="none"
-                      size="small"
                       value={type}
                       {...props}
                     />
                   )}
                 />
               </View>
-              <Spancing x={3} />
-              <View className="flex-1">
-                <Controller
-                  name="interval"
-                  control={control}
-                  render={({
-                    field: { onChange, value, ...props },
-                    fieldState: { error },
-                  }) => (
-                    <Input
-                      accessibilityLabel="inserir intervalo de uso"
-                      editable={false}
-                      error={error?.message}
-                      forceHasFocus={modalTimer}
-                      label="Intervalo"
-                      onChangeText={onChange}
-                      onFocus={handleFocus('interval', () =>
-                        setModalTimer(true)
-                      )}
-                      placeholder="a cada xx:xx"
-                      pointerEvents="none"
-                      size="small"
-                      value={value ? `A cada ${value}` : undefined}
-                      {...props}
-                    />
-                  )}
-                />
-              </View>
             </View>
+            <Text size="xlarge">Instruções</Text>
+            <Spancing y="4" />
+            <Controller
+              name="interval"
+              control={control}
+              render={({
+                field: { onChange, value, ...props },
+                fieldState: { error },
+              }) => (
+                <Input
+                  accessibilityLabel="inserir intervalo de uso"
+                  editable={false}
+                  error={error?.message}
+                  forceHasFocus={modalTimer}
+                  label="Intervalo"
+                  onChangeText={onChange}
+                  onFocus={handleFocus('interval', () => setModalTimer(true))}
+                  placeholder="a cada xx:xx"
+                  pointerEvents="none"
+                  value={value ? `A cada ${value}` : undefined}
+                  {...props}
+                />
+              )}
+            />
             <View className="flex-row">
               <View className="flex-1">
                 <Controller
@@ -204,13 +209,12 @@ export function CadastrarRemedioScreen() {
                       onChangeText={onChange}
                       placeholder="1, 4, 6..."
                       maxLength={4}
-                      size="small"
                       {...props}
                     />
                   )}
                 />
               </View>
-              <Spancing x={3} />
+              <Spancing x="3" />
               <View className="flex-1">
                 <Controller
                   name="measure"
@@ -229,9 +233,7 @@ export function CadastrarRemedioScreen() {
                       onFocus={handleFocus('measure', () =>
                         setModalMeasures(true)
                       )}
-                      placeholder="ml, mg..."
                       pointerEvents="none"
-                      size="small"
                       value={measure}
                       {...props}
                     />
@@ -248,7 +250,9 @@ export function CadastrarRemedioScreen() {
               }) => (
                 <Input
                   accessibilityLabel={`inserir seu nome`}
-                  containerProps={{ style: { height: 90 } }}
+                  containerProps={{
+                    style: { height: 'auto' },
+                  }}
                   error={error?.message}
                   label="Observação"
                   maxLength={128}
@@ -256,9 +260,7 @@ export function CadastrarRemedioScreen() {
                   numberOfLines={4}
                   onChangeText={onChange}
                   onFocus={handleFocus('observation')}
-                  placeholder="Evitar o uso com outros medicamentos..."
-                  size="small"
-                  textAlignVertical="top"
+                  placeholder="Ex: ficar me jejum após ingerir..."
                   {...props}
                 />
               )}
@@ -305,18 +307,27 @@ export function CadastrarRemedioScreen() {
         open={!!modalConfirm}
         title="Confirmar Medicamento"
       >
-        <View className="px-[5%] pb-[3%] h-[160px] justify-center">
-          <Text size="large">
-            Usar a cada {splitTimer(formState?.interval)},{'\n'}
-            {quantity} {measure} de {formState?.name.trim()} em {type}.
-            {!!formState?.observation && `${'\n'}Obs: ${formState.observation}`}
-          </Text>
-          <Spancing y={2} />
-          <Text size="small" weight="semi">
-            Você receberá notificações de uso a cada{' '}
-            {splitTimer(formState?.interval)}.{'\n'}
-            Podendo desativá-las na página do rémedio.
-          </Text>
+        <View className="p-[5%] min-h-[160px] justify-between">
+          <View>
+            <Text size="large">Informações gerais</Text>
+            <Spancing y="2" />
+            <Text size="medium" palette="black">
+              Usar a cada {splitTimer(formState?.interval)} {'\n'}
+              {quantity} {measure} de {formState?.name.trim()} em {type}
+              {!!formState?.observation &&
+                `${'\n'}Obs: ${formState.observation}`}
+              .
+            </Text>
+          </View>
+          <Spancing y="8" />
+          <View>
+            <Text size="large">Notificações</Text>
+            <Spancing y="2" />
+            <Text palette="black">
+              Você será notificado uma vez a cada{' '}
+              {splitTimer(formState?.interval)}.
+            </Text>
+          </View>
         </View>
       </ModalConfirm>
     </Layout>

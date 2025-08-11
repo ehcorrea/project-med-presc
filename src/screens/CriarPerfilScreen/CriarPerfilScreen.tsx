@@ -1,12 +1,13 @@
-import { Controller, useFieldArray, useForm } from 'react-hook-form';
-import { ScrollView, TouchableOpacity, View } from 'react-native';
 import { useCallback, useRef, useState } from 'react';
-import { yupResolver } from '@hookform/resolvers/yup';
+import { ScrollView, View } from 'react-native';
+import { Controller, useFieldArray, useForm } from 'react-hook-form';
 import { router } from 'expo-router';
+import { yupResolver } from '@hookform/resolvers/yup';
 
 import { ProfileType } from '@/types/profile';
 import {
   Button,
+  HeaderPublic,
   Input,
   Line,
   ModalOptions,
@@ -16,6 +17,8 @@ import {
 import { NewProfileValidator, validatorNewProfile } from '@/utils/form/';
 import { profileStore } from '@/stores';
 import { createProfile } from '@/factories';
+
+import { ButtonAdd, ButtonRemove } from './components';
 
 import * as S from './CriarPerfilScreen.styles';
 
@@ -59,9 +62,9 @@ export function CriarPerfilScreen() {
 
   return (
     <>
-      <S.Header>
+      <HeaderPublic>
         <Button.Back />
-      </S.Header>
+      </HeaderPublic>
       <ScrollView
         bounces={false}
         className="flex-1"
@@ -70,9 +73,9 @@ export function CriarPerfilScreen() {
         ref={scrollRef}
       >
         <Text.Title size="xhuge">Criar Perfil</Text.Title>
-        <Spancing y={8} />
+        <Spancing y="8" />
         <Text size="xlarge">Perfil pessoal</Text>
-        <Spancing y={4} />
+        <Spancing y="4" />
         <Controller
           name="name"
           control={control}
@@ -83,7 +86,7 @@ export function CriarPerfilScreen() {
             <Input
               label="Nome"
               accessibilityLabel={`inserir seu nome`}
-              placeholder="Nome Completo ou apelido"
+              placeholder="Nome completo ou apelido"
               error={error?.message}
               onChangeText={onChange}
               onFocus={handleFocus('name')}
@@ -91,6 +94,7 @@ export function CriarPerfilScreen() {
             />
           )}
         />
+        <Spancing y="4" />
         <Controller
           name="type"
           control={control}
@@ -101,25 +105,25 @@ export function CriarPerfilScreen() {
             <Input
               accessibilityLabel="inserir tipo do perfil"
               editable={false}
-              onFocus={() => setModalProfile(true)}
-              forceHasFocus={modalProfile}
-              pointerEvents="none"
               error={error?.message}
+              forceHasFocus={modalProfile}
               label="Tipo de Perfil"
+              onFocus={() => setModalProfile(true)}
               placeholder="Pessoal ou Cuidador"
+              pointerEvents="none"
               {...props}
             />
           )}
         />
-        <Spancing y={8} />
+        <Spancing y="8" />
         {profileType === ProfileType.CAREGIVING && (
           <View>
             <Line />
-            <Spancing y={8} />
+            <Spancing y="8" />
             <Text size="xlarge">Dependentes</Text>
-            <Spancing y={10} />
+            <Spancing y="10" />
             {fields.map((field, index) => (
-              <View className="flex-row flex-1 w-[100%]" key={field.id}>
+              <View className="flex-row flex-1 w-[100%] " key={field.id}>
                 <S.ContainerInput isFirstItem={!index}>
                   <Controller
                     name={`dependents.${index}.name`}
@@ -131,7 +135,7 @@ export function CriarPerfilScreen() {
                       <Input
                         label="Nome"
                         accessibilityLabel={`inserir nome do dependente ${index + 1}`}
-                        placeholder="Nome Completo ou apelido"
+                        placeholder="Nome completo ou apelido"
                         error={error?.message}
                         onChangeText={onChange}
                         onFocus={handleFocus(`dependents.${index}.name`)}
@@ -140,26 +144,12 @@ export function CriarPerfilScreen() {
                     )}
                   />
                 </S.ContainerInput>
-                {!!index && (
-                  <TouchableOpacity
-                    onPress={() => remove(index)}
-                    className="flex-1 items-end justify-center"
-                  >
-                    <S.IconRemove />
-                  </TouchableOpacity>
-                )}
+                {!!index && <ButtonRemove onPress={() => remove(index)} />}
               </View>
             ))}
-            <Spancing y={5} />
-            <TouchableOpacity
-              onPress={handleAddDependent}
-              className="flex-row items-center"
-            >
-              <S.LineAdd />
-              <S.IconAdd />
-              <S.LineAdd />
-            </TouchableOpacity>
-            <Spancing y={15} />
+            <Spancing y="5" />
+            <ButtonAdd onPress={handleAddDependent} />
+            <Spancing y="15" />
           </View>
         )}
         <Button
@@ -170,7 +160,7 @@ export function CriarPerfilScreen() {
           CRIAR
         </Button>
         <ModalOptions
-          title="Selecione um tipo de perfil"
+          title="Selecione o tipo de PERFIL"
           values={[
             { title: ProfileType.PERSONAL, value: ProfileType.PERSONAL },
             { title: ProfileType.CAREGIVING, value: ProfileType.CAREGIVING },

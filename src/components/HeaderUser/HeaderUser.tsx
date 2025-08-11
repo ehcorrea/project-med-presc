@@ -1,23 +1,22 @@
 import { TouchableOpacity, View } from 'react-native';
+import { useTheme } from '@emotion/react';
 import Ionicons from '@expo/vector-icons/Ionicons';
 
 import { profileStore } from '@/stores';
-import { theme } from '@/constants';
 
-import { Text } from '../Text/Text';
 import { AvatarProfile } from '../AvatarProfile/AvatarProfile';
 import { Spancing } from '../Spacing/Spacing';
-
-import * as S from './HeaderUser.styles';
+import { Text } from '../Text/Text';
 
 export function HeaderUser() {
   const { selected } = profileStore();
+  const theme = useTheme();
 
   return (
-    <S.Container>
+    <View className="flex-row items-center justify-between m-[5%] mt-[50px]">
       <View className="flex-row items-center">
         <AvatarProfile name={selected?.name} color={selected?.color} />
-        <Spancing x={4} />
+        <Spancing x="4" />
         <View>
           <Text palette="gray" size="large">
             {selected?.name}
@@ -30,10 +29,10 @@ export function HeaderUser() {
       <TouchableOpacity>
         <Ionicons
           name="notifications-outline"
-          size={theme.font.size.xlarge}
+          size={Number(theme.fonts.size.xlarge)}
           color="black"
         />
       </TouchableOpacity>
-    </S.Container>
+    </View>
   );
 }

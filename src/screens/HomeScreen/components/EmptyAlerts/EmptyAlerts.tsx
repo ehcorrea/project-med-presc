@@ -1,19 +1,14 @@
 import { Image } from 'expo-image';
 import { View } from 'react-native';
 
-import { Text } from '@/components';
-
 export function EmptyAlerts() {
   return (
-    <View className="flex-1 items-center p-[5%]">
+    <View className="items-center h-5/6 justify-center aspect-square">
       <Image
         contentFit="contain"
-        className="h-[200px] w-[200px]"
-        source={require('@/assets/images/notification.svg')}
+        className="h-full w-full"
+        source={require('@/assets/images/notification.png')}
       />
-      <Text size="large" className="text-center">
-        Parece que você ainda {`\n`}não possui alertas...
-      </Text>
     </View>
   );
 }

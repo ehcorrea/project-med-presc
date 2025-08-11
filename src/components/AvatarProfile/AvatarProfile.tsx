@@ -1,5 +1,7 @@
-import { theme } from '@/constants';
-import * as S from './AvatarProfile.styles';
+import { View } from 'react-native';
+
+import { THEME } from '@/constants';
+
 import { Text } from '../Text/Text';
 
 export type AvatarProfileProps = {
@@ -11,19 +13,22 @@ export type AvatarProfileProps = {
 export function AvatarProfile({
   name = 'Not Set',
   icon,
-  color = theme.colors.default.primary.main,
+  color = THEME.colors.primary.main,
 }: AvatarProfileProps) {
   const avatar = name[0].toUpperCase();
 
   return (
-    <S.Container color={color}>
+    <View
+      className="items-center justify-center h-12 w-12 rounded-2xl"
+      style={{ backgroundColor: color }}
+    >
       {icon ? (
         icon
       ) : (
-        <Text palette="white" size="huge" weight="bold">
+        <Text palette="white" size="huge" weight="bold" className="mt-0.5">
           {avatar}
         </Text>
       )}
-    </S.Container>
+    </View>
   );
 }

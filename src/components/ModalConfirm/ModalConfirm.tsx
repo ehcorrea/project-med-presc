@@ -1,27 +1,34 @@
 import { View } from 'react-native';
 
+import { Color, Palette } from '@/types/theme';
+
 import { Modal } from '../Modal/Modal';
 import { Spancing } from '../Spacing/Spacing';
 import { Text } from '../Text/Text';
-
-import * as S from './ModalConfirm.styles';
+import { Button } from '../Button/Button';
 
 export type ModalConfirmProps = {
-  alert?: boolean;
   children: React.ReactElement;
   onClose: () => void;
   onConfirm: () => void;
   open: boolean;
   title?: string;
+  confirmColor?: {
+    palette?: Palette;
+    color?: Color;
+  };
 };
 
 export function ModalConfirm({
-  alert,
   children,
   onClose,
   onConfirm,
   open,
   title = 'Selecione o intervalo',
+  confirmColor = {
+    palette: 'primary',
+    color: 'main',
+  },
 }: ModalConfirmProps) {
   const handleConfirmar = () => {
     onClose();
@@ -36,13 +43,24 @@ export function ModalConfirm({
         </Text>
         {children}
         <View className="flex-row max-w-[60%] self-end">
-          <S.ModalButon palette="transparent" cancel onPress={onClose}>
+          <Button
+            className="flex-1 h-[50px]"
+            label={{ palette: 'black', size: 'medium' }}
+            onPress={onClose}
+            palette="transparent"
+          >
             Cancelar
-          </S.ModalButon>
-          <Spancing x={5} />
-          <S.ModalButon onPress={handleConfirmar} alert={alert}>
+          </Button>
+          <Spancing x="5" />
+          <Button
+            className="flex-1 h-[50px]"
+            color={50}
+            label={{ palette: 'white', size: 'medium' }}
+            onPress={handleConfirmar}
+            {...confirmColor}
+          >
             Confirmar
-          </S.ModalButon>
+          </Button>
         </View>
       </View>
     </Modal>

@@ -6,7 +6,7 @@ import {
   Modal as ModalRN,
   TouchableWithoutFeedback,
 } from 'react-native';
-import {
+import Animated, {
   useAnimatedStyle,
   useDerivedValue,
   useSharedValue,
@@ -20,9 +20,10 @@ export type ModalProps = {
   children: React.ReactNode;
   open: boolean;
   style?: StyleProp<ViewStyle>;
-  variant?: 'footer' | 'floating';
+
   onTouchBackground?: () => void;
-} & ViewProps;
+} & Partial<S.ContainerProps> &
+  ViewProps;
 
 export function Modal({
   open,
@@ -56,26 +57,30 @@ export function Modal({
     }
 
     setVisible(true);
-  }, [open]);
+  }, [open, variant]);
 
   return (
-    <ModalRN visible={visible} transparent={true}>
+    <ModalRN visible={visible} transparent={true} statusBarTranslucent>
       <TouchableWithoutFeedback
         onPress={(e) => e.currentTarget === e.target && onTouchBackground?.()}
       >
-        <S.Backdrop style={animatedBackdrop}>
-          <S.Modal
-            {...props}
-            testID="modal-shape"
-            variant={variant}
-            style={[animatedModal, props.style]}
-            onLayout={(e) => {
-              height.value = e.nativeEvent.layout.height;
-            }}
-          >
-            {visible && children}
-          </S.Modal>
-        </S.Backdrop>
+        <Animated.View
+          className="items-center justify-center absolute left-0 top-0 right-0 bottom-0 bg-black/50"
+          style={animatedBackdrop}
+        >
+          {((visible && variant === 'footer') || open) && (
+            <S.Container
+              {...props}
+              variant={variant}
+              style={[animatedModal, props.style]}
+              onLayout={(e) => {
+                height.value = e.nativeEvent.layout.height;
+              }}
+            >
+              {children}
+            </S.Container>
+          )}
+        </Animated.View>
       </TouchableWithoutFeedback>
     </ModalRN>
   );

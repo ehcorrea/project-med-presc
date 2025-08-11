@@ -13,5 +13,5 @@ Text.Title = (props: TextProps) => {
 };
 
 Text.Subtitle = (props: TextProps) => {
-  return <Text size="large" weight="semi" {...props} />;
+  return <Text size="large" weight="semibold" {...props} />;
 };

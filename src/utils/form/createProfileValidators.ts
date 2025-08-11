@@ -2,7 +2,7 @@ import { ProfileType } from '@/types/profile';
 import * as yup from 'yup';
 
 const defaultValidations = {
-  required: 'obrigatório',
+  required: 'Obrigatório',
 };
 
 export type NewProfileValidator = yup.InferType<typeof validatorNewProfile>;
@@ -13,7 +13,7 @@ export const validatorNewProfile = yup.object().shape({
     .required(defaultValidations.required)
     .matches(
       /^(?!\s)(?!.*\s{2})[A-Za-zÀ-ÖØ-öø-ÿ]+(?: [A-Za-zÀ-ÖØ-öø-ÿ]+)*$/,
-      'campo inválido'
+      'Campo inválido'
     ),
   type: yup.string(),
   dependents: yup.array().of(

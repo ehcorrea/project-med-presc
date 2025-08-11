@@ -1,9 +1,14 @@
-import { ViewProps } from 'react-native';
+import { View } from 'react-native';
 
-import * as S from './Line.styles';
+type LineProps = {
+  color?: string;
+};
 
-type LineProps = S.LineProps & ViewProps;
-
-export function Line(props: LineProps) {
-  return <S.Line {...props} />;
+export function Line({ color = '#b3b3b380' }: LineProps) {
+  return (
+    <View
+      className="flex-1 max-h-[1px] h-1"
+      style={{ backgroundColor: color }}
+    />
+  );
 }

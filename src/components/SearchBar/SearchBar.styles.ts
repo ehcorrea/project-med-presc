@@ -1,29 +1,13 @@
-import { TouchableOpacity } from 'react-native';
-import styled, { css } from 'styled-components/native';
-import { AntDesign } from '@expo/vector-icons';
+import { TextInput } from 'react-native';
+import styled, { css } from '@emotion/native';
 
-export const Container = styled(TouchableOpacity)`
+export const Input = styled(TextInput)`
   ${({ theme }) => css`
-    background-color: ${theme.colors.default.white.main};
-    border-radius: ${theme.rfvalue(14)}px;
-    flex-direction: row;
-    height: ${theme.rhvalue(48)}px;
-    padding-horizontal: ${theme.rwvalue(10)}px;
-    width: 85%;
-  `}
-`;
-
-export const SearchIcon = styled(AntDesign).attrs(({ theme }) => ({
-  color: theme.colors.default.gray[80],
-  size: theme.rfvalue(20),
-}))``;
-
-export const SearchInput = styled.TextInput.attrs(({ theme }) => ({
-  placeholder: 'Buscar...',
-  placeholderTextColor: theme.colors.default.gray[50],
-}))`
-  ${({ theme }) => css`
-    flex: 1%;
-    font-size: ${theme.font.size.medium}px;
+    align-items: center;
+    flex: 1;
+    font-family: ${theme.fonts.weight.regular};
+    font-size: ${theme.fonts.size.large}px;
+    height: 100%;
+    line-height: ${theme.fonts.height.large}px;
   `}
 `;

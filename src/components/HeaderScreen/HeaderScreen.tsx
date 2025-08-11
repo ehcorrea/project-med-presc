@@ -1,26 +1,28 @@
 import { View } from 'react-native';
-
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Text } from '../Text/Text';
 import { Button } from '../Button/Button';
 
-import * as S from './HeaderScreen.styles';
-
 export type HeaderScreenProps = {
+  rightArtifact?: React.ReactElement;
   title?: string;
-  rightButton?: React.ReactElement;
 };
 
-export function HeaderScreen({
-  title = 'Adicionar Medicamento',
-  rightButton,
-}: HeaderScreenProps) {
+export function HeaderScreen({ title = '', rightArtifact }: HeaderScreenProps) {
+  const insets = useSafeAreaInsets();
   return (
-    <S.Container>
-      <Button.Back />
-      <View className="flex-1 absolute items-center right-0 left-0">
-        <Text size="large">{title}</Text>
+    <View
+      className="items-start justify-end px-[5%] py-[2%] w-full"
+      style={{ marginTop: insets.top }}
+    >
+      <View className="flex-row justify-between w-full">
+        <Button.Back /> {rightArtifact}
       </View>
-      {rightButton}
-    </S.Container>
+      {!!title && (
+        <Text.Title size="huge" className="mt-[5%] self-center">
+          {title}
+        </Text.Title>
+      )}
+    </View>
   );
 }

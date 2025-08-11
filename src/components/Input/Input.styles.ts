@@ -1,71 +1,71 @@
 import { Platform, TextInput } from 'react-native';
-import styled, { css, DefaultTheme } from 'styled-components/native';
+import styled, { css, Theme } from '@emotion/native';
 
 export type InputState = 'error' | 'focused' | 'default';
 
 export type ContainerProps = {
+  size: 'large' | 'medium';
   state: 'error' | 'focused' | 'default';
-  size: 'small' | 'medium';
 };
 
 const containerModifiders = {
-  error: (theme: DefaultTheme) => css`
-    border-color: ${theme.colors.default.error.main};
+  error: (theme: Theme) => css`
+    border-color: ${theme.colors.error.main};
   `,
-  focused: (theme: DefaultTheme) => css`
-    border-color: ${theme.colors.default.primary.main};
+  focused: (theme: Theme) => css`
+    border-color: ${theme.colors.primary.main};
   `,
-  default: (theme: DefaultTheme) => css`
-    border-color: ${theme.colors.default.gray.main};
+  default: (theme: Theme) => css`
+    border-color: ${theme.colors.gray.main};
   `,
-  small: (theme: DefaultTheme) => css`
-    height: ${theme.rhvalue(40)}px;
-    padding: ${theme.rfvalue(10)}px;
+  medium: () => css`
+    min-height: 50px;
   `,
-  medium: (theme: DefaultTheme) => css`
-    height: ${theme.rhvalue(50)}px;
-    padding: ${theme.rfvalue(15)}px;
+  large: () => css`
+    min-height: 60px;
   `,
 };
 
 const inputModifiders = {
-  small: (theme: DefaultTheme) => css`
-    font-size: ${theme.font.size.medium}px;
-    line-height: ${Platform.OS === 'ios' ? 20 : 21}px;
+  medium: (theme: Theme) => css`
+    font-size: ${theme.fonts.size.large}px;
   `,
-  medium: (theme: DefaultTheme) => css`
-    font-size: ${theme.font.size.large}px;
-    line-height: ${Platform.OS === 'ios' ? 20 : 25}px;
+  large: (theme: Theme) => css`
+    font-size: ${theme.fonts.size.xlarge}px;
+  `,
+};
+
+const systemModifiers = {
+  ios: () => css`
+    padding-top: 1%;
   `,
 };
 
 export const Container = styled.View<ContainerProps>`
   ${({ theme, state, size }) => css`
     align-items: center;
-    border-radius: ${theme.rfvalue(10)}px;
+    border-radius: 10px;
     border-width: 1px;
     flex-direction: row;
-    min-height: ${theme.rhvalue(20)}px;
+    min-height: 30px;
+    padding-horizontal: 8px;
     overflow: hidden;
-    justify-content: center;
+
     ${containerModifiders[state](theme)}
-    ${containerModifiders[size](theme)}
+    ${containerModifiders[size]()}
   `}
 `;
 
-export const Input = styled(TextInput).attrs(({ theme, ...props }) => ({
-  placeholderTextColor: '#C4C4C4',
-  ...props,
-}))<Pick<ContainerProps, 'size'>>`
+export const Input = styled(TextInput)<Pick<ContainerProps, 'size'>>`
   ${({ theme, size }) => css`
-    flex: 1;
-    font-family: ${theme.font.weight.regular};
-    font-size: ${theme.font.size.large}px;
-    height: 100%;
-    color: ${theme.colors.default.black.main};
-    justify-content: center;
     align-items: center;
-
+    color: ${theme.colors.black.main};
+    flex: 1;
+    font-family: ${theme.fonts.weight.regular};
+    font-size: ${theme.fonts.size.large}px;
     ${inputModifiders[size](theme)};
+    ${Platform.select({
+      ios: systemModifiers.ios(),
+    })}
   `}
 `;
