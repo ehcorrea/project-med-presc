@@ -1,54 +1,28 @@
-import { Pressable, View } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
+import { View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { useTheme } from '@emotion/react';
-
-import { Spancing } from '../Spacing/Spacing';
 import { Text } from '../Text/Text';
+import { Button } from '../Button/Button';
 
 export type HeaderScreenProps = {
   rightArtifact?: React.ReactElement;
-  subtitle?: string;
-  title: string;
+  title?: string;
 };
 
-export function HeaderScreen({
-  title,
-  subtitle,
-  rightArtifact,
-}: HeaderScreenProps) {
-  const theme = useTheme();
+export function HeaderScreen({ title = '', rightArtifact }: HeaderScreenProps) {
   const insets = useSafeAreaInsets();
   return (
     <View
-      className="items-center m-[5%]  justify-between"
+      className="items-start justify-end px-[5%] py-[2%] w-full"
       style={{ marginTop: insets.top }}
     >
-      <View className="flex-row justify-between items-center w-full">
-        <View className="flex-1">
-          <Pressable>
-            <Ionicons
-              name="arrow-back"
-              size={Number(theme.rfvalue(30))}
-              color="#222"
-            />
-          </Pressable>
-        </View>
-        <View className="flex-1 h-10">
-          <View className="absolute  right-0">{rightArtifact}</View>
-        </View>
+      <View className="flex-row justify-between w-full">
+        <Button.Back /> {rightArtifact}
       </View>
-      <Spancing y="5" />
-      <View>
-        <Text palette="black" size="huge" weight="semibold">
+      {!!title && (
+        <Text.Title size="huge" className="mt-[5%] self-center">
           {title}
-        </Text>
-        {subtitle && (
-          <Text palette="black" color={50} weight="regular" size="large">
-            {subtitle}
-          </Text>
-        )}
-      </View>
+        </Text.Title>
+      )}
     </View>
   );
 }
