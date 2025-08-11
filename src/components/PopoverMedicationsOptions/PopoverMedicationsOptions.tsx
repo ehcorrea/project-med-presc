@@ -93,11 +93,13 @@ export function PopoverMedicationsOptions({
         open={modalRemove}
         onClose={handleModalRemove}
         onConfirm={handleRemoveMedication}
-        alert
+        confirmColor={{
+          palette: 'error',
+        }}
       >
-        <Text className="my-[10%] text-center">
-          Esta ação não poderá ser desfeita e também {'\n'}removerá as
-          notificações associadas.
+        <Text className="my-[10%] text-center" size="large">
+          Esta ação não poderá ser desfeita e também removerá as notificações
+          associadas.
         </Text>
       </ModalConfirm>
       <ModalConfirm
@@ -105,9 +107,12 @@ export function PopoverMedicationsOptions({
         open={modalAlert}
         onClose={handleModalAlert}
         onConfirm={handleAlertMedication}
-        alert={medication?.alert}
+        confirmColor={{
+          palette: !medication?.alert ? 'primary' : 'error',
+          color: !medication?.alert ? 'main' : 50,
+        }}
       >
-        <Text className="my-[10%] text-center">
+        <Text className="my-[5%] text-center">
           Você poderá {medication?.alert ? 'reativar' : 'silenciar'} o alerta
           novamente quando quiser.
         </Text>
