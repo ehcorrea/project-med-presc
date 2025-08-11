@@ -60,7 +60,7 @@ export function Modal({
   }, [open, variant]);
 
   return (
-    <ModalRN visible={visible} transparent={true}>
+    <ModalRN visible={visible} transparent={true} statusBarTranslucent>
       <TouchableWithoutFeedback
         onPress={(e) => e.currentTarget === e.target && onTouchBackground?.()}
       >

@@ -1,26 +1,34 @@
 import { View } from 'react-native';
 
+import { Color, Palette } from '@/types/theme';
+
 import { Modal } from '../Modal/Modal';
 import { Spancing } from '../Spacing/Spacing';
 import { Text } from '../Text/Text';
 import { Button } from '../Button/Button';
 
 export type ModalConfirmProps = {
-  alert?: boolean;
   children: React.ReactElement;
   onClose: () => void;
   onConfirm: () => void;
   open: boolean;
   title?: string;
+  confirmColor?: {
+    palette?: Palette;
+    color?: Color;
+  };
 };
 
 export function ModalConfirm({
-  alert,
   children,
   onClose,
   onConfirm,
   open,
   title = 'Selecione o intervalo',
+  confirmColor = {
+    palette: 'primary',
+    color: 'main',
+  },
 }: ModalConfirmProps) {
   const handleConfirmar = () => {
     onClose();
@@ -49,7 +57,7 @@ export function ModalConfirm({
             color={50}
             label={{ palette: 'white', size: 'medium' }}
             onPress={handleConfirmar}
-            palette="error"
+            {...confirmColor}
           >
             Confirmar
           </Button>
