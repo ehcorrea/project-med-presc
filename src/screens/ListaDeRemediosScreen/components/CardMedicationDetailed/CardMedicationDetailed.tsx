@@ -92,7 +92,7 @@ export function CardMedicationDetailed({
               }
             />
             <Spancing x="6" />
-            <Text size="large" className="flex-1" numberOfLines={1}>
+            <Text size="large" className="flex-1 mt-1" numberOfLines={1}>
               {String(medication.quantity).padStart(2, '0')} {measure} de{' '}
               {medication.name}.
             </Text>
@@ -119,14 +119,15 @@ export function CardMedicationDetailed({
             {!!medication.observation && (
               <Text
                 weight="light"
-                color={20}
+                color={80}
                 className="px-[5px]"
                 adjustsFontSizeToFit
+                palette="secondary"
               >
                 Possui observação
               </Text>
             )}
-            <Text weight="light" color={20}>
+            <Text weight="light" color={80}>
               {new Date(medication.created).toLocaleDateString()}
             </Text>
           </S.Footer>

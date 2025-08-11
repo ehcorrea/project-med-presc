@@ -33,6 +33,7 @@ export const Body = styled.View`
   ${({ theme }) => css`
     flex-direction: row;
     padding: ${theme.rfvalue(16)}px;
+    align-items: center;
   `}
 `;
 
