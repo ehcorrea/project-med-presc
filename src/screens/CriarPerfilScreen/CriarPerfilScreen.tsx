@@ -18,8 +18,7 @@ import { NewProfileValidator, validatorNewProfile } from '@/utils/form/';
 import { profileStore } from '@/stores';
 import { createProfile } from '@/factories';
 
-import { ButtonAdd } from './components/ButtonAdd';
-import { ButtonRemove } from './components/ButtonRemove';
+import { ButtonAdd, ButtonRemove } from './components';
 
 import * as S from './CriarPerfilScreen.styles';
 
