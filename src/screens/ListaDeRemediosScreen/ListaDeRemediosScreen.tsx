@@ -9,7 +9,6 @@ import {
   SearchBar,
   Spancing,
   FloatButton,
-  Text,
   PopoverMedicationsOptions,
 } from '@/components';
 
@@ -33,12 +32,9 @@ export function ListaDeRemediosScreen() {
   return (
     <Layout>
       <View className="px-[5%] flex-1 ">
-        <SearchBar />
         {medications.length ? (
           <>
-            <Text weight="semibold" size="xlarge">
-              Remédios cadastrados
-            </Text>
+            <SearchBar />
             <Spancing y="8" />
             <FlatList
               ListEmptyComponent={<EmptyList />}
