@@ -39,7 +39,7 @@ Button.Back = () => {
     <S.Button
       elevation
       palette="white"
-      className="h-[38px] w-[38px] rounded-full pr-1"
+      className="h-[38px] w-[38px] rounded-full pr-1 p-1"
       onPress={handlePress}
     >
       <MaterialIcons name="keyboard-arrow-left" size={28} color="black" />
@@ -54,7 +54,13 @@ export type ButtonOptions = {
 
 Button.Options = ({ onPress, children }: ButtonOptions) => {
   return (
-    <S.Button elevation palette="white" onPress={onPress} activeOpacity={0}>
+    <S.Button
+      elevation
+      palette="white"
+      className="h-[38px] w-[38px] rounded-full pr-1 justify-center p-1"
+      onPress={onPress}
+      activeOpacity={0}
+    >
       {children}
       <MaterialIcons name="keyboard-control" size={28} color="black" />
     </S.Button>
